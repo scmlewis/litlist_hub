@@ -30,7 +30,7 @@ export default function BookSearch({ onSelect }: BookSearchProps) {
       try {
         const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
         if (response.ok) {
-          const data = await response.json();
+          const data = await response.json() as SearchResult[];
           setResults(data);
           setShowResults(true);
         }
