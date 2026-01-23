@@ -4,9 +4,11 @@
   "description": "A full-stack book tracking app with Cloudflare Pages, D1, and OAuth",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npx @cloudflare/next-on-pages",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "wrangler pages dev"
   },
   "keywords": [
     "books",
@@ -17,8 +19,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "jose": "^6.1.3",
-    "next": "^16.1.4",
+    "next": "^15.1.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
