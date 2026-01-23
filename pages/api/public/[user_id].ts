@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { getCloudflareContext } from '@cloudflare/next-on-pages';
+import { getRequestContext } from '@cloudflare/next-on-pages';
 
 export const config = {
   runtime: 'edge',
@@ -19,8 +19,8 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
-    const { env } = await getCloudflareContext();
-    const db = env.DB;
+    const { env } = getRequestContext();
+    const db = (env as { DB: D1Database }).DB;
 
     // Check if user exists
     const user = await db.prepare(
