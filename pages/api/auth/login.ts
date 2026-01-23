@@ -13,20 +13,20 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      return new Response(JSON.stringify({ error: 'Server not configured: JWT_SECRET missing' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const body = await req.json() as { email?: string };
     const email = body.email?.trim().toLowerCase();
 
     if (!email || !email.includes('@')) {
       return new Response(JSON.stringify({ error: 'Valid email is required' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    const jwtSecret = process.env.JWT_SECRET;
-    if (!jwtSecret) {
-      return new Response(JSON.stringify({ error: 'Server not configured' }), {
-        status: 500,
         headers: { 'Content-Type': 'application/json' },
       });
     }
@@ -43,7 +43,7 @@ export default async function handler(req: NextRequest) {
       {
         userId,
         email,
-        githubId: 0, // No GitHub ID for simple login
+        githubId: 0,
       },
       jwtSecret
     );
@@ -58,7 +58,7 @@ export default async function handler(req: NextRequest) {
     });
   } catch (error) {
     console.error('Login error:', error);
-    return new Response(JSON.stringify({ error: 'Login failed' }), {
+    return new Response(JSON.stringify({ error: 'Login failed: ' + String(error) }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
