@@ -2,9 +2,7 @@ import type { NextRequest } from 'next/server';
 import { signToken, createSessionCookie, generateUserId } from '../../../lib/auth';
 import { getEnv } from '../../../lib/env';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 interface GitHubUser {
   id: number;

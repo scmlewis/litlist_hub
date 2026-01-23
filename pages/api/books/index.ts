@@ -2,9 +2,7 @@ import type { NextRequest } from 'next/server';
 import { getEnv } from '../../../lib/env';
 import { verifyToken, getTokenFromRequest } from '../../../lib/auth';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 interface BookInput {
   title: string;

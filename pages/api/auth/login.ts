@@ -1,32 +1,26 @@
 import type { NextRequest } from 'next/server';
-import { getEnv } from '../../../lib/env';
+import { getRequestContext } from '@cloudflare/next-on-pages';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 export default async function handler(req: NextRequest) {
   try {
     const url = new URL(req.url);
     
-    let env;
+    let clientId: string | undefined;
     let debugInfo = '';
     
     try {
-      const { getRequestContext } = require('@cloudflare/next-on-pages');
       const ctx = getRequestContext();
-      env = ctx.env;
+      clientId = ctx.env?.GITHUB_CLIENT_ID;
       debugInfo = `Context keys: ${Object.keys(ctx.env || {}).join(', ')}`;
     } catch (e) {
       debugInfo = `getRequestContext failed: ${String(e)}`;
-      env = {
-        GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-      };
+      clientId = process.env.GITHUB_CLIENT_ID;
     }
     
-    const clientId = env?.GITHUB_CLIENT_ID;
     if (!clientId) {
-      return new Response(`GitHub Client ID not configured. Debug: ${debugInfo}. Env keys available: ${Object.keys(env || {}).join(', ')}`, { status: 500 });
+      return new Response(`GitHub Client ID not configured. Debug: ${debugInfo}`, { status: 500 });
     }
 
     // Build GitHub OAuth URL

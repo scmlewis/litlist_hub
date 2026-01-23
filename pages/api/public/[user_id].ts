@@ -1,9 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { getEnv } from '../../../lib/env';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 export default async function handler(req: NextRequest) {
   // Get user_id from URL

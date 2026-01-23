@@ -1,4 +1,6 @@
 // Helper to get Cloudflare environment bindings
+import { getRequestContext } from '@cloudflare/next-on-pages';
+
 export interface CloudflareEnv {
   GITHUB_CLIENT_ID: string;
   GITHUB_CLIENT_SECRET: string;
@@ -9,8 +11,6 @@ export interface CloudflareEnv {
 
 export function getEnv(): CloudflareEnv {
   try {
-    // Dynamic import to avoid issues during build
-    const { getRequestContext } = require('@cloudflare/next-on-pages');
     const ctx = getRequestContext();
     return ctx.env as CloudflareEnv;
   } catch (error) {
