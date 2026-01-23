@@ -1,10 +1,12 @@
-import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Book } from '../../types';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
-interface PublicListProps {
+interface PublicListState {
   books: Book[];
-  userId: string;
+  loading: boolean;
   error?: string;
 }
 
@@ -14,17 +16,54 @@ const statusConfig = {
   done: { label: 'Done', color: 'bg-green-100 text-green-800' },
 };
 
-export default function PublicList({ books, userId, error }: PublicListProps) {
-  if (error) {
+export default function PublicList() {
+  const router = useRouter();
+  const { user_id } = router.query;
+  const [state, setState] = useState<PublicListState>({
+    books: [],
+    loading: true,
+  });
+
+  useEffect(() => {
+    if (!user_id) return;
+
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch(`/api/public/${user_id}`);
+        if (!response.ok) {
+          setState({ books: [], loading: false, error: 'User not found' });
+          return;
+        }
+        const data = await response.json() as { books: Book[] };
+        setState({ books: data.books, loading: false });
+      } catch {
+        setState({ books: [], loading: false, error: 'Failed to load books' });
+      }
+    };
+
+    fetchBooks();
+  }, [user_id]);
+
+  if (state.loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (state.error) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Not Found</h1>
-          <p className="text-gray-600">{error}</p>
+          <p className="text-gray-600">{state.error}</p>
         </div>
       </div>
     );
   }
+
+  const { books } = state;
 
   return (
     <>
@@ -105,40 +144,3 @@ export default function PublicList({ books, userId, error }: PublicListProps) {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { user_id } = context.params as { user_id: string };
-  const protocol = context.req.headers.host?.includes('localhost') ? 'http' : 'https';
-  const host = context.req.headers.host;
-
-  try {
-    const response = await fetch(`${protocol}://${host}/api/public/${user_id}`);
-    
-    if (!response.ok) {
-      return {
-        props: {
-          books: [],
-          userId: user_id,
-          error: 'User not found',
-        },
-      };
-    }
-
-    const data = await response.json() as { books: Book[] };
-    
-    return {
-      props: {
-        books: data.books,
-        userId: user_id,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        books: [],
-        userId: user_id,
-        error: 'Failed to load books',
-      },
-    };
-  }
-};
