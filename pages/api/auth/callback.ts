@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { signToken, createSessionCookie, generateUserId } from '../../../lib/auth';
-import { getRequestContext } from '@cloudflare/next-on-pages';
+import { getEnv } from '../../../lib/env';
 
 export const config = {
   runtime: 'edge',
@@ -18,13 +18,6 @@ interface GitHubEmail {
   verified: boolean;
 }
 
-interface CloudflareEnv {
-  GITHUB_CLIENT_ID: string;
-  GITHUB_CLIENT_SECRET: string;
-  JWT_SECRET: string;
-  DB: D1Database;
-}
-
 export default async function handler(req: NextRequest) {
   const url = new URL(req.url);
   
@@ -35,12 +28,11 @@ export default async function handler(req: NextRequest) {
   }
 
   // Get env from Cloudflare context
-  const { env } = getRequestContext();
-  const cfEnv = env as CloudflareEnv;
+  const env = getEnv();
 
-  const clientId = cfEnv.GITHUB_CLIENT_ID || process.env.GITHUB_CLIENT_ID;
-  const clientSecret = cfEnv.GITHUB_CLIENT_SECRET || process.env.GITHUB_CLIENT_SECRET;
-  const jwtSecret = cfEnv.JWT_SECRET || process.env.JWT_SECRET;
+  const clientId = env.GITHUB_CLIENT_ID;
+  const clientSecret = env.GITHUB_CLIENT_SECRET;
+  const jwtSecret = env.JWT_SECRET;
 
   if (!clientId || !clientSecret || !jwtSecret) {
     return new Response('OAuth not configured: missing ' + 
@@ -100,7 +92,7 @@ export default async function handler(req: NextRequest) {
     }
 
     // Use the db from the env we already got
-    const db = cfEnv.DB;
+    const db = env.DB;
     
     const userId = generateUserId(githubUser.id);
     

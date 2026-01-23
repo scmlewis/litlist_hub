@@ -1,13 +1,9 @@
 import type { NextRequest } from 'next/server';
-import { getRequestContext } from '@cloudflare/next-on-pages';
+import { getEnv } from '../../../lib/env';
 
 export const config = {
   runtime: 'edge',
 };
-
-interface CloudflareEnv {
-  DB: D1Database;
-}
 
 export default async function handler(req: NextRequest) {
   // Get user_id from URL
@@ -23,9 +19,8 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
-    const { env } = getRequestContext();
-    const cfEnv = env as CloudflareEnv;
-    const db = cfEnv.DB;
+    const env = getEnv();
+    const db = env.DB;
 
     // Check if user exists
     const user = await db.prepare(

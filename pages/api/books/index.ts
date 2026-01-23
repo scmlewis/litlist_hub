@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { getRequestContext } from '@cloudflare/next-on-pages';
+import { getEnv } from '../../../lib/env';
 import { verifyToken, getTokenFromRequest } from '../../../lib/auth';
 
 export const config = {
@@ -15,17 +15,11 @@ interface BookInput {
   cover_url?: string;
 }
 
-interface CloudflareEnv {
-  JWT_SECRET: string;
-  DB: D1Database;
-}
-
 export default async function handler(req: NextRequest) {
   // Get env from Cloudflare context
-  const { env } = getRequestContext();
-  const cfEnv = env as CloudflareEnv;
+  const env = getEnv();
   
-  const jwtSecret = cfEnv.JWT_SECRET || process.env.JWT_SECRET;
+  const jwtSecret = env.JWT_SECRET;
   if (!jwtSecret) {
     return new Response(JSON.stringify({ error: 'Server not configured' }), {
       status: 500,
@@ -51,7 +45,7 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
-    const db = cfEnv.DB;
+    const db = env.DB;
 
     // GET: Fetch all books for authenticated user
     if (req.method === 'GET') {
