@@ -4,7 +4,7 @@
   "description": "A full-stack book tracking app with Cloudflare Pages, D1, and OAuth",
   "scripts": {
     "dev": "next dev",
-    "build": "npx @cloudflare/next-on-pages",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "pages:build": "npx @cloudflare/next-on-pages",
