@@ -44,7 +44,7 @@ export default function Dashboard() {
         return;
       }
       if (!response.ok) throw new Error('Failed to fetch books');
-      const data = await response.json();
+      const data = await response.json() as Book[];
       setBooks(data);
       
       // Extract user info from first book or make a separate call
