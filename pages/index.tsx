@@ -1,4 +1,39 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 export default function Home() {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Login failed');
+      }
+
+      // Redirect to dashboard on success
+      router.push('/dashboard');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <div className="container mx-auto px-4 py-16">
@@ -15,16 +50,33 @@ export default function Home() {
             book collection with friends and fellow readers.
           </p>
 
-          {/* CTA Button */}
-          <a
-            href="/api/auth/login"
-            className="inline-block bg-primary-600 hover:bg-primary-700 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-          >
-            Login with GitHub
-          </a>
+          {/* Login Form */}
+          <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg mb-12">
+            <h2 className="text-2xl font-semibold mb-6">Get Started</h2>
+            <form onSubmit={handleLogin}>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                required
+              />
+              {error && (
+                <p className="text-red-500 text-sm mb-4">{error}</p>
+              )}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 text-white font-semibold px-8 py-3 rounded-lg text-lg transition-colors duration-200"
+              >
+                {loading ? 'Logging in...' : 'Continue with Email'}
+              </button>
+            </form>
+          </div>
 
           {/* Features */}
-          <div className="grid md:grid-cols-3 gap-8 mt-20">
+          <div className="grid md:grid-cols-3 gap-8 mt-12">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="text-4xl mb-4">📚</div>
               <h3 className="text-xl font-semibold mb-2">Organize Books</h3>
