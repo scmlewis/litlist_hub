@@ -11,18 +11,11 @@ export interface CloudflareEnv {
 
 // Get D1 database binding using the runtime context
 export function getDB(): D1Database {
-  // Access the Cloudflare context that next-on-pages provides via process.env
-  // @ts-expect-error - __cf_cxt is injected at runtime by next-on-pages
-  const cfContext = globalThis.__cf_cxt;
+  // Access the Cloudflare context that next-on-pages provides via globalThis
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const cfContext = (globalThis as any).__cf_cxt;
   if (cfContext?.env?.DB) {
     return cfContext.env.DB;
-  }
-  
-  // Fallback: try process.env which might have bindings in some setups
-  // @ts-expect-error - DB might be on process.env in some configurations
-  if (process.env.DB) {
-    // @ts-expect-error
-    return process.env.DB;
   }
   
   throw new Error('D1 database not available - make sure DB binding is configured in wrangler.toml');
