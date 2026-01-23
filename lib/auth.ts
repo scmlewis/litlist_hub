@@ -89,3 +89,21 @@ export async function getUserFromRequest(
 export function generateUserId(githubId: number): string {
   return `github_${githubId}`;
 }
+
+// Get token from NextRequest (for Next.js API routes)
+export function getTokenFromRequest(request: { cookies: { get: (name: string) => { value: string } | undefined } } | Request): string | null {
+  // Handle NextRequest with cookies API
+  if ('cookies' in request && typeof request.cookies.get === 'function') {
+    const cookie = request.cookies.get('session');
+    return cookie?.value || null;
+  }
+  
+  // Handle standard Request with headers
+  if ('headers' in request) {
+    const cookieHeader = (request as Request).headers.get('Cookie');
+    return getTokenFromCookies(cookieHeader);
+  }
+  
+  return null;
+}
+
