@@ -1,24 +1,18 @@
 import { useState, useEffect } from 'react';
 import BookSearch from './BookSearch';
+import { Book } from '../types';
 
-interface Book {
-  id?: number;
-  title: string;
-  author: string | null;
-  status: 'want' | 'reading' | 'done';
-  notes: string | null;
-  cover_url: string | null;
-}
+type BookFormData = Omit<Book, 'id' | 'user_id' | 'created_at' | 'goodreads_id'>;
 
 interface BookModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (book: Omit<Book, 'id'>) => Promise<void>;
+  onSave: (book: BookFormData) => Promise<void>;
   book?: Book | null;
 }
 
 export default function BookModal({ isOpen, onClose, onSave, book }: BookModalProps) {
-  const [formData, setFormData] = useState<Omit<Book, 'id'>>({
+  const [formData, setFormData] = useState<BookFormData>({
     title: '',
     author: null,
     status: 'want',

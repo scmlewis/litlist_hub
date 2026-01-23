@@ -4,24 +4,7 @@ import BookList from '../components/BookList';
 import BookModal from '../components/BookModal';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
-
-interface Book {
-  id: number;
-  user_id: string;
-  title: string;
-  author: string | null;
-  status: 'want' | 'reading' | 'done';
-  notes: string | null;
-  goodreads_id: string | null;
-  cover_url: string | null;
-  created_at: string;
-}
-
-interface User {
-  userId: string;
-  email: string;
-  githubId: number;
-}
+import { Book, User } from '../types';
 
 export default function Dashboard() {
   const [books, setBooks] = useState<Book[]>([]);

@@ -1,12 +1,4 @@
-interface Book {
-  id: number;
-  title: string;
-  author: string | null;
-  status: 'want' | 'reading' | 'done';
-  notes: string | null;
-  cover_url: string | null;
-  created_at: string;
-}
+import { Book } from '../types';
 
 interface BookListProps {
   books: Book[];
