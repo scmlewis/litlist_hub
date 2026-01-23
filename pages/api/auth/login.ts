@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { getRequestContext } from '@cloudflare/next-on-pages';
+import type { CloudflareEnv } from '../../../lib/env';
 
 export const runtime = 'edge';
 
@@ -12,7 +13,8 @@ export default async function handler(req: NextRequest) {
     
     try {
       const ctx = getRequestContext();
-      clientId = ctx.env?.GITHUB_CLIENT_ID;
+      const env = ctx.env as CloudflareEnv;
+      clientId = env?.GITHUB_CLIENT_ID;
       debugInfo = `Context keys: ${Object.keys(ctx.env || {}).join(', ')}`;
     } catch (e) {
       debugInfo = `getRequestContext failed: ${String(e)}`;
