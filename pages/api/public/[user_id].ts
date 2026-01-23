@@ -5,6 +5,10 @@ export const config = {
   runtime: 'edge',
 };
 
+interface CloudflareEnv {
+  DB: D1Database;
+}
+
 export default async function handler(req: NextRequest) {
   // Get user_id from URL
   const url = new URL(req.url);
@@ -20,7 +24,8 @@ export default async function handler(req: NextRequest) {
 
   try {
     const { env } = getRequestContext();
-    const db = (env as { DB: D1Database }).DB;
+    const cfEnv = env as CloudflareEnv;
+    const db = cfEnv.DB;
 
     // Check if user exists
     const user = await db.prepare(

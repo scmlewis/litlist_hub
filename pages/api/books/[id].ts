@@ -15,8 +15,17 @@ interface BookUpdate {
   cover_url?: string;
 }
 
+interface CloudflareEnv {
+  JWT_SECRET: string;
+  DB: D1Database;
+}
+
 export default async function handler(req: NextRequest) {
-  const jwtSecret = process.env.JWT_SECRET;
+  // Get env from Cloudflare context
+  const { env } = getRequestContext();
+  const cfEnv = env as CloudflareEnv;
+  
+  const jwtSecret = cfEnv.JWT_SECRET || process.env.JWT_SECRET;
   if (!jwtSecret) {
     return new Response(JSON.stringify({ error: 'Server not configured' }), {
       status: 500,
@@ -54,8 +63,7 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
-    const { env } = getRequestContext();
-    const db = (env as { DB: D1Database }).DB;
+    const db = cfEnv.DB;
 
     // Verify book ownership
     const book = await db.prepare(

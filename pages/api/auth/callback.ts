@@ -18,6 +18,13 @@ interface GitHubEmail {
   verified: boolean;
 }
 
+interface CloudflareEnv {
+  GITHUB_CLIENT_ID: string;
+  GITHUB_CLIENT_SECRET: string;
+  JWT_SECRET: string;
+  DB: D1Database;
+}
+
 export default async function handler(req: NextRequest) {
   const url = new URL(req.url);
   
@@ -27,12 +34,19 @@ export default async function handler(req: NextRequest) {
     return new Response('No authorization code provided', { status: 400 });
   }
 
-  const clientId = process.env.GITHUB_CLIENT_ID;
-  const clientSecret = process.env.GITHUB_CLIENT_SECRET;
-  const jwtSecret = process.env.JWT_SECRET;
+  // Get env from Cloudflare context
+  const { env } = getRequestContext();
+  const cfEnv = env as CloudflareEnv;
+
+  const clientId = cfEnv.GITHUB_CLIENT_ID || process.env.GITHUB_CLIENT_ID;
+  const clientSecret = cfEnv.GITHUB_CLIENT_SECRET || process.env.GITHUB_CLIENT_SECRET;
+  const jwtSecret = cfEnv.JWT_SECRET || process.env.JWT_SECRET;
 
   if (!clientId || !clientSecret || !jwtSecret) {
-    return new Response('OAuth not configured', { status: 500 });
+    return new Response('OAuth not configured: missing ' + 
+      (!clientId ? 'GITHUB_CLIENT_ID ' : '') + 
+      (!clientSecret ? 'GITHUB_CLIENT_SECRET ' : '') + 
+      (!jwtSecret ? 'JWT_SECRET' : ''), { status: 500 });
   }
 
   try {
@@ -85,9 +99,8 @@ export default async function handler(req: NextRequest) {
       return new Response('No email found for GitHub account', { status: 400 });
     }
 
-    // Get D1 database from Cloudflare context
-    const { env } = getRequestContext();
-    const db = (env as { DB: D1Database }).DB;
+    // Use the db from the env we already got
+    const db = cfEnv.DB;
     
     const userId = generateUserId(githubUser.id);
     
