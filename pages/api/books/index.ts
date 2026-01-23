@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { getEnv } from '../../../lib/env';
+import { getDB } from '../../../lib/env';
 import { verifyToken, getTokenFromRequest } from '../../../lib/auth';
 
 export const runtime = 'edge';
@@ -14,10 +14,8 @@ interface BookInput {
 }
 
 export default async function handler(req: NextRequest) {
-  // Get env from Cloudflare context
-  const env = getEnv();
-  
-  const jwtSecret = env.JWT_SECRET;
+  // Get env vars from process.env
+  const jwtSecret = process.env.JWT_SECRET;
   if (!jwtSecret) {
     return new Response(JSON.stringify({ error: 'Server not configured' }), {
       status: 500,
@@ -43,7 +41,7 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
-    const db = env.DB;
+    const db = getDB();
 
     // GET: Fetch all books for authenticated user
     if (req.method === 'GET') {

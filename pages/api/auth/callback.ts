@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { signToken, createSessionCookie, generateUserId } from '../../../lib/auth';
-import { getEnv } from '../../../lib/env';
+import { getDB } from '../../../lib/env';
 
 export const runtime = 'edge';
 
@@ -25,12 +25,10 @@ export default async function handler(req: NextRequest) {
     return new Response('No authorization code provided', { status: 400 });
   }
 
-  // Get env from Cloudflare context
-  const env = getEnv();
-
-  const clientId = env.GITHUB_CLIENT_ID;
-  const clientSecret = env.GITHUB_CLIENT_SECRET;
-  const jwtSecret = env.JWT_SECRET;
+  // Get env vars from process.env
+  const clientId = process.env.GITHUB_CLIENT_ID;
+  const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+  const jwtSecret = process.env.JWT_SECRET;
 
   if (!clientId || !clientSecret || !jwtSecret) {
     return new Response('OAuth not configured: missing ' + 
@@ -89,8 +87,8 @@ export default async function handler(req: NextRequest) {
       return new Response('No email found for GitHub account', { status: 400 });
     }
 
-    // Use the db from the env we already got
-    const db = env.DB;
+    // Get D1 database binding
+    const db = getDB();
     
     const userId = generateUserId(githubUser.id);
     

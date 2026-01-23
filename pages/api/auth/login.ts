@@ -2,28 +2,12 @@ import type { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
-// Helper to get env vars - works on both Cloudflare and local
-function getEnvVar(name: string): string | undefined {
-  // Try process.env first (works on Cloudflare Pages with secrets)
-  if (process.env[name]) {
-    return process.env[name];
-  }
-  
-  // Try Cloudflare context
-  try {
-    const { getRequestContext } = require('@cloudflare/next-on-pages');
-    const ctx = getRequestContext();
-    return ctx?.env?.[name];
-  } catch {
-    return undefined;
-  }
-}
-
 export default async function handler(req: NextRequest) {
   try {
     const url = new URL(req.url);
     
-    const clientId = getEnvVar('GITHUB_CLIENT_ID');
+    // Use process.env - Cloudflare Pages injects secrets here
+    const clientId = process.env.GITHUB_CLIENT_ID;
     
     if (!clientId) {
       return new Response('GitHub Client ID not configured. Please set GITHUB_CLIENT_ID in Cloudflare Pages environment variables.', { status: 500 });

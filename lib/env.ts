@@ -8,40 +8,19 @@ export interface CloudflareEnv {
   DB: D1Database;
 }
 
-// Helper to get a single env var
-export function getEnvVar(name: string): string | undefined {
-  // Try process.env first (works on Cloudflare Pages with secrets)
-  if (process.env[name]) {
-    return process.env[name];
-  }
-  
-  // Try Cloudflare context
-  try {
-    const { getRequestContext } = require('@cloudflare/next-on-pages');
-    const ctx = getRequestContext();
-    return ctx?.env?.[name];
-  } catch {
-    return undefined;
-  }
-}
-
-// Get D1 database binding
-export function getDB(): D1Database | undefined {
-  try {
-    const { getRequestContext } = require('@cloudflare/next-on-pages');
-    const ctx = getRequestContext();
-    return ctx?.env?.DB;
-  } catch {
-    return undefined;
-  }
+// Get D1 database binding - must use getRequestContext for bindings
+export function getDB(): D1Database {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { getRequestContext } = require('@cloudflare/next-on-pages');
+  return getRequestContext().env.DB;
 }
 
 export function getEnv(): CloudflareEnv {
   return {
-    GITHUB_CLIENT_ID: getEnvVar('GITHUB_CLIENT_ID') || '',
-    GITHUB_CLIENT_SECRET: getEnvVar('GITHUB_CLIENT_SECRET') || '',
-    JWT_SECRET: getEnvVar('JWT_SECRET') || '',
-    NEXT_PUBLIC_BASE_URL: getEnvVar('NEXT_PUBLIC_BASE_URL') || '',
-    DB: getDB() as D1Database,
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID || '',
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET || '',
+    JWT_SECRET: process.env.JWT_SECRET || '',
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || '',
+    DB: undefined as unknown as D1Database, // Use getDB() instead
   };
 }

@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { getEnv } from '../../../lib/env';
+import { getDB } from '../../../lib/env';
 
 export const runtime = 'edge';
 
@@ -17,8 +17,7 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
-    const env = getEnv();
-    const db = env.DB;
+    const db = getDB();
 
     // Check if user exists
     const user = await db.prepare(
