@@ -19,7 +19,7 @@ export default function Home() {
         body: JSON.stringify({ email }),
       });
 
-      const data = await response.json();
+      const data = await response.json() as { error?: string; success?: boolean };
 
       if (!response.ok) {
         throw new Error(data.error || 'Login failed');
