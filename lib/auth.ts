@@ -42,7 +42,7 @@ export async function verifyToken(
   try {
     const secretKey = getSecretKey(secret);
     const { payload } = await jwtVerify(token, secretKey);
-    return payload as SessionPayload;
+    return payload as unknown as SessionPayload;
   } catch (error) {
     console.error('JWT verification failed:', error);
     return null;
