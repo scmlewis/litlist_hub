@@ -1,28 +1,32 @@
 import type { NextRequest } from 'next/server';
-import { getRequestContext } from '@cloudflare/next-on-pages';
-import type { CloudflareEnv } from '../../../lib/env';
 
 export const runtime = 'edge';
+
+// Helper to get env vars - works on both Cloudflare and local
+function getEnvVar(name: string): string | undefined {
+  // Try process.env first (works on Cloudflare Pages with secrets)
+  if (process.env[name]) {
+    return process.env[name];
+  }
+  
+  // Try Cloudflare context
+  try {
+    const { getRequestContext } = require('@cloudflare/next-on-pages');
+    const ctx = getRequestContext();
+    return ctx?.env?.[name];
+  } catch {
+    return undefined;
+  }
+}
 
 export default async function handler(req: NextRequest) {
   try {
     const url = new URL(req.url);
     
-    let clientId: string | undefined;
-    let debugInfo = '';
-    
-    try {
-      const ctx = getRequestContext();
-      const env = ctx.env as CloudflareEnv;
-      clientId = env?.GITHUB_CLIENT_ID;
-      debugInfo = `Context keys: ${Object.keys(ctx.env || {}).join(', ')}`;
-    } catch (e) {
-      debugInfo = `getRequestContext failed: ${String(e)}`;
-      clientId = process.env.GITHUB_CLIENT_ID;
-    }
+    const clientId = getEnvVar('GITHUB_CLIENT_ID');
     
     if (!clientId) {
-      return new Response(`GitHub Client ID not configured. Debug: ${debugInfo}`, { status: 500 });
+      return new Response('GitHub Client ID not configured. Please set GITHUB_CLIENT_ID in Cloudflare Pages environment variables.', { status: 500 });
     }
 
     // Build GitHub OAuth URL
