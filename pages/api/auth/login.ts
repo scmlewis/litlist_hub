@@ -8,11 +8,25 @@ export const config = {
 export default async function handler(req: NextRequest) {
   try {
     const url = new URL(req.url);
-    const env = getEnv();
     
-    const clientId = env.GITHUB_CLIENT_ID;
+    let env;
+    let debugInfo = '';
+    
+    try {
+      const { getRequestContext } = require('@cloudflare/next-on-pages');
+      const ctx = getRequestContext();
+      env = ctx.env;
+      debugInfo = `Context keys: ${Object.keys(ctx.env || {}).join(', ')}`;
+    } catch (e) {
+      debugInfo = `getRequestContext failed: ${String(e)}`;
+      env = {
+        GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+      };
+    }
+    
+    const clientId = env?.GITHUB_CLIENT_ID;
     if (!clientId) {
-      return new Response('GitHub Client ID not configured. Check GITHUB_CLIENT_ID in Cloudflare Pages settings.', { status: 500 });
+      return new Response(`GitHub Client ID not configured. Debug: ${debugInfo}. Env keys available: ${Object.keys(env || {}).join(', ')}`, { status: 500 });
     }
 
     // Build GitHub OAuth URL
