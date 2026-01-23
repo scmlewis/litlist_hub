@@ -83,7 +83,7 @@ export default function Dashboard() {
           body: JSON.stringify(bookData),
         });
         if (!response.ok) throw new Error('Failed to update book');
-        const updatedBook = await response.json();
+        const updatedBook = await response.json() as Book;
         setBooks(books.map((b) => (b.id === updatedBook.id ? updatedBook : b)));
       } else {
         // Create new book
@@ -93,7 +93,7 @@ export default function Dashboard() {
           body: JSON.stringify(bookData),
         });
         if (!response.ok) throw new Error('Failed to create book');
-        const newBook = await response.json();
+        const newBook = await response.json() as Book;
         setBooks([newBook, ...books]);
       }
       setIsModalOpen(false);
