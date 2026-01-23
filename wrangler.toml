@@ -6,7 +6,7 @@ pages_build_output_dir = ".next"
 [[d1_databases]]
 binding = "DB"
 database_name = "bookshelf-vibe-db"
-database_id = "" # Will be filled after creating the database
+database_id = "7c2e18b2-033b-4d11-a390-22911b3cb8fd"
 
 # Environment variables (set these in Cloudflare dashboard)
 # [vars]
