@@ -61,14 +61,14 @@ export function StarRating({
               className={`${sizeClasses[size]} transition-colors ${
                 isFilled
                   ? "fill-amber-400 text-amber-400"
-                  : "fill-transparent text-gray-500"
+                  : "fill-transparent text-stone-500"
               }`}
             />
           </button>
         );
       })}
       {rating !== null && rating > 0 && (
-        <span className="ml-1.5 text-sm text-gray-400 font-medium">
+        <span className="ml-1.5 text-sm text-stone-400 font-medium">
           {rating}/5
         </span>
       )}

@@ -215,7 +215,7 @@ export function ImportPageClient() {
           </div>
         </div>
         <h1 className="text-3xl font-bold text-white mb-2">Import from Goodreads</h1>
-        <p className="text-gray-400">
+        <p className="text-stone-400">
           Upload your Goodreads library export to import all your books
         </p>
       </div>
@@ -223,7 +223,7 @@ export function ImportPageClient() {
       {/* Instructions */}
       <div className="glass-card rounded-2xl p-6 mb-6">
         <h2 className="text-lg font-semibold text-white mb-4">How to export from Goodreads:</h2>
-        <ol className="space-y-3 text-gray-300">
+        <ol className="space-y-3 text-stone-300">
           <li className="flex gap-3">
             <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-900/50 text-primary-400 rounded-full text-sm font-medium">1</span>
             <span>Go to <a href="https://www.goodreads.com/review/import" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline">goodreads.com/review/import</a></span>
@@ -246,12 +246,12 @@ export function ImportPageClient() {
       {/* File Upload */}
       {!file ? (
         <label className="block cursor-pointer">
-          <div className="border-2 border-dashed border-gray-600 rounded-2xl p-10 text-center hover:border-primary-500 hover:bg-primary-900/20 transition-all duration-300">
-            <FileText className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+          <div className="border-2 border-dashed border-stone-600 rounded-2xl p-10 text-center hover:border-primary-500 hover:bg-primary-900/20 transition-all duration-300">
+            <FileText className="w-12 h-12 text-stone-500 mx-auto mb-4" />
             <p className="text-lg font-medium text-white mb-2">
               Drop your CSV file here or click to browse
             </p>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-stone-400">
               Supports Goodreads library export format
             </p>
           </div>
@@ -272,14 +272,14 @@ export function ImportPageClient() {
               </div>
               <div>
                 <p className="font-medium text-white">{file.name}</p>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-stone-400">
                   {isParsing ? "Parsing..." : `${parsedBooks.length} books found`}
                 </p>
               </div>
             </div>
             <button
               onClick={clearFile}
-              className="p-2 text-gray-400 hover:text-red-400 transition-colors cursor-pointer"
+              className="p-2 text-stone-400 hover:text-red-400 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -305,14 +305,14 @@ export function ImportPageClient() {
 
               {/* List name input */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-stone-300 mb-2">
                   Import to list:
                 </label>
                 <input
                   type="text"
                   value={listName}
                   onChange={(e) => setListName(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-stone-800 border border-stone-600 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="Enter list name"
                 />
               </div>
@@ -371,7 +371,7 @@ export function ImportPageClient() {
                 </div>
               )}
 
-              <p className="text-center text-gray-400">
+              <p className="text-center text-stone-400">
                 Redirecting to your lists...
               </p>
             </div>

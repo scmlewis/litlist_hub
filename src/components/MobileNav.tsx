@@ -50,9 +50,9 @@ export function MobileNav() {
               <h3 className="text-lg font-semibold text-white">More Options</h3>
               <button 
                 onClick={() => setShowMore(false)}
-                className="p-2 rounded-full hover:bg-gray-800 transition-colors cursor-pointer"
+                className="p-2 rounded-full hover:bg-stone-800 transition-colors cursor-pointer"
               >
-                <X className="w-5 h-5 text-gray-400" />
+                <X className="w-5 h-5 text-stone-400" />
               </button>
             </div>
             <div className="grid grid-cols-3 gap-2">
@@ -67,7 +67,7 @@ export function MobileNav() {
                     className={`flex flex-col items-center gap-2 p-4 rounded-xl transition-all duration-200 ${
                       active
                         ? "text-primary-400 bg-primary-900/30"
-                        : "text-gray-400 hover:text-gray-200 hover:bg-gray-800/50"
+                        : "text-stone-400 hover:text-stone-200 hover:bg-stone-800/50"
                     }`}
                   >
                     <Icon className="w-6 h-6" />
@@ -103,7 +103,7 @@ export function MobileNav() {
                 className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl min-w-[64px] transition-all duration-200 ${
                   active
                     ? "text-primary-400 bg-primary-900/30"
-                    : "text-gray-400 hover:text-gray-200"
+                    : "text-stone-400 hover:text-stone-200"
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -116,7 +116,7 @@ export function MobileNav() {
             className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl min-w-[64px] transition-all duration-200 cursor-pointer ${
               showMore || isMoreActive
                 ? "text-primary-400 bg-primary-900/30"
-                : "text-gray-400 hover:text-gray-200"
+                : "text-stone-400 hover:text-stone-200"
             }`}
           >
             <MoreHorizontal className="w-5 h-5" />

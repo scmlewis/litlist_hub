@@ -86,7 +86,7 @@ describe("ReadingHeatmap", () => {
     const { container } = render(<ReadingHeatmap {...defaultProps} onDayClick={onDayClick} />);
     
     // Find a button without activity (gray background, not amber)
-    const inactiveButtons = container.querySelectorAll('button[class*="bg-gray-800"]:not([class*="bg-amber"])');
+    const inactiveButtons = container.querySelectorAll('button[class*="bg-stone-800"]:not([class*="bg-amber"])');
     
     if (inactiveButtons[0]) {
       await user.click(inactiveButtons[0]);

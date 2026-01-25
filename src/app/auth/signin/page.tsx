@@ -19,7 +19,7 @@ export default function SignInPage() {
         <h1 className="text-3xl font-bold text-white mb-3 text-center">
           Welcome back
         </h1>
-        <p className="text-gray-400 text-center mb-8">
+        <p className="text-stone-400 text-center mb-8">
           Sign in to continue your reading journey
         </p>
 
@@ -32,7 +32,7 @@ export default function SignInPage() {
         >
           <button
             type="submit"
-            className="group w-full flex items-center justify-center gap-3 px-6 py-4 bg-white text-gray-900 rounded-2xl font-semibold hover:bg-gray-100 shadow-lg shadow-white/10 transition-all duration-200 cursor-pointer"
+            className="group w-full flex items-center justify-center gap-3 px-6 py-4 bg-white text-stone-900 rounded-2xl font-semibold hover:bg-stone-100 shadow-lg shadow-white/10 transition-all duration-200 cursor-pointer"
           >
             <Github className="w-5 h-5" />
             Continue with GitHub
@@ -45,10 +45,10 @@ export default function SignInPage() {
           <>
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-700"></div>
+                <div className="w-full border-t border-stone-700"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-[var(--card-bg)] text-gray-500 font-medium">or use test account</span>
+                <span className="px-4 bg-[var(--card-bg)] text-stone-500 font-medium">or use test account</span>
               </div>
             </div>
 
@@ -69,7 +69,7 @@ export default function SignInPage() {
           </>
         )}
 
-        <p className="mt-8 text-xs text-gray-400 text-center">
+        <p className="mt-8 text-xs text-stone-400 text-center">
           By signing in, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>

@@ -45,14 +45,14 @@ export function BookCard({
       </div>
 
       <div className="flex-1 min-w-0 flex flex-col">
-        <h3 className="font-bold text-white truncate text-lg" title={book.title}>
+        <h3 className="font-bold text-white text-lg line-clamp-2" title={book.title}>
           {book.title}
         </h3>
-        <p className="text-sm text-gray-400 truncate">
+        <p className="text-sm text-stone-400 line-clamp-1" title={book.authors.length > 0 ? book.authors.join(", ") : "Unknown Author"}>
           {book.authors.length > 0 ? book.authors.join(", ") : "Unknown Author"}
         </p>
         {book.publishYear && (
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-stone-500 mt-1">
             Published {book.publishYear}
           </p>
         )}

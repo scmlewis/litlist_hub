@@ -7,7 +7,7 @@ interface SkeletonProps {
 export function Skeleton({ className = "" }: SkeletonProps) {
   return (
     <div
-      className={`animate-pulse bg-gray-700/50 rounded ${className}`}
+      className={`animate-pulse bg-stone-700/50 rounded ${className}`}
     />
   );
 }
@@ -62,7 +62,7 @@ export function SearchResultsSkeleton() {
 export function ListsPageSkeleton() {
   return (
     <div className="space-y-4">
-      <Skeleton className="h-16 w-full rounded-2xl border-2 border-dashed border-gray-600" />
+      <Skeleton className="h-16 w-full rounded-2xl border-2 border-dashed border-stone-600" />
       {[1, 2, 3].map((i) => (
         <ListCardSkeleton key={i} />
       ))}

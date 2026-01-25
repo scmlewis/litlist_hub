@@ -53,7 +53,7 @@ export default async function ListsPage() {
             <h1 className="text-3xl font-bold text-white">
               My Lists
             </h1>
-            <p className="text-gray-400 text-sm">
+            <p className="text-stone-400 text-sm">
               Organize your reading journey
             </p>
           </div>

@@ -63,7 +63,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
           </div>
           <div>
             <h1 className="text-3xl font-bold text-white">Settings</h1>
-            <p className="text-gray-400">Manage your account</p>
+            <p className="text-stone-400">Manage your account</p>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
             )}
             <div>
               <p className="text-lg font-medium text-white">{user.name}</p>
-              <p className="text-gray-400">{user.email}</p>
+              <p className="text-stone-400">{user.email}</p>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
             <Shield className="w-5 h-5 text-primary-400" />
             <h2 className="text-lg font-semibold text-white">Data Management</h2>
           </div>
-          <p className="text-gray-400 mb-4">
+          <p className="text-stone-400 mb-4">
             Export your reading lists and data before making any account changes.
           </p>
           <Link
@@ -114,7 +114,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
             <AlertTriangle className="w-5 h-5 text-red-400" />
             <h2 className="text-lg font-semibold text-red-400">Danger Zone</h2>
           </div>
-          <p className="text-gray-400 mb-4">
+          <p className="text-stone-400 mb-4">
             Once you delete your account, there is no going back. All your reading
             lists, books, and reading goals will be permanently deleted.
           </p>
@@ -138,7 +138,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
           <div className="relative glass-card rounded-2xl p-6 max-w-md w-full animate-scale-in">
             <button
               onClick={() => setShowDeleteModal(false)}
-              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="absolute top-4 right-4 p-2 text-stone-400 hover:text-white rounded-lg hover:bg-stone-800/50 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -163,8 +163,8 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
                 </ul>
               </div>
 
-              <div className="p-4 bg-gray-800/50 rounded-xl">
-                <p className="text-gray-300 text-sm mb-2">
+              <div className="p-4 bg-stone-800/50 rounded-xl">
+                <p className="text-stone-300 text-sm mb-2">
                   Before deleting, consider{" "}
                   <Link
                     href="/export"
@@ -178,7 +178,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-stone-300 mb-2">
                   Type <span className="text-red-400 font-mono">DELETE</span> to
                   confirm:
                 </label>
@@ -187,7 +187,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
                   value={confirmText}
                   onChange={(e) => setConfirmText(e.target.value)}
                   placeholder="DELETE"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500"
+                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-700 rounded-xl text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500"
                 />
               </div>
 
@@ -198,7 +198,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowDeleteModal(false)}
-                  className="flex-1 px-4 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-medium transition-colors cursor-pointer"
+                  className="flex-1 px-4 py-3 bg-stone-800 hover:bg-stone-700 text-white rounded-xl font-medium transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>

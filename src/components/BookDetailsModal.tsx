@@ -94,9 +94,9 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-gray-800/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-stone-800/50 hover:bg-stone-700/50 transition-colors cursor-pointer"
         >
-          <X className="w-5 h-5 text-gray-400" />
+          <X className="w-5 h-5 text-stone-400" />
         </button>
 
         {/* Content */}
@@ -112,7 +112,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
               <p className="text-red-400 mb-4">{error}</p>
               <button
                 onClick={fetchDetails}
-                className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm transition-colors cursor-pointer"
+                className="px-4 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors cursor-pointer"
               >
                 Try Again
               </button>
@@ -136,8 +136,8 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                         className="rounded-lg shadow-lg object-cover"
                       />
                     ) : (
-                      <div className="w-[150px] h-[225px] bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg flex items-center justify-center">
-                        <BookOpen className="w-12 h-12 text-gray-500" />
+                      <div className="w-[150px] h-[225px] bg-gradient-to-br from-stone-700 to-stone-800 rounded-lg flex items-center justify-center">
+                        <BookOpen className="w-12 h-12 text-stone-500" />
                       </div>
                     )}
                   </div>
@@ -149,13 +149,13 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                     </h2>
                     
                     {details.authors && details.authors.length > 0 && (
-                      <div className="flex items-center gap-2 text-gray-300 mb-3">
+                      <div className="flex items-center gap-2 text-stone-300 mb-3">
                         <User className="w-4 h-4" />
                         <span>{details.authors.join(", ")}</span>
                       </div>
                     )}
 
-                    <div className="flex flex-wrap gap-3 text-sm text-gray-400">
+                    <div className="flex flex-wrap gap-3 text-sm text-stone-400">
                       {details.publishDate && (
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
@@ -171,7 +171,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                     </div>
 
                     {details.publishers && details.publishers.length > 0 && (
-                      <p className="text-sm text-gray-500 mt-2">
+                      <p className="text-sm text-stone-500 mt-2">
                         Published by {details.publishers.join(", ")}
                       </p>
                     )}
@@ -186,7 +186,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                     <Star className="w-4 h-4 text-amber-400" />
                     Description
                   </h3>
-                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+                  <p className="text-stone-300 leading-relaxed whitespace-pre-line">
                     {details.description}
                   </p>
                 </div>
@@ -203,13 +203,13 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                     {details.subjects.slice(0, 15).map((subject, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 text-xs rounded-full bg-gray-800 text-gray-300"
+                        className="px-3 py-1 text-xs rounded-full bg-stone-800 text-stone-300"
                       >
                         {subject}
                       </span>
                     ))}
                     {details.subjects.length > 15 && (
-                      <span className="px-3 py-1 text-xs rounded-full bg-gray-800/50 text-gray-500">
+                      <span className="px-3 py-1 text-xs rounded-full bg-stone-800/50 text-stone-500">
                         +{details.subjects.length - 15} more
                       </span>
                     )}
@@ -220,8 +220,8 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
               {/* ISBN */}
               {details.isbn && (
                 <div className="px-6 pb-4">
-                  <p className="text-sm text-gray-500">
-                    ISBN: <span className="text-gray-400 font-mono">{details.isbn}</span>
+                  <p className="text-sm text-stone-500">
+                    ISBN: <span className="text-stone-400 font-mono">{details.isbn}</span>
                   </p>
                 </div>
               )}
@@ -241,7 +241,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                   href={details.openLibraryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 py-3 px-4 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl font-medium transition-colors"
+                  className="flex items-center gap-2 py-3 px-4 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded-xl font-medium transition-colors"
                 >
                   <ExternalLink className="w-5 h-5" />
                   Open Library

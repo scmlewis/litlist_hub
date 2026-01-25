@@ -61,12 +61,12 @@ export function DayActivityModal({ date, books, onClose }: DayActivityModalProps
             </div>
             <div>
               <h3 className="font-semibold text-white">Books Finished</h3>
-              <p className="text-sm text-gray-400">{formattedDate}</p>
+              <p className="text-sm text-stone-400">{formattedDate}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-gray-700 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-stone-400 hover:text-white hover:bg-stone-700 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -75,13 +75,13 @@ export function DayActivityModal({ date, books, onClose }: DayActivityModalProps
         {/* Book list */}
         <div className="p-4 max-h-80 overflow-y-auto">
           {books.length === 0 ? (
-            <p className="text-center text-gray-400 py-4">No books finished on this day</p>
+            <p className="text-center text-stone-400 py-4">No books finished on this day</p>
           ) : (
             <div className="space-y-3">
               {books.map((book) => (
                 <div
                   key={book.id}
-                  className="flex items-center gap-4 p-3 bg-gray-800/50 rounded-xl"
+                  className="flex items-center gap-4 p-3 bg-stone-800/50 rounded-xl"
                 >
                   <div className="w-12 h-16 relative flex-shrink-0 rounded-lg overflow-hidden">
                     {book.coverUrl ? (
@@ -93,8 +93,8 @@ export function DayActivityModal({ date, books, onClose }: DayActivityModalProps
                         sizes="48px"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-700">
-                        <BookOpen className="w-5 h-5 text-gray-500" />
+                      <div className="w-full h-full flex items-center justify-center bg-stone-700">
+                        <BookOpen className="w-5 h-5 text-stone-500" />
                       </div>
                     )}
                   </div>
@@ -108,7 +108,7 @@ export function DayActivityModal({ date, books, onClose }: DayActivityModalProps
                             className={`w-4 h-4 ${
                               i < book.rating!
                                 ? "text-amber-400 fill-current"
-                                : "text-gray-600"
+                                : "text-stone-600"
                             }`}
                           />
                         ))}
@@ -122,8 +122,8 @@ export function DayActivityModal({ date, books, onClose }: DayActivityModalProps
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[var(--card-border)] bg-gray-800/30">
-          <div className="flex items-center justify-center gap-2 text-sm text-gray-400">
+        <div className="p-4 border-t border-[var(--card-border)] bg-stone-800/30">
+          <div className="flex items-center justify-center gap-2 text-sm text-stone-400">
             <BookOpen className="w-4 h-4 text-primary-400" />
             <span>
               {books.length} book{books.length !== 1 ? "s" : ""} completed

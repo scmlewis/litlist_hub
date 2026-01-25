@@ -90,14 +90,14 @@ export function GoalsPageClient() {
           </div>
         </div>
         <h1 className="text-3xl font-bold text-white mb-2">Reading Goals</h1>
-        <p className="text-gray-400">Set and track your reading targets</p>
+        <p className="text-stone-400">Set and track your reading targets</p>
       </div>
 
       {/* Year Selector */}
       <div className="flex items-center justify-center gap-4 mb-8">
         <button
           onClick={() => setYear(year - 1)}
-          className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-xl transition-colors cursor-pointer"
+          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
@@ -107,7 +107,7 @@ export function GoalsPageClient() {
         <button
           onClick={() => setYear(year + 1)}
           disabled={year >= new Date().getFullYear() + 1}
-          className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -116,9 +116,9 @@ export function GoalsPageClient() {
       {isLoading ? (
         <div className="glass-card rounded-2xl p-8 text-center">
           <div className="animate-pulse">
-            <div className="h-32 w-32 mx-auto bg-gray-700 rounded-full mb-4" />
-            <div className="h-6 w-48 mx-auto bg-gray-700 rounded mb-2" />
-            <div className="h-4 w-32 mx-auto bg-gray-700 rounded" />
+            <div className="h-32 w-32 mx-auto bg-stone-700 rounded-full mb-4" />
+            <div className="h-6 w-48 mx-auto bg-stone-700 rounded mb-2" />
+            <div className="h-4 w-32 mx-auto bg-stone-700 rounded" />
           </div>
         </div>
       ) : goal ? (
@@ -133,7 +133,7 @@ export function GoalsPageClient() {
                 stroke="currentColor"
                 strokeWidth="12"
                 fill="none"
-                className="text-gray-700"
+                className="text-stone-700"
               />
               <circle
                 cx="96"
@@ -163,7 +163,7 @@ export function GoalsPageClient() {
               ) : (
                 <>
                   <span className="text-4xl font-bold text-white">{booksRead}</span>
-                  <span className="text-gray-400">of {goal.target}</span>
+                  <span className="text-stone-400">of {goal.target}</span>
                 </>
               )}
             </div>
@@ -171,7 +171,7 @@ export function GoalsPageClient() {
 
           {/* Stats */}
           <div className="text-center mb-6">
-            <p className="text-lg text-gray-300">
+            <p className="text-lg text-stone-300">
               {isComplete ? (
                 <span className="flex items-center justify-center gap-2">
                   <Sparkles className="w-5 h-5 text-primary-400" />
@@ -185,7 +185,7 @@ export function GoalsPageClient() {
                 </>
               )}
             </p>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-stone-500 mt-1">
               {Math.round(progress)}% complete
             </p>
           </div>
@@ -193,16 +193,16 @@ export function GoalsPageClient() {
           {/* Edit Goal */}
           {isEditing ? (
             <div className="flex items-center justify-center gap-3">
-              <label className="text-gray-300">Target:</label>
+              <label className="text-stone-300">Target:</label>
               <input
                 type="number"
                 min={1}
                 max={365}
                 value={editTarget}
                 onChange={(e) => setEditTarget(parseInt(e.target.value) || 1)}
-                className="w-20 px-3 py-2 bg-gray-700 border border-gray-600 rounded-xl text-white text-center focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-20 px-3 py-2 bg-stone-700 border border-stone-600 rounded-xl text-white text-center focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
-              <span className="text-gray-300">books</span>
+              <span className="text-stone-300">books</span>
               <button
                 onClick={saveGoal}
                 className="p-2 text-primary-400 hover:bg-primary-900/30 rounded-xl transition-colors cursor-pointer"
@@ -214,7 +214,7 @@ export function GoalsPageClient() {
                   setIsEditing(false);
                   setEditTarget(goal.target);
                 }}
-                className="p-2 text-gray-400 hover:bg-gray-700 rounded-xl transition-colors cursor-pointer"
+                className="p-2 text-stone-400 hover:bg-stone-700 rounded-xl transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -222,7 +222,7 @@ export function GoalsPageClient() {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="mx-auto flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-xl transition-colors cursor-pointer"
+              className="mx-auto flex items-center gap-2 px-4 py-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer"
             >
               <Edit3 className="w-4 h-4" />
               Edit Goal
@@ -238,22 +238,22 @@ export function GoalsPageClient() {
             </div>
           </div>
           <h3 className="text-xl font-bold text-white mb-2">No goal set for {year}</h3>
-          <p className="text-gray-400 mb-6">
+          <p className="text-stone-400 mb-6">
             Set a reading goal to track your progress throughout the year
           </p>
 
           {isEditing ? (
             <div className="flex items-center justify-center gap-3">
-              <label className="text-gray-300">I want to read</label>
+              <label className="text-stone-300">I want to read</label>
               <input
                 type="number"
                 min={1}
                 max={365}
                 value={editTarget}
                 onChange={(e) => setEditTarget(parseInt(e.target.value) || 1)}
-                className="w-20 px-3 py-2 bg-gray-700 border border-gray-600 rounded-xl text-white text-center focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-20 px-3 py-2 bg-stone-700 border border-stone-600 rounded-xl text-white text-center focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
-              <span className="text-gray-300">books</span>
+              <span className="text-stone-300">books</span>
               <button
                 onClick={saveGoal}
                 className="px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 transition-colors cursor-pointer"
@@ -276,7 +276,7 @@ export function GoalsPageClient() {
       {/* Tips */}
       <div className="mt-8 p-6 glass-card rounded-2xl">
         <h3 className="text-lg font-semibold text-white mb-4">📚 Reading Tips</h3>
-        <ul className="space-y-2 text-gray-400">
+        <ul className="space-y-2 text-stone-400">
           <li className="flex items-start gap-2">
             <span className="text-primary-400">•</span>
             Start with a realistic goal - 1-2 books per month is a great start

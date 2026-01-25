@@ -439,7 +439,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
         <h3 className="text-xl font-bold text-white mb-2">
           No lists yet
         </h3>
-        <p className="text-gray-400 mb-6 max-w-sm mx-auto">
+        <p className="text-stone-400 mb-6 max-w-sm mx-auto">
           Create your first reading list to start tracking your books
         </p>
         <button
@@ -459,30 +459,30 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
       <div className="glass-card rounded-2xl p-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
             <input
               ref={searchInputRef}
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search your library... (Ctrl+K)"
-              className="w-full pl-12 pr-10 py-3 bg-gray-800/50 text-white placeholder-gray-500 rounded-xl border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all"
+              className="w-full pl-12 pr-10 py-3 bg-stone-800/50 text-white placeholder-stone-500 rounded-xl border border-stone-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-300 cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-stone-400 hover:text-stone-300 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
           </div>
           <div className="flex items-center gap-2">
-            <Library className="w-4 h-4 text-gray-500" />
+            <Library className="w-4 h-4 text-stone-500" />
             <select
               value={searchScope}
               onChange={(e) => setSearchScope(e.target.value)}
-              className="px-3 py-3 text-sm bg-gray-800/50 text-gray-300 rounded-xl border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
+              className="px-3 py-3 text-sm bg-stone-800/50 text-stone-300 rounded-xl border border-stone-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
             >
               <option value="all">All Lists</option>
               {lists.map((list) => (
@@ -509,21 +509,21 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
             </div>
             <button
               onClick={() => setSearchQuery("")}
-              className="text-sm text-gray-400 hover:text-gray-300 cursor-pointer"
+              className="text-sm text-stone-400 hover:text-stone-300 cursor-pointer"
             >
               Clear search
             </button>
           </div>
           {searchResults.length === 0 ? (
             <div className="p-10 text-center">
-              <p className="text-gray-400">No books match &quot;{searchQuery}&quot;</p>
+              <p className="text-stone-400">No books match &quot;{searchQuery}&quot;</p>
             </div>
           ) : (
             <div className="divide-y divide-[var(--card-border)]">
               {searchResults.map(({ listId, listName, listBook }) => (
                 <div
                   key={`${listId}-${listBook.id}`}
-                  className="p-4 hover:bg-gray-800/50 transition-all duration-200"
+                  className="p-4 hover:bg-stone-800/50 transition-all duration-200"
                 >
                   <div className="flex items-center gap-4">
                     <div 
@@ -551,14 +551,14 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                       >
                         <HighlightMatch text={listBook.book.title} query={searchQuery} />
                       </h4>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-stone-400">
                         <HighlightMatch 
                           text={listBook.book.authors.join(", ") || "Unknown Author"} 
                           query={searchQuery} 
                         />
                       </p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="px-2 py-0.5 text-xs bg-gray-700 text-gray-300 rounded-full">
+                        <span className="px-2 py-0.5 text-xs bg-stone-700 text-stone-300 rounded-full">
                           {listName}
                         </span>
                         <StatusBadge status={listBook.status} />
@@ -571,7 +571,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                     </div>
                     <button
                       onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
-                      className="p-2 text-gray-400 hover:text-blue-400 hover:bg-blue-900/30 rounded-xl transition-all duration-200 cursor-pointer"
+                      className="p-2 text-stone-400 hover:text-blue-400 hover:bg-blue-900/30 rounded-xl transition-all duration-200 cursor-pointer"
                       title="View details"
                     >
                       <Info className="w-4 h-4" />
@@ -588,7 +588,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
           <button
             onClick={createList}
             disabled={loadingStates["create"]}
-            className="group w-full flex items-center justify-center gap-2 p-5 border-2 border-dashed border-gray-600 rounded-2xl text-gray-400 hover:border-primary-500 hover:text-primary-400 hover:bg-primary-900/20 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group w-full flex items-center justify-center gap-2 p-5 border-2 border-dashed border-stone-600 rounded-2xl text-stone-400 hover:border-primary-500 hover:text-primary-400 hover:bg-primary-900/20 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loadingStates["create"] ? (
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -607,7 +607,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
               >
           {/* List header */}
           <div
-            className="p-5 flex items-center justify-between cursor-pointer hover:bg-gray-800/50"
+            className="p-5 flex items-center justify-between cursor-pointer hover:bg-stone-800/50"
             onClick={() => setExpandedList(expandedList === list.id ? null : list.id)}
           >
             <div className="flex items-center gap-4">
@@ -625,15 +625,15 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                 <h3 className="font-semibold text-white">
                   {list.name}
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-stone-400">
                   {list._count.books} book{list._count.books !== 1 && "s"}
                   {list.isPublic && " • Public"}
                 </p>
               </div>
               {expandedList === list.id ? (
-                <ChevronUp className="w-5 h-5 text-gray-400 ml-2" />
+                <ChevronUp className="w-5 h-5 text-stone-400 ml-2" />
               ) : (
-                <ChevronDown className="w-5 h-5 text-gray-400 ml-2" />
+                <ChevronDown className="w-5 h-5 text-stone-400 ml-2" />
               )}
             </div>
             <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
@@ -642,7 +642,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                 className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 cursor-pointer ${
                   list.isPublic
                     ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/25"
-                    : "bg-gray-700 text-gray-400 hover:bg-gray-600"
+                    : "bg-stone-700 text-stone-400 hover:bg-stone-600"
                 }`}
               >
                 {list.isPublic ? <Globe className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
@@ -659,7 +659,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
               )}
               <button
                 onClick={() => deleteList(list.id, list.name)}
-                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200 cursor-pointer"
+                className="p-2 text-stone-400 hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200 cursor-pointer"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -686,14 +686,14 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
               )}
               {list.books.length === 0 ? (
                 <div className="p-10 text-center">
-                  <p className="text-gray-400 mb-2">No books yet</p>
+                  <p className="text-stone-400 mb-2">No books yet</p>
                   <Link href="/search" className="text-primary-400 hover:underline font-medium">
                     Search for books to add →
                   </Link>
                 </div>
               ) : filteredBooks.length === 0 ? (
                 <div className="p-10 text-center">
-                  <p className="text-gray-400 mb-2">No books match your filters</p>
+                  <p className="text-stone-400 mb-2">No books match your filters</p>
                   <button
                     onClick={() => {
                       setFilterStatus(null);
@@ -709,7 +709,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                   {filteredBooks.map((listBook) => (
                     <div
                       key={listBook.id}
-                      className="p-4 hover:bg-gray-800/50 transition-all duration-200"
+                      className="p-4 hover:bg-stone-800/50 transition-all duration-200"
                     >
                       <div className="flex items-center gap-4">
                         <div 
@@ -737,7 +737,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                           >
                             {listBook.book.title}
                           </h4>
-                          <p className="text-sm text-gray-400 truncate">
+                          <p className="text-sm text-stone-400 truncate">
                             {listBook.book.authors.join(", ") || "Unknown Author"}
                           </p>
                           <div className="flex items-center gap-3 mt-1.5 flex-wrap">
@@ -765,7 +765,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                               className={`flex items-center gap-1 text-xs transition-colors cursor-pointer ${
                                 listBook.notes || listBook.review
                                   ? "text-amber-400 hover:text-amber-300"
-                                  : "text-gray-500 hover:text-gray-400"
+                                  : "text-stone-500 hover:text-stone-400"
                               }`}
                             >
                               <StickyNote className="w-3.5 h-3.5" />
@@ -776,7 +776,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                         <div className="flex items-center gap-2 flex-shrink-0">
                           <button
                             onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
-                            className="p-2 text-gray-400 hover:text-blue-400 hover:bg-blue-900/30 rounded-xl transition-all duration-200 cursor-pointer"
+                            className="p-2 text-stone-400 hover:text-blue-400 hover:bg-blue-900/30 rounded-xl transition-all duration-200 cursor-pointer"
                             title="View details"
                           >
                             <Info className="w-4 h-4" />
@@ -788,7 +788,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                           />
                           <button
                             onClick={() => removeBook(list.id, listBook.bookId, listBook.book.title)}
-                            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-900/30 rounded-xl transition-all duration-200 cursor-pointer"
+                            className="p-2 text-stone-400 hover:text-red-500 hover:bg-red-900/30 rounded-xl transition-all duration-200 cursor-pointer"
                           >
                             <X className="w-4 h-4" />
                           </button>

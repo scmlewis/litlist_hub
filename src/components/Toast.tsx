@@ -98,10 +98,10 @@ function ToastItem({ toast, onDismiss }: ToastItemProps) {
       className={`flex items-center gap-3 px-4 py-3 glass-card rounded-xl border ${styles[toast.type]} animate-slide-in-right shadow-lg`}
     >
       {icons[toast.type]}
-      <p className="text-sm text-gray-200 flex-1">{toast.message}</p>
+      <p className="text-sm text-stone-200 flex-1">{toast.message}</p>
       <button
         onClick={() => onDismiss(toast.id)}
-        className="p-1 text-gray-400 hover:text-gray-200 transition-colors cursor-pointer"
+        className="p-1 text-stone-400 hover:text-stone-200 transition-colors cursor-pointer"
       >
         <X className="w-4 h-4" />
       </button>

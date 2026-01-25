@@ -17,7 +17,7 @@ const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function getColorClass(count: number): string {
-  if (count === 0) return "bg-gray-800 hover:bg-gray-700";
+  if (count === 0) return "bg-stone-800 hover:bg-stone-700";
   if (count === 1) return "bg-amber-900/70 hover:bg-amber-800";
   if (count === 2) return "bg-amber-700 hover:bg-amber-600";
   return "bg-amber-500 hover:bg-amber-400";
@@ -110,7 +110,7 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
             return (
               <div
                 key={weekIndex}
-                className="w-3 text-xs text-gray-500"
+                className="w-3 text-xs text-stone-500"
                 style={{ width: "13px" }}
               >
                 {label?.month || ""}
@@ -126,7 +126,7 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
           {DAYS_OF_WEEK.map((day, i) => (
             <div
               key={day}
-              className="text-xs text-gray-500 h-3 flex items-center"
+              className="text-xs text-stone-500 h-3 flex items-center"
               style={{ height: "13px" }}
             >
               {i % 2 === 1 ? day : ""}
@@ -165,7 +165,7 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
                     disabled={isFuture || activity.count === 0}
                     className={`w-3 h-3 rounded-sm transition-all duration-150 ${
                       isFuture
-                        ? "bg-gray-900 cursor-not-allowed"
+                        ? "bg-stone-900 cursor-not-allowed"
                         : getColorClass(activity.count)
                     } ${isToday ? "ring-1 ring-primary-400" : ""} ${
                       activity.count > 0 ? "cursor-pointer" : "cursor-default"
@@ -183,14 +183,14 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
 
       {/* Legend */}
       <div className="flex items-center justify-end gap-2 mt-4">
-        <span className="text-xs text-gray-500">Less</span>
+        <span className="text-xs text-stone-500">Less</span>
         <div className="flex gap-1">
-          <div className="w-3 h-3 rounded-sm bg-gray-800" />
+          <div className="w-3 h-3 rounded-sm bg-stone-800" />
           <div className="w-3 h-3 rounded-sm bg-amber-900/70" />
           <div className="w-3 h-3 rounded-sm bg-amber-700" />
           <div className="w-3 h-3 rounded-sm bg-amber-500" />
         </div>
-        <span className="text-xs text-gray-500">More</span>
+        <span className="text-xs text-stone-500">More</span>
       </div>
     </div>
   );

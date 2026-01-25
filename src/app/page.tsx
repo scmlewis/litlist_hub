@@ -17,12 +17,12 @@ export default async function Home() {
         </div>
         
         <h1 className="text-6xl md:text-7xl font-extrabold mb-6 tracking-tight">
-          <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-white via-stone-100 to-white bg-clip-text text-transparent">
             LitList Hub
           </span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl md:text-2xl text-stone-400 mb-10 max-w-2xl mx-auto leading-relaxed">
           Your personal reading companion. Track books, build lists, and share your literary journey.
         </p>
         
@@ -82,7 +82,7 @@ export default async function Home() {
             <h3 className="text-xl font-bold mb-3 text-white">
               Discover Books
             </h3>
-            <p className="text-gray-400 leading-relaxed">
+            <p className="text-stone-400 leading-relaxed">
               Search millions of books from the Open Library database. Find your next great read.
             </p>
           </div>
@@ -97,7 +97,7 @@ export default async function Home() {
             <h3 className="text-xl font-bold mb-3 text-white">
               Track Progress
             </h3>
-            <p className="text-gray-400 leading-relaxed">
+            <p className="text-stone-400 leading-relaxed">
               Mark books as want to read, currently reading, or finished. Never lose track again.
             </p>
           </div>
@@ -112,7 +112,7 @@ export default async function Home() {
             <h3 className="text-xl font-bold mb-3 text-white">
               Share Lists
             </h3>
-            <p className="text-gray-400 leading-relaxed">
+            <p className="text-stone-400 leading-relaxed">
               Create shareable links to show friends what you&apos;re reading. Inspire others.
             </p>
           </div>

@@ -92,7 +92,7 @@ export function ExportPageClient() {
           </div>
         </div>
         <h1 className="text-3xl font-bold text-white mb-2">Export Your Data</h1>
-        <p className="text-gray-400">
+        <p className="text-stone-400">
           Download your reading lists, progress, and statistics
         </p>
       </div>
@@ -109,7 +109,7 @@ export function ExportPageClient() {
               key={option.format}
               onClick={() => handleExport(option.format)}
               disabled={isExporting !== null}
-              className={`w-full p-6 glass-card rounded-2xl text-left transition-all duration-200 hover:bg-gray-800/50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border ${option.borderColor}`}
+              className={`w-full p-6 glass-card rounded-2xl text-left transition-all duration-200 hover:bg-stone-800/50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border ${option.borderColor}`}
             >
               <div className="flex items-start gap-4">
                 <div className={`p-3 rounded-xl ${option.bgColor}`}>
@@ -119,11 +119,11 @@ export function ExportPageClient() {
                   <h3 className="text-lg font-semibold text-white mb-1">
                     {option.title}
                   </h3>
-                  <p className="text-sm text-gray-400">{option.description}</p>
+                  <p className="text-sm text-stone-400">{option.description}</p>
                 </div>
                 <div className="flex-shrink-0">
                   {isLoading ? (
-                    <Loader2 className="w-6 h-6 text-gray-400 animate-spin" />
+                    <Loader2 className="w-6 h-6 text-stone-400 animate-spin" />
                   ) : isComplete ? (
                     <CheckCircle className="w-6 h-6 text-emerald-400" />
                   ) : (
@@ -139,7 +139,7 @@ export function ExportPageClient() {
       {/* Info */}
       <div className="mt-8 p-6 glass-card rounded-2xl">
         <h3 className="text-lg font-semibold text-white mb-4">📦 What&apos;s Included</h3>
-        <ul className="space-y-2 text-gray-400">
+        <ul className="space-y-2 text-stone-400">
           <li className="flex items-start gap-2">
             <span className="text-emerald-400">✓</span>
             All your reading lists and their books

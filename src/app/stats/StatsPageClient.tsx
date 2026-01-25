@@ -99,7 +99,7 @@ export function StatsPageClient() {
           </div>
         </div>
         <h1 className="text-3xl font-bold text-white mb-2">Reading Statistics</h1>
-        <p className="text-gray-400">Track your reading journey</p>
+        <p className="text-stone-400">Track your reading journey</p>
       </div>
 
       {/* Year Selector */}
@@ -107,7 +107,7 @@ export function StatsPageClient() {
         <button
           onClick={() => setYear(year - 1)}
           disabled={stats?.yearsWithData && !stats.yearsWithData.includes(year - 1) && year - 1 < Math.min(...(stats.yearsWithData || [new Date().getFullYear()]))}
-          className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
@@ -117,7 +117,7 @@ export function StatsPageClient() {
         <button
           onClick={() => setYear(year + 1)}
           disabled={year >= new Date().getFullYear()}
-          className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -128,9 +128,9 @@ export function StatsPageClient() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="glass-card rounded-2xl p-6 animate-pulse">
-                <div className="h-8 w-8 bg-gray-700 rounded-lg mb-3" />
-                <div className="h-8 w-16 bg-gray-700 rounded mb-2" />
-                <div className="h-4 w-24 bg-gray-700 rounded" />
+                <div className="h-8 w-8 bg-stone-700 rounded-lg mb-3" />
+                <div className="h-8 w-16 bg-stone-700 rounded mb-2" />
+                <div className="h-4 w-24 bg-stone-700 rounded" />
               </div>
             ))}
           </div>
@@ -142,39 +142,39 @@ export function StatsPageClient() {
             <div className="glass-card rounded-2xl p-6">
               <BookOpen className="w-8 h-8 text-accent-400 mb-3" />
               <div className="text-3xl font-bold text-white">{stats.booksReadThisYear}</div>
-              <div className="text-sm text-gray-400">Books Read in {year}</div>
+              <div className="text-sm text-stone-400">Books Read in {year}</div>
             </div>
             <div className="glass-card rounded-2xl p-6">
               <Library className="w-8 h-8 text-blue-400 mb-3" />
               <div className="text-3xl font-bold text-white">{stats.pagesThisYear.toLocaleString()}</div>
-              <div className="text-sm text-gray-400">Pages Read</div>
+              <div className="text-sm text-stone-400">Pages Read</div>
             </div>
             <div className="glass-card rounded-2xl p-6">
               <Star className="w-8 h-8 text-amber-400 mb-3" />
               <div className="text-3xl font-bold text-white">
                 {stats.averageRating ? stats.averageRating.toFixed(1) : "—"}
               </div>
-              <div className="text-sm text-gray-400">Avg Rating</div>
+              <div className="text-sm text-stone-400">Avg Rating</div>
             </div>
             <div className="glass-card rounded-2xl p-6">
               <Clock className="w-8 h-8 text-accent-400 mb-3" />
               <div className="text-3xl font-bold text-white">
                 {stats.averageReadingDays ? `${stats.averageReadingDays}d` : "—"}
               </div>
-              <div className="text-sm text-gray-400">Avg Time per Book</div>
+              <div className="text-sm text-stone-400">Avg Time per Book</div>
             </div>
           </div>
 
           {/* Reading Status */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <Link href="/lists" className="glass-card rounded-2xl p-6 hover:bg-gray-800/50 transition-colors">
+            <Link href="/lists" className="glass-card rounded-2xl p-6 hover:bg-stone-800/50 transition-colors">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-primary-900/40 rounded-xl">
                   <TrendingUp className="w-6 h-6 text-primary-400" />
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-white">{stats.currentlyReading}</div>
-                  <div className="text-sm text-gray-400">Currently Reading</div>
+                  <div className="text-sm text-stone-400">Currently Reading</div>
                 </div>
               </div>
             </Link>
@@ -185,18 +185,18 @@ export function StatsPageClient() {
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-white">{(stats.pagesInProgress ?? 0).toLocaleString()}</div>
-                  <div className="text-sm text-gray-400">Pages in Progress</div>
+                  <div className="text-sm text-stone-400">Pages in Progress</div>
                 </div>
               </div>
             </div>
-            <Link href="/lists" className="glass-card rounded-2xl p-6 hover:bg-gray-800/50 transition-colors">
+            <Link href="/lists" className="glass-card rounded-2xl p-6 hover:bg-stone-800/50 transition-colors">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-amber-900/40 rounded-xl">
                   <BookMarked className="w-6 h-6 text-amber-400" />
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-white">{stats.wantToRead}</div>
-                  <div className="text-sm text-gray-400">Want to Read</div>
+                  <div className="text-sm text-stone-400">Want to Read</div>
                 </div>
               </div>
             </Link>
@@ -211,18 +211,18 @@ export function StatsPageClient() {
                 const isCurrentMonth = year === new Date().getFullYear() && index === new Date().getMonth();
                 return (
                   <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                    <span className="text-sm text-gray-400">{count > 0 ? count : ""}</span>
+                    <span className="text-sm text-stone-400">{count > 0 ? count : ""}</span>
                     <div
                       className={`w-full rounded-t-lg transition-all duration-500 ${
                         isCurrentMonth
                           ? "bg-gradient-to-t from-primary-600 to-primary-400"
                           : count > 0
                           ? "bg-gradient-to-t from-accent-600 to-accent-400"
-                          : "bg-gray-700"
+                          : "bg-stone-700"
                       }`}
                       style={{ height: `${Math.max(height, 4)}%` }}
                     />
-                    <span className="text-xs text-gray-500">{MONTHS[index]}</span>
+                    <span className="text-xs text-stone-500">{MONTHS[index]}</span>
                   </div>
                 );
               })}
@@ -242,7 +242,7 @@ export function StatsPageClient() {
               <h3 className="text-lg font-semibold text-white mb-4">Recently Finished</h3>
               <div className="space-y-3">
                 {stats.recentBooks.map((book) => (
-                  <div key={book.id} className="flex items-center gap-4 p-3 bg-gray-800/50 rounded-xl">
+                  <div key={book.id} className="flex items-center gap-4 p-3 bg-stone-800/50 rounded-xl">
                     <div className="w-12 h-16 relative flex-shrink-0 rounded-lg overflow-hidden">
                       {book.coverUrl ? (
                         <Image
@@ -253,14 +253,14 @@ export function StatsPageClient() {
                           sizes="48px"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-700">
-                          <BookOpen className="w-5 h-5 text-gray-500" />
+                        <div className="w-full h-full flex items-center justify-center bg-stone-700">
+                          <BookOpen className="w-5 h-5 text-stone-500" />
                         </div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-white truncate">{book.title}</h4>
-                      <p className="text-sm text-gray-400 truncate">
+                      <p className="text-sm text-stone-400 truncate">
                         {book.authors.join(", ") || "Unknown Author"}
                       </p>
                     </div>
@@ -280,13 +280,13 @@ export function StatsPageClient() {
           <div className="glass-card rounded-2xl p-6">
             <h3 className="text-lg font-semibold text-white mb-4">All-Time Stats</h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 bg-gray-800/50 rounded-xl">
+              <div className="p-4 bg-stone-800/50 rounded-xl">
                 <div className="text-2xl font-bold text-white">{stats.totalBooksRead}</div>
-                <div className="text-sm text-gray-400">Total Books Read</div>
+                <div className="text-sm text-stone-400">Total Books Read</div>
               </div>
-              <div className="p-4 bg-gray-800/50 rounded-xl">
+              <div className="p-4 bg-stone-800/50 rounded-xl">
                 <div className="text-2xl font-bold text-white">{stats.totalPagesRead.toLocaleString()}</div>
-                <div className="text-sm text-gray-400">Total Pages Read</div>
+                <div className="text-sm text-stone-400">Total Pages Read</div>
               </div>
             </div>
           </div>
@@ -294,7 +294,7 @@ export function StatsPageClient() {
           {/* Goal Link */}
           <Link
             href="/goals"
-            className="block glass-card rounded-2xl p-6 hover:bg-gray-800/50 transition-colors"
+            className="block glass-card rounded-2xl p-6 hover:bg-stone-800/50 transition-colors"
           >
             <div className="flex items-center gap-4">
               <div className="p-3 bg-amber-900/40 rounded-xl">
@@ -302,15 +302,15 @@ export function StatsPageClient() {
               </div>
               <div className="flex-1">
                 <h3 className="font-semibold text-white">Set a Reading Goal</h3>
-                <p className="text-sm text-gray-400">Challenge yourself to read more</p>
+                <p className="text-sm text-stone-400">Challenge yourself to read more</p>
               </div>
-              <ChevronRight className="w-5 h-5 text-gray-400" />
+              <ChevronRight className="w-5 h-5 text-stone-400" />
             </div>
           </Link>
         </div>
       ) : (
         <div className="glass-card rounded-2xl p-8 text-center">
-          <p className="text-gray-400">No reading data available yet.</p>
+          <p className="text-stone-400">No reading data available yet.</p>
           <Link href="/search" className="text-primary-400 hover:underline">
             Start adding books →
           </Link>

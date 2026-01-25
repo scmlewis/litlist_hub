@@ -16,7 +16,7 @@ export async function Header() {
               <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
           </div>
-          <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-white to-stone-300 bg-clip-text text-transparent">
             LitList
           </span>
         </Link>
@@ -27,47 +27,47 @@ export async function Header() {
             <>
               <Link
                 href="/search"
-                className="flex items-center gap-2 px-4 py-2.5 text-gray-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2.5 text-stone-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
               >
                 <Search className="w-4 h-4" />
                 <span>Search</span>
               </Link>
               <Link
                 href="/lists"
-                className="flex items-center gap-2 px-4 py-2.5 text-gray-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2.5 text-stone-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
               >
                 <Library className="w-4 h-4" />
                 <span>My Lists</span>
               </Link>
               <Link
                 href="/import"
-                className="flex items-center gap-2 px-4 py-2.5 text-gray-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2.5 text-stone-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
               >
                 <Upload className="w-4 h-4" />
                 <span>Import</span>
               </Link>
               <Link
                 href="/goals"
-                className="flex items-center gap-2 px-4 py-2.5 text-gray-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2.5 text-stone-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
               >
                 <Target className="w-4 h-4" />
                 <span>Goals</span>
               </Link>
               <Link
                 href="/stats"
-                className="flex items-center gap-2 px-4 py-2.5 text-gray-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2.5 text-stone-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
               >
                 <BarChart3 className="w-4 h-4" />
                 <span>Stats</span>
               </Link>
               <Link
                 href="/export"
-                className="flex items-center gap-2 px-4 py-2.5 text-gray-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2.5 text-stone-300 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl font-medium transition-all duration-200 cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 <span>Export</span>
               </Link>
-              <div className="flex items-center gap-3 ml-3 pl-4 border-l border-gray-700/50">
+              <div className="flex items-center gap-3 ml-3 pl-4 border-l border-stone-700/50">
                 {session.user?.image && (
                   <Image
                     src={session.user.image}
@@ -79,7 +79,7 @@ export async function Header() {
                 )}
                 <Link
                   href="/settings"
-                  className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-400 hover:text-primary-400 hover:bg-primary-900/20 rounded-xl transition-all duration-200 cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-2 text-sm text-stone-400 hover:text-primary-400 hover:bg-primary-900/20 rounded-xl transition-all duration-200 cursor-pointer"
                 >
                   <Settings className="w-4 h-4" />
                   <span>Settings</span>
@@ -92,7 +92,7 @@ export async function Header() {
                 >
                   <button
                     type="submit"
-                    className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-400 hover:text-red-400 hover:bg-red-900/20 rounded-xl transition-all duration-200 cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-2 text-sm text-stone-400 hover:text-red-400 hover:bg-red-900/20 rounded-xl transition-all duration-200 cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign out</span>

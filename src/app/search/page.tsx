@@ -23,7 +23,7 @@ export default async function SearchPage() {
           <h1 className="text-3xl font-bold text-white">
             Search Books
           </h1>
-          <p className="text-gray-400 text-sm">
+          <p className="text-stone-400 text-sm">
             Discover millions of books from Open Library
           </p>
         </div>

@@ -65,7 +65,7 @@ export function BookNotes({
       return (
         <button
           onClick={handleEdit}
-          className="text-xs text-gray-500 hover:text-gray-400 flex items-center gap-1 transition-colors cursor-pointer"
+          className="text-xs text-stone-500 hover:text-stone-400 flex items-center gap-1 transition-colors cursor-pointer"
         >
           <StickyNote className="w-3 h-3" />
           Add notes
@@ -75,13 +75,13 @@ export function BookNotes({
 
     if (isEditing) {
       return (
-        <div className="mt-2 p-3 bg-gray-900/50 rounded-lg border border-gray-800">
+        <div className="mt-2 p-3 bg-stone-900/50 rounded-lg border border-stone-800">
           <textarea
             ref={notesRef}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Personal notes..."
-            className="w-full bg-transparent text-sm text-gray-300 resize-none focus:outline-none placeholder-gray-600"
+            className="w-full bg-transparent text-sm text-stone-300 resize-none focus:outline-none placeholder-stone-600"
             rows={2}
           />
           <div className="flex gap-2 mt-2">
@@ -99,7 +99,7 @@ export function BookNotes({
             </button>
             <button
               onClick={handleCancel}
-              className="px-2 py-1 text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded transition-colors cursor-pointer"
+              className="px-2 py-1 text-xs bg-stone-700 hover:bg-stone-600 text-stone-300 rounded transition-colors cursor-pointer"
             >
               Cancel
             </button>
@@ -110,14 +110,14 @@ export function BookNotes({
 
     return (
       <div className="mt-2 group relative">
-        <p className="text-xs text-gray-500 italic line-clamp-2">
+        <p className="text-xs text-stone-500 italic line-clamp-2">
           {initialNotes}
         </p>
         <button
           onClick={handleEdit}
-          className="absolute -right-1 -top-1 p-1 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 rounded cursor-pointer"
+          className="absolute -right-1 -top-1 p-1 opacity-0 group-hover:opacity-100 transition-opacity bg-stone-800 rounded cursor-pointer"
         >
-          <Edit2 className="w-3 h-3 text-gray-400" />
+          <Edit2 className="w-3 h-3 text-stone-400" />
         </button>
       </div>
     );
@@ -134,7 +134,7 @@ export function BookNotes({
         {!isEditing && (
           <button
             onClick={handleEdit}
-            className="p-1 text-gray-400 hover:text-gray-300 transition-colors cursor-pointer"
+            className="p-1 text-stone-400 hover:text-stone-300 transition-colors cursor-pointer"
           >
             <Edit2 className="w-4 h-4" />
           </button>
@@ -144,7 +144,7 @@ export function BookNotes({
       {isEditing ? (
         <div className="space-y-4">
           <div>
-            <label className="block text-xs text-gray-500 mb-1">
+            <label className="block text-xs text-stone-500 mb-1">
               Personal Notes
             </label>
             <textarea
@@ -152,20 +152,20 @@ export function BookNotes({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Your personal notes about this book..."
-              className="w-full p-3 bg-gray-900/50 border border-gray-800 rounded-lg text-sm text-gray-300 resize-none focus:outline-none focus:border-primary-600 placeholder-gray-600"
+              className="w-full p-3 bg-stone-900/50 border border-stone-800 rounded-lg text-sm text-stone-300 resize-none focus:outline-none focus:border-primary-600 placeholder-stone-600"
               rows={3}
             />
           </div>
           
           <div>
-            <label className="block text-xs text-gray-500 mb-1">
+            <label className="block text-xs text-stone-500 mb-1">
               Review
             </label>
             <textarea
               value={review}
               onChange={(e) => setReview(e.target.value)}
               placeholder="Write your review of this book..."
-              className="w-full p-3 bg-gray-900/50 border border-gray-800 rounded-lg text-sm text-gray-300 resize-none focus:outline-none focus:border-primary-600 placeholder-gray-600"
+              className="w-full p-3 bg-stone-900/50 border border-stone-800 rounded-lg text-sm text-stone-300 resize-none focus:outline-none focus:border-primary-600 placeholder-stone-600"
               rows={4}
             />
           </div>
@@ -185,7 +185,7 @@ export function BookNotes({
             </button>
             <button
               onClick={handleCancel}
-              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 text-sm rounded-lg transition-colors cursor-pointer flex items-center gap-2"
+              className="px-4 py-2 bg-stone-700 hover:bg-stone-600 text-stone-300 text-sm rounded-lg transition-colors cursor-pointer flex items-center gap-2"
             >
               <X className="w-4 h-4" />
               Cancel
@@ -196,8 +196,8 @@ export function BookNotes({
         <div className="space-y-3">
           {initialNotes ? (
             <div>
-              <p className="text-xs text-gray-500 mb-1">Notes</p>
-              <p className="text-sm text-gray-300 whitespace-pre-wrap">
+              <p className="text-xs text-stone-500 mb-1">Notes</p>
+              <p className="text-sm text-stone-300 whitespace-pre-wrap">
                 {initialNotes}
               </p>
             </div>
@@ -205,15 +205,15 @@ export function BookNotes({
           
           {initialReview ? (
             <div>
-              <p className="text-xs text-gray-500 mb-1">Review</p>
-              <p className="text-sm text-gray-300 whitespace-pre-wrap">
+              <p className="text-xs text-stone-500 mb-1">Review</p>
+              <p className="text-sm text-stone-300 whitespace-pre-wrap">
                 {initialReview}
               </p>
             </div>
           ) : null}
 
           {!hasContent && (
-            <p className="text-sm text-gray-500 italic">
+            <p className="text-sm text-stone-500 italic">
               No notes or review yet. Click the edit button to add some!
             </p>
           )}

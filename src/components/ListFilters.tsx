@@ -29,7 +29,7 @@ interface ListFiltersProps {
 }
 
 const STATUS_OPTIONS: { value: ReadingStatus | null; label: string; icon: typeof BookOpen; color: string }[] = [
-  { value: null, label: "All", icon: Filter, color: "text-gray-400" },
+  { value: null, label: "All", icon: Filter, color: "text-stone-400" },
   { value: "WANT_TO_READ", label: "Want to Read", icon: Clock, color: "text-blue-400" },
   { value: "READING", label: "Reading", icon: BookOpen, color: "text-primary-400" },
   { value: "DONE", label: "Done", icon: CheckCircle, color: "text-accent-400" },
@@ -73,11 +73,11 @@ export function ListFilters({
   };
 
   return (
-    <div className="p-4 bg-gray-800/30 border-b border-[var(--card-border)]">
+    <div className="p-4 bg-stone-800/30 border-b border-[var(--card-border)]">
       <div className="flex flex-col gap-3">
         {/* Status Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-gray-500 uppercase tracking-wider mr-1">Status:</span>
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible sm:flex-wrap">
+          <span className="text-xs text-stone-500 uppercase tracking-wider mr-1 flex-shrink-0">Status:</span>
           {STATUS_OPTIONS.map((option) => {
             const Icon = option.icon;
             const isActive = filterStatus === option.value;
@@ -88,7 +88,7 @@ export function ListFilters({
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer ${
                   isActive
                     ? "bg-primary-500/20 text-primary-300 ring-1 ring-primary-500/50"
-                    : "bg-gray-700/50 text-gray-400 hover:bg-gray-700 hover:text-gray-300"
+                    : "bg-stone-700/50 text-stone-400 hover:bg-stone-700 hover:text-stone-300"
                 }`}
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? option.color : ""}`} />
@@ -99,14 +99,14 @@ export function ListFilters({
         </div>
 
         {/* Rating Filter & Sort Controls */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible sm:flex-wrap">
           {/* Rating Filter */}
           <div className="flex items-center gap-2">
-            <Star className="w-4 h-4 text-gray-500" />
+            <Star className="w-4 h-4 text-stone-500" />
             <select
               value={filterMinRating ?? ""}
               onChange={(e) => onFilterMinRatingChange(e.target.value ? Number(e.target.value) : null)}
-              className="px-3 py-1.5 text-sm bg-gray-700/50 text-gray-300 rounded-lg border border-gray-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
+              className="px-3 py-1.5 text-sm bg-stone-700/50 text-stone-300 rounded-lg border border-stone-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
             >
               {RATING_OPTIONS.map((option) => (
                 <option key={option.value ?? "any"} value={option.value ?? ""}>
@@ -116,15 +116,15 @@ export function ListFilters({
             </select>
           </div>
 
-          <div className="h-4 w-px bg-gray-600 mx-1" />
+          <div className="h-4 w-px bg-stone-600 mx-1" />
 
           {/* Sort By */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500">Sort:</span>
+            <span className="text-xs text-stone-500">Sort:</span>
             <select
               value={sortBy}
               onChange={(e) => onSortByChange(e.target.value as SortField)}
-              className="px-3 py-1.5 text-sm bg-gray-700/50 text-gray-300 rounded-lg border border-gray-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
+              className="px-3 py-1.5 text-sm bg-stone-700/50 text-stone-300 rounded-lg border border-stone-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
             >
               {SORT_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -134,7 +134,7 @@ export function ListFilters({
             </select>
             <button
               onClick={() => onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")}
-              className="p-1.5 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
               title={sortOrder === "asc" ? "Ascending" : "Descending"}
             >
               {sortOrder === "asc" ? (
@@ -148,14 +148,14 @@ export function ListFilters({
           {/* Clear Filters & Count */}
           <div className="flex items-center gap-2 ml-auto">
             {isFiltered && (
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-stone-400">
                 {filteredCount} of {totalBooks} books
               </span>
             )}
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="inline-flex items-center gap-1 px-2 py-1 text-xs text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-2 py-1 text-xs text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-3 h-3" />
                 Clear

@@ -59,7 +59,7 @@ export default async function SharePage({ params }: SharePageProps) {
           </h1>
         </div>
         {list.user && (
-          <div className="flex items-center gap-2 text-gray-400 ml-12">
+          <div className="flex items-center gap-2 text-stone-400 ml-12">
             {list.user.image && (
               <Image
                 src={list.user.image}
@@ -107,7 +107,7 @@ export default async function SharePage({ params }: SharePageProps) {
 
       {/* Books */}
       {list.books.length === 0 ? (
-        <div className="text-center py-12 text-gray-400">
+        <div className="text-center py-12 text-stone-400">
           This list is empty.
         </div>
       ) : (
@@ -115,7 +115,7 @@ export default async function SharePage({ params }: SharePageProps) {
           {list.books.map((listBook) => (
             <div
               key={listBook.id}
-              className="flex items-center gap-4 p-4 glass-card rounded-xl hover:bg-gray-800/50 transition-colors duration-200"
+              className="flex items-center gap-4 p-4 glass-card rounded-xl hover:bg-stone-800/50 transition-colors duration-200"
             >
               <div className="w-16 h-20 relative flex-shrink-0 bg-gradient-to-br from-primary-900/40 to-primary-800/40 rounded-lg overflow-hidden">
                 {listBook.book.coverUrl ? (
@@ -136,11 +136,11 @@ export default async function SharePage({ params }: SharePageProps) {
                 <h3 className="font-semibold text-white">
                   {listBook.book.title}
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-stone-400">
                   {listBook.book.authors.join(", ") || "Unknown Author"}
                 </p>
                 {listBook.book.publishYear && (
-                  <p className="text-xs text-gray-500 mt-1">{listBook.book.publishYear}</p>
+                  <p className="text-xs text-stone-500 mt-1">{listBook.book.publishYear}</p>
                 )}
               </div>
               <StatusBadge status={listBook.status} />
@@ -150,7 +150,7 @@ export default async function SharePage({ params }: SharePageProps) {
       )}
 
       {/* Footer */}
-      <div className="mt-12 text-center text-sm text-gray-400">
+      <div className="mt-12 text-center text-sm text-stone-400">
         <p>
           Track your own reading at{" "}
           <a href="/" className="text-primary-400 hover:underline">
