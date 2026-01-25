@@ -23,11 +23,13 @@ describe("StatsPageClient", () => {
     booksReadThisYear: 12,
     totalPagesRead: 7500,
     pagesThisYear: 3000,
+    pagesInProgress: 150,
     averageRating: 4.2,
     booksPerMonth: [2, 3, 1, 0, 2, 1, 0, 0, 0, 0, 0, 0],
     currentlyReading: 2,
     wantToRead: 5,
     averageReadingDays: 14,
+    yearsWithData: [2026, 2025],
     recentBooks: [
       {
         id: "1",

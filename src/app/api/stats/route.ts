@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+// Helper to deduplicate books by openLibraryKey (same book in multiple lists counts once)
+function deduplicateBooks<T extends { book: { openLibraryKey: string } }>(books: T[]): T[] {
+  const seen = new Set<string>();
+  return books.filter((lb) => {
+    if (seen.has(lb.book.openLibraryKey)) return false;
+    seen.add(lb.book.openLibraryKey);
+    return true;
+  });
+}
+
 // GET /api/stats - Get reading statistics for current user
 export async function GET(request: NextRequest) {
   const session = await auth();
@@ -17,7 +27,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Get all finished books for the user
-    const finishedBooks = await prisma.listBook.findMany({
+    const allFinishedBooks = await prisma.listBook.findMany({
       where: {
         list: { userId: session.user.id },
         status: "DONE",
@@ -27,6 +37,9 @@ export async function GET(request: NextRequest) {
       },
       orderBy: { finishDate: "desc" },
     });
+
+    // Deduplicate: same book in multiple lists counts once
+    const finishedBooks = deduplicateBooks(allFinishedBooks);
 
     // Filter by year for yearly stats
     const yearStart = new Date(`${year}-01-01`);
@@ -67,21 +80,31 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    // Currently reading
-    const currentlyReading = await prisma.listBook.count({
+    // Currently reading books (deduplicated)
+    const allCurrentlyReading = await prisma.listBook.findMany({
       where: {
         list: { userId: session.user.id },
         status: "READING",
       },
+      include: { book: true },
     });
+    const currentlyReadingBooks = deduplicateBooks(allCurrentlyReading);
+    const currentlyReading = currentlyReadingBooks.length;
 
-    // Want to read
-    const wantToRead = await prisma.listBook.count({
+    // Pages in progress (pages read so far in currently reading books)
+    const pagesInProgress = currentlyReadingBooks.reduce((sum, lb) => {
+      return sum + (lb.currentPage || 0);
+    }, 0);
+
+    // Want to read (deduplicated)
+    const allWantToRead = await prisma.listBook.findMany({
       where: {
         list: { userId: session.user.id },
         status: "WANT_TO_READ",
       },
+      include: { book: true },
     });
+    const wantToRead = deduplicateBooks(allWantToRead).length;
 
     // Average reading time (days between start and finish)
     const booksWithDates = finishedBooks.filter(
@@ -97,6 +120,19 @@ export async function GET(request: NextRequest) {
             return sum + Math.max(1, days);
           }, 0) / booksWithDates.length
         : null;
+
+    // Get years with data for navigation
+    const yearsWithData = [...new Set(
+      allFinishedBooks
+        .filter(lb => lb.finishDate)
+        .map(lb => lb.finishDate!.getFullYear())
+    )].sort((a, b) => b - a);
+    
+    // Always include current year
+    const currentYear = new Date().getFullYear();
+    if (!yearsWithData.includes(currentYear)) {
+      yearsWithData.unshift(currentYear);
+    }
 
     // Recent books
     const recentBooks = booksThisYear.slice(0, 5).map((lb) => ({
@@ -115,6 +151,7 @@ export async function GET(request: NextRequest) {
       booksReadThisYear,
       totalPagesRead,
       pagesThisYear,
+      pagesInProgress,
       averageRating: averageRating ? Math.round(averageRating * 10) / 10 : null,
       booksPerMonth,
       currentlyReading,
@@ -123,6 +160,7 @@ export async function GET(request: NextRequest) {
         ? Math.round(averageReadingDays)
         : null,
       recentBooks,
+      yearsWithData,
     });
   } catch (error) {
     console.error("Error fetching stats:", error);

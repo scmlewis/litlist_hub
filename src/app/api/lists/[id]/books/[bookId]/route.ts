@@ -33,6 +33,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     // Find the list book entry
     const listBook = await prisma.listBook.findFirst({
       where: { listId, bookId },
+      include: { book: true },
     });
 
     if (!listBook) {
@@ -50,12 +51,41 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     if (startDate !== undefined) updateData.startDate = startDate ? new Date(startDate) : null;
     if (finishDate !== undefined) updateData.finishDate = finishDate ? new Date(finishDate) : null;
 
+    // Validate: currentPage should not exceed totalPages
+    const effectiveTotalPages = totalPages ?? listBook.totalPages ?? listBook.book?.pageCount;
+    const effectiveCurrentPage = currentPage ?? listBook.currentPage;
+    if (effectiveCurrentPage !== null && effectiveTotalPages !== null && effectiveCurrentPage > effectiveTotalPages) {
+      return NextResponse.json(
+        { error: "Current page cannot exceed total pages" },
+        { status: 400 }
+      );
+    }
+
+    // Validate: finishDate should be >= startDate
+    const effectiveStartDate = startDate !== undefined 
+      ? (startDate ? new Date(startDate) : null)
+      : listBook.startDate;
+    const effectiveFinishDate = finishDate !== undefined
+      ? (finishDate ? new Date(finishDate) : null)
+      : listBook.finishDate;
+    if (effectiveStartDate && effectiveFinishDate && effectiveFinishDate < effectiveStartDate) {
+      return NextResponse.json(
+        { error: "Finish date cannot be before start date" },
+        { status: 400 }
+      );
+    }
+
     // Auto-set dates based on status changes
     if (status === "READING" && !listBook.startDate) {
       updateData.startDate = new Date();
     }
     if (status === "DONE" && !listBook.finishDate) {
       updateData.finishDate = new Date();
+    }
+
+    // Clear finishDate when changing from DONE to another status
+    if (status && status !== "DONE" && listBook.status === "DONE") {
+      updateData.finishDate = null;
     }
 
     // Update the list book

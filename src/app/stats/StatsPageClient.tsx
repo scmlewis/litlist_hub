@@ -32,12 +32,14 @@ interface Stats {
   booksReadThisYear: number;
   totalPagesRead: number;
   pagesThisYear: number;
+  pagesInProgress: number;
   averageRating: number | null;
   booksPerMonth: number[];
   currentlyReading: number;
   wantToRead: number;
   averageReadingDays: number | null;
   recentBooks: RecentBook[];
+  yearsWithData: number[];
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -88,7 +90,8 @@ export function StatsPageClient() {
       <div className="flex items-center justify-center gap-4 mb-8">
         <button
           onClick={() => setYear(year - 1)}
-          className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-xl transition-colors cursor-pointer"
+          disabled={stats?.yearsWithData && !stats.yearsWithData.includes(year - 1) && year - 1 < Math.min(...(stats.yearsWithData || [new Date().getFullYear()]))}
+          className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
@@ -147,7 +150,7 @@ export function StatsPageClient() {
           </div>
 
           {/* Reading Status */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <Link href="/lists" className="glass-card rounded-2xl p-6 hover:bg-gray-800/50 transition-colors">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-primary-900/40 rounded-xl">
@@ -159,6 +162,17 @@ export function StatsPageClient() {
                 </div>
               </div>
             </Link>
+            <div className="glass-card rounded-2xl p-6">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-emerald-900/40 rounded-xl">
+                  <Library className="w-6 h-6 text-emerald-400" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-white">{(stats.pagesInProgress ?? 0).toLocaleString()}</div>
+                  <div className="text-sm text-gray-400">Pages in Progress</div>
+                </div>
+              </div>
+            </div>
             <Link href="/lists" className="glass-card rounded-2xl p-6 hover:bg-gray-800/50 transition-colors">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-amber-900/40 rounded-xl">

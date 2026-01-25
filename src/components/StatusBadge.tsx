@@ -40,11 +40,25 @@ export function StatusBadge({ status, onChange, editable = false }: StatusBadgeP
   const config = statusConfig[status];
   const Icon = config.icon;
 
+  const handleChange = (newStatus: ReadingStatus) => {
+    if (!onChange) return;
+    
+    // Confirm when changing from DONE to another status
+    if (status === "DONE" && newStatus !== "DONE") {
+      const confirmed = window.confirm(
+        "Changing from Done will clear the finish date. Continue?"
+      );
+      if (!confirmed) return;
+    }
+    
+    onChange(newStatus);
+  };
+
   if (editable && onChange) {
     return (
       <select
         value={status}
-        onChange={(e) => onChange(e.target.value as ReadingStatus)}
+        onChange={(e) => handleChange(e.target.value as ReadingStatus)}
         className={`px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r ${config.gradient} ${config.textColor} border-0 cursor-pointer focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 shadow-lg [&>option]:bg-gray-800 [&>option]:text-gray-100`}
       >
         <option value="WANT_TO_READ">Want to Read</option>
