@@ -52,9 +52,9 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     if (finishDate !== undefined) updateData.finishDate = finishDate ? new Date(finishDate) : null;
 
     // Validate: currentPage should not exceed totalPages
-    const effectiveTotalPages = totalPages ?? listBook.totalPages ?? listBook.book?.pageCount;
-    const effectiveCurrentPage = currentPage ?? listBook.currentPage;
-    if (effectiveCurrentPage !== null && effectiveTotalPages !== null && effectiveCurrentPage > effectiveTotalPages) {
+    const effectiveTotalPages = totalPages ?? listBook.totalPages ?? listBook.book?.pageCount ?? null;
+    const effectiveCurrentPage = currentPage ?? listBook.currentPage ?? null;
+    if (effectiveCurrentPage != null && effectiveTotalPages != null && effectiveCurrentPage > effectiveTotalPages) {
       return NextResponse.json(
         { error: "Current page cannot exceed total pages" },
         { status: 400 }
