@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { StatusBadge } from "@/components/StatusBadge";
@@ -8,6 +8,8 @@ import { StarRating } from "@/components/StarRating";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { BookNotes } from "@/components/BookNotes";
 import { BookDetailsModal } from "@/components/BookDetailsModal";
+import { ListFilters } from "@/components/ListFilters";
+import { HighlightMatch } from "@/components/HighlightMatch";
 import { useToast } from "@/components/Toast";
 import { 
   BookOpen, 
@@ -22,8 +24,13 @@ import {
   X,
   Loader2,
   StickyNote,
-  Info
+  Info,
+  Search,
+  Library
 } from "lucide-react";
+
+type SortField = "addedAt" | "title" | "author" | "rating" | "progress";
+type SortOrder = "asc" | "desc";
 
 type ReadingStatus = "WANT_TO_READ" | "READING" | "DONE";
 
@@ -71,6 +78,101 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
   const [selectedBookKey, setSelectedBookKey] = useState<string | null>(null);
   const [expandedNotes, setExpandedNotes] = useState<string | null>(null);
   const { showToast } = useToast();
+
+  // Filter & Sort State (resets on page load - Option A)
+  const [filterStatus, setFilterStatus] = useState<ReadingStatus | null>(null);
+  const [filterMinRating, setFilterMinRating] = useState<number | null>(null);
+  const [sortBy, setSortBy] = useState<SortField>("addedAt");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+
+  // Search State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchScope, setSearchScope] = useState<"all" | string>("all");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcut for search (Ctrl/Cmd + K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+      if (e.key === "Escape" && searchQuery) {
+        setSearchQuery("");
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [searchQuery]);
+
+  // Filter and sort books within a list
+  const getFilteredBooks = useCallback((books: ListBook[]) => {
+    let filtered = [...books];
+
+    // Apply status filter
+    if (filterStatus) {
+      filtered = filtered.filter((lb) => lb.status === filterStatus);
+    }
+
+    // Apply rating filter
+    if (filterMinRating !== null) {
+      filtered = filtered.filter((lb) => (lb.rating ?? 0) >= filterMinRating);
+    }
+
+    // Apply sorting
+    filtered.sort((a, b) => {
+      let comparison = 0;
+      switch (sortBy) {
+        case "title":
+          comparison = a.book.title.localeCompare(b.book.title);
+          break;
+        case "author":
+          comparison = (a.book.authors[0] ?? "").localeCompare(b.book.authors[0] ?? "");
+          break;
+        case "rating":
+          comparison = (a.rating ?? 0) - (b.rating ?? 0);
+          break;
+        case "progress":
+          const progressA = a.totalPages ? (a.currentPage ?? 0) / a.totalPages : 0;
+          const progressB = b.totalPages ? (b.currentPage ?? 0) / b.totalPages : 0;
+          comparison = progressA - progressB;
+          break;
+        case "addedAt":
+        default:
+          comparison = 0; // Keep original order (most recent first)
+          break;
+      }
+      return sortOrder === "asc" ? comparison : -comparison;
+    });
+
+    return filtered;
+  }, [filterStatus, filterMinRating, sortBy, sortOrder]);
+
+  // Search results (flattened across lists)
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return null;
+
+    const query = searchQuery.toLowerCase();
+    const results: { listId: string; listName: string; listBook: ListBook }[] = [];
+
+    const listsToSearch = searchScope === "all" 
+      ? lists 
+      : lists.filter((l) => l.id === searchScope);
+
+    listsToSearch.forEach((list) => {
+      list.books.forEach((listBook) => {
+        const titleMatch = listBook.book.title.toLowerCase().includes(query);
+        const authorMatch = listBook.book.authors.some((a) => 
+          a.toLowerCase().includes(query)
+        );
+        if (titleMatch || authorMatch) {
+          results.push({ listId: list.id, listName: list.name, listBook });
+        }
+      });
+    });
+
+    return results;
+  }, [searchQuery, searchScope, lists]);
 
   const setLoading = (key: string, loading: boolean) => {
     setLoadingStates((prev) => ({ ...prev, [key]: loading }));
@@ -353,24 +455,156 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
 
   return (
     <div className="space-y-4">
-      <button
-        onClick={createList}
-        disabled={loadingStates["create"]}
-        className="group w-full flex items-center justify-center gap-2 p-5 border-2 border-dashed border-gray-600 rounded-2xl text-gray-400 hover:border-primary-500 hover:text-primary-400 hover:bg-primary-900/20 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {loadingStates["create"] ? (
-          <Loader2 className="w-5 h-5 animate-spin" />
-        ) : (
-          <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
-        )}
-        Create New List
-      </button>
+      {/* Global Search Bar */}
+      <div className="glass-card rounded-2xl p-4">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              ref={searchInputRef}
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search your library... (Ctrl+K)"
+              className="w-full pl-12 pr-10 py-3 bg-gray-800/50 text-white placeholder-gray-500 rounded-xl border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-300 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <Library className="w-4 h-4 text-gray-500" />
+            <select
+              value={searchScope}
+              onChange={(e) => setSearchScope(e.target.value)}
+              className="px-3 py-3 text-sm bg-gray-800/50 text-gray-300 rounded-xl border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
+            >
+              <option value="all">All Lists</option>
+              {lists.map((list) => (
+                <option key={list.id} value={list.id}>
+                  {list.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
 
-      {lists.map((list) => (
-        <div
-          key={list.id}
-          className="glass-card rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
-        >
+      {/* Search Results View */}
+      {searchResults !== null ? (
+        <div className="glass-card rounded-2xl overflow-hidden">
+          <div className="p-4 border-b border-[var(--card-border)] flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Search className="w-5 h-5 text-primary-400" />
+              <span className="font-medium text-white">Search Results</span>
+              <span className="px-2 py-0.5 text-xs bg-primary-900/40 text-primary-300 rounded-full">
+                {searchResults.length} book{searchResults.length !== 1 ? "s" : ""} found
+                {searchScope !== "all" && ` in "${lists.find(l => l.id === searchScope)?.name}"`}
+              </span>
+            </div>
+            <button
+              onClick={() => setSearchQuery("")}
+              className="text-sm text-gray-400 hover:text-gray-300 cursor-pointer"
+            >
+              Clear search
+            </button>
+          </div>
+          {searchResults.length === 0 ? (
+            <div className="p-10 text-center">
+              <p className="text-gray-400">No books match &quot;{searchQuery}&quot;</p>
+            </div>
+          ) : (
+            <div className="divide-y divide-[var(--card-border)]">
+              {searchResults.map(({ listId, listName, listBook }) => (
+                <div
+                  key={`${listId}-${listBook.id}`}
+                  className="p-4 hover:bg-gray-800/50 transition-all duration-200"
+                >
+                  <div className="flex items-center gap-4">
+                    <div 
+                      className="w-14 h-20 relative flex-shrink-0 rounded-lg overflow-hidden shadow-md cursor-pointer hover:ring-2 hover:ring-primary-400 transition-all"
+                      onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
+                    >
+                      {listBook.book.coverUrl ? (
+                        <Image
+                          src={listBook.book.coverUrl}
+                          alt={listBook.book.title}
+                          fill
+                          className="object-cover"
+                          sizes="56px"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-900/50 to-primary-800/50">
+                          <BookOpen className="w-6 h-6 text-primary-400" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 
+                        className="font-semibold text-white cursor-pointer hover:text-primary-400 transition-colors"
+                        onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
+                      >
+                        <HighlightMatch text={listBook.book.title} query={searchQuery} />
+                      </h4>
+                      <p className="text-sm text-gray-400">
+                        <HighlightMatch 
+                          text={listBook.book.authors.join(", ") || "Unknown Author"} 
+                          query={searchQuery} 
+                        />
+                      </p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="px-2 py-0.5 text-xs bg-gray-700 text-gray-300 rounded-full">
+                          {listName}
+                        </span>
+                        <StatusBadge status={listBook.status} />
+                        {listBook.rating && (
+                          <span className="flex items-center gap-0.5 text-xs text-amber-400">
+                            {"★".repeat(listBook.rating)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
+                      className="p-2 text-gray-400 hover:text-blue-400 hover:bg-blue-900/30 rounded-xl transition-all duration-200 cursor-pointer"
+                      title="View details"
+                    >
+                      <Info className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        /* Normal List View */
+        <>
+          <button
+            onClick={createList}
+            disabled={loadingStates["create"]}
+            className="group w-full flex items-center justify-center gap-2 p-5 border-2 border-dashed border-gray-600 rounded-2xl text-gray-400 hover:border-primary-500 hover:text-primary-400 hover:bg-primary-900/20 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loadingStates["create"] ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+            )}
+            Create New List
+          </button>
+
+          {lists.map((list) => {
+            const filteredBooks = getFilteredBooks(list.books);
+            return (
+              <div
+                key={list.id}
+                className="glass-card rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
+              >
           {/* List header */}
           <div
             className="p-5 flex items-center justify-between cursor-pointer hover:bg-gray-800/50"
@@ -435,6 +669,21 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
           {/* List books */}
           {expandedList === list.id && (
             <div className="border-t border-[var(--card-border)]">
+              {/* Filters */}
+              {list.books.length > 0 && (
+                <ListFilters
+                  filterStatus={filterStatus}
+                  filterMinRating={filterMinRating}
+                  sortBy={sortBy}
+                  sortOrder={sortOrder}
+                  onFilterStatusChange={setFilterStatus}
+                  onFilterMinRatingChange={setFilterMinRating}
+                  onSortByChange={setSortBy}
+                  onSortOrderChange={setSortOrder}
+                  totalBooks={list.books.length}
+                  filteredCount={filteredBooks.length}
+                />
+              )}
               {list.books.length === 0 ? (
                 <div className="p-10 text-center">
                   <p className="text-gray-400 mb-2">No books yet</p>
@@ -442,9 +691,22 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                     Search for books to add →
                   </Link>
                 </div>
+              ) : filteredBooks.length === 0 ? (
+                <div className="p-10 text-center">
+                  <p className="text-gray-400 mb-2">No books match your filters</p>
+                  <button
+                    onClick={() => {
+                      setFilterStatus(null);
+                      setFilterMinRating(null);
+                    }}
+                    className="text-primary-400 hover:underline font-medium cursor-pointer"
+                  >
+                    Clear filters
+                  </button>
+                </div>
               ) : (
                 <div className="divide-y divide-[var(--card-border)]">
-                  {list.books.map((listBook) => (
+                  {filteredBooks.map((listBook) => (
                     <div
                       key={listBook.id}
                       className="p-4 hover:bg-gray-800/50 transition-all duration-200"
@@ -552,7 +814,10 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
             </div>
           )}
         </div>
-      ))}
+            );
+          })}
+        </>
+      )}
 
       {/* Book Details Modal */}
       <BookDetailsModal

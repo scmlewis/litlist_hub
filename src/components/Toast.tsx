@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
-import { CheckCircle, AlertCircle, X, Info, AlertTriangle } from "lucide-react";
+import { CheckCircle, XCircle, X, Info, AlertTriangle } from "lucide-react";
 
 type ToastType = "success" | "error" | "info" | "warning";
 
@@ -80,22 +80,22 @@ interface ToastItemProps {
 
 function ToastItem({ toast, onDismiss }: ToastItemProps) {
   const icons = {
-    success: <CheckCircle className="w-5 h-5 text-emerald-400" />,
-    error: <AlertCircle className="w-5 h-5 text-red-400" />,
+    success: <CheckCircle className="w-5 h-5 text-accent-400" />,
+    error: <XCircle className="w-5 h-5 text-red-400" />,
     info: <Info className="w-5 h-5 text-blue-400" />,
-    warning: <AlertTriangle className="w-5 h-5 text-amber-400" />,
+    warning: <AlertTriangle className="w-5 h-5 text-primary-400" />,
   };
 
-  const bgColors = {
-    success: "border-emerald-800/50 bg-emerald-900/20",
+  const styles = {
+    success: "border-accent-800/50 bg-accent-900/20",
     error: "border-red-800/50 bg-red-900/20",
     info: "border-blue-800/50 bg-blue-900/20",
-    warning: "border-amber-800/50 bg-amber-900/20",
+    warning: "border-primary-800/50 bg-primary-900/20",
   };
 
   return (
     <div
-      className={`flex items-center gap-3 px-4 py-3 glass-card rounded-xl border ${bgColors[toast.type]} animate-slide-in-right shadow-lg`}
+      className={`flex items-center gap-3 px-4 py-3 glass-card rounded-xl border ${styles[toast.type]} animate-slide-in-right shadow-lg`}
     >
       {icons[toast.type]}
       <p className="text-sm text-gray-200 flex-1">{toast.message}</p>

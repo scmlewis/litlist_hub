@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { LogIn, AlertCircle } from "lucide-react";
 
@@ -10,7 +10,12 @@ export function TestLoginForm() {
   const [password, setPassword] = useState("test123");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [csrfToken, setCsrfToken] = useState<string | undefined>();
   const router = useRouter();
+
+  useEffect(() => {
+    getCsrfToken().then(setCsrfToken);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,14 +26,17 @@ export function TestLoginForm() {
       const result = await signIn("credentials", {
         email,
         password,
+        csrfToken,
         redirect: false,
       });
 
       if (result?.error) {
         setError("Invalid email or password");
-      } else {
+      } else if (result?.ok) {
         router.push("/");
         router.refresh();
+      } else {
+        setError("Sign in failed");
       }
     } catch {
       setError("Something went wrong");

@@ -267,8 +267,8 @@ export function ImportPageClient() {
           {/* File info */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-900/30 rounded-lg">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
+              <div className="p-2 bg-primary-900/30 rounded-lg">
+                <CheckCircle className="w-5 h-5 text-primary-400" />
               </div>
               <div>
                 <p className="font-medium text-white">{file.name}</p>
@@ -297,9 +297,9 @@ export function ImportPageClient() {
                   <div className="text-2xl font-bold text-primary-300">{shelfCounts.reading}</div>
                   <div className="text-sm text-primary-400">Reading</div>
                 </div>
-                <div className="bg-emerald-900/30 p-4 rounded-xl text-center border border-emerald-800/50">
-                  <div className="text-2xl font-bold text-emerald-300">{shelfCounts.read}</div>
-                  <div className="text-sm text-emerald-400">Read</div>
+                <div className="bg-accent-900/30 p-4 rounded-xl text-center border border-accent-800/50">
+                  <div className="text-2xl font-bold text-accent-300">{shelfCounts.read}</div>
+                  <div className="text-sm text-accent-400">Read</div>
                 </div>
               </div>
 
@@ -342,11 +342,11 @@ export function ImportPageClient() {
           {/* Import result */}
           {importResult && (
             <div className="space-y-4">
-              <div className="flex items-center gap-3 p-4 bg-emerald-900/30 rounded-xl border border-emerald-800/50">
-                <CheckCircle className="w-6 h-6 text-emerald-400" />
+              <div className="flex items-center gap-3 p-4 bg-accent-900/30 rounded-xl border border-accent-800/50">
+                <CheckCircle className="w-6 h-6 text-accent-400" />
                 <div>
-                  <p className="font-medium text-emerald-300">Import Complete!</p>
-                  <p className="text-sm text-emerald-400">
+                  <p className="font-medium text-accent-300">Import Complete!</p>
+                  <p className="text-sm text-accent-400">
                     {importResult.imported} imported, {importResult.skipped} skipped (already in list)
                   </p>
                 </div>

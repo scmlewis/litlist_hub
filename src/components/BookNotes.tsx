@@ -88,7 +88,7 @@ export function BookNotes({
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="px-2 py-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white rounded transition-colors disabled:opacity-50 cursor-pointer flex items-center gap-1"
+              className="px-2 py-1 text-xs bg-primary-600 hover:bg-primary-700 text-white rounded transition-colors disabled:opacity-50 cursor-pointer flex items-center gap-1"
             >
               {isSaving ? (
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -128,7 +128,7 @@ export function BookNotes({
     <div className="mt-4 p-4 glass-card rounded-xl">
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-sm font-medium text-white flex items-center gap-2">
-          <StickyNote className="w-4 h-4 text-amber-400" />
+          <StickyNote className="w-4 h-4 text-primary-400" />
           Notes & Review
         </h4>
         {!isEditing && (
@@ -152,7 +152,7 @@ export function BookNotes({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Your personal notes about this book..."
-              className="w-full p-3 bg-gray-900/50 border border-gray-800 rounded-lg text-sm text-gray-300 resize-none focus:outline-none focus:border-emerald-600 placeholder-gray-600"
+              className="w-full p-3 bg-gray-900/50 border border-gray-800 rounded-lg text-sm text-gray-300 resize-none focus:outline-none focus:border-primary-600 placeholder-gray-600"
               rows={3}
             />
           </div>
@@ -165,7 +165,7 @@ export function BookNotes({
               value={review}
               onChange={(e) => setReview(e.target.value)}
               placeholder="Write your review of this book..."
-              className="w-full p-3 bg-gray-900/50 border border-gray-800 rounded-lg text-sm text-gray-300 resize-none focus:outline-none focus:border-emerald-600 placeholder-gray-600"
+              className="w-full p-3 bg-gray-900/50 border border-gray-800 rounded-lg text-sm text-gray-300 resize-none focus:outline-none focus:border-primary-600 placeholder-gray-600"
               rows={4}
             />
           </div>
@@ -174,7 +174,7 @@ export function BookNotes({
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm rounded-lg transition-colors disabled:opacity-50 cursor-pointer flex items-center gap-2"
+              className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm rounded-lg transition-colors disabled:opacity-50 cursor-pointer flex items-center gap-2"
             >
               {isSaving ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

@@ -84,8 +84,8 @@ export function GoalsPageClient() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl blur-xl opacity-30" />
-          <div className="relative p-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl blur-xl opacity-30" />
+          <div className="relative p-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl">
             <Target className="w-8 h-8 text-white" />
           </div>
         </div>
@@ -149,16 +149,16 @@ export function GoalsPageClient() {
               />
               <defs>
                 <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#f59e0b" />
-                  <stop offset="100%" stopColor="#10b981" />
+                  <stop offset="0%" stopColor="#8b5a2b" />
+                  <stop offset="100%" stopColor="#b87333" />
                 </linearGradient>
               </defs>
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               {isComplete ? (
                 <>
-                  <Trophy className="w-10 h-10 text-amber-400 mb-1" />
-                  <span className="text-sm text-amber-400 font-medium">Complete!</span>
+                  <Trophy className="w-10 h-10 text-primary-400 mb-1" />
+                  <span className="text-sm text-primary-400 font-medium">Complete!</span>
                 </>
               ) : (
                 <>
@@ -174,9 +174,9 @@ export function GoalsPageClient() {
             <p className="text-lg text-gray-300">
               {isComplete ? (
                 <span className="flex items-center justify-center gap-2">
-                  <Sparkles className="w-5 h-5 text-amber-400" />
+                  <Sparkles className="w-5 h-5 text-primary-400" />
                   Congratulations! You reached your goal!
-                  <Sparkles className="w-5 h-5 text-amber-400" />
+                  <Sparkles className="w-5 h-5 text-primary-400" />
                 </span>
               ) : (
                 <>
@@ -205,7 +205,7 @@ export function GoalsPageClient() {
               <span className="text-gray-300">books</span>
               <button
                 onClick={saveGoal}
-                className="p-2 text-emerald-400 hover:bg-emerald-900/30 rounded-xl transition-colors cursor-pointer"
+                className="p-2 text-primary-400 hover:bg-primary-900/30 rounded-xl transition-colors cursor-pointer"
               >
                 <Check className="w-5 h-5" />
               </button>

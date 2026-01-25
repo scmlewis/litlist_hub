@@ -5,8 +5,10 @@ import { TestLoginForm } from "@/app/auth/signin/TestLoginForm";
 
 // Mock next-auth/react
 const mockSignIn = vi.fn();
+const mockGetCsrfToken = vi.fn().mockResolvedValue("mock-csrf-token");
 vi.mock("next-auth/react", () => ({
   signIn: (...args: unknown[]) => mockSignIn(...args),
+  getCsrfToken: () => mockGetCsrfToken(),
 }));
 
 // Mock next/navigation
@@ -58,7 +60,7 @@ describe("TestLoginForm", () => {
   });
 
   it("calls signIn with credentials on form submit", async () => {
-    mockSignIn.mockResolvedValue({ error: null });
+    mockSignIn.mockResolvedValue({ ok: true, error: null });
     const user = userEvent.setup();
     render(<TestLoginForm />);
     
@@ -69,13 +71,14 @@ describe("TestLoginForm", () => {
       expect(mockSignIn).toHaveBeenCalledWith("credentials", {
         email: "test@example.com",
         password: "test123",
+        csrfToken: "mock-csrf-token",
         redirect: false,
       });
     });
   });
 
   it("redirects to home on successful login", async () => {
-    mockSignIn.mockResolvedValue({ error: null });
+    mockSignIn.mockResolvedValue({ ok: true, error: null });
     const user = userEvent.setup();
     render(<TestLoginForm />);
     

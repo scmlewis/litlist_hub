@@ -19,7 +19,7 @@ const statusConfig: Record<ReadingStatus, {
 }> = {
   WANT_TO_READ: {
     label: "Want to Read",
-    gradient: "from-violet-500 to-purple-600",
+    gradient: "from-blue-500 to-blue-600",
     textColor: "text-white",
     icon: BookMarked,
   },
@@ -31,7 +31,7 @@ const statusConfig: Record<ReadingStatus, {
   },
   DONE: {
     label: "Done",
-    gradient: "from-emerald-500 to-emerald-600",
+    gradient: "from-accent-500 to-accent-600",
     textColor: "text-white",
     icon: CheckCircle,
   },

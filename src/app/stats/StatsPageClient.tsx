@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ReadingHeatmap } from "@/components/ReadingHeatmap";
+import { DayActivityModal } from "@/components/DayActivityModal";
 import { 
   BarChart3, 
   BookOpen, 
@@ -26,6 +28,18 @@ interface RecentBook {
   pageCount: number | null;
 }
 
+interface DayBook {
+  id: string;
+  title: string;
+  coverUrl: string | null;
+  rating: number | null;
+}
+
+interface DailyActivity {
+  count: number;
+  books: DayBook[];
+}
+
 interface Stats {
   year: number;
   totalBooksRead: number;
@@ -40,6 +54,7 @@ interface Stats {
   averageReadingDays: number | null;
   recentBooks: RecentBook[];
   yearsWithData: number[];
+  dailyActivity: Record<string, DailyActivity>;
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -48,6 +63,7 @@ export function StatsPageClient() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [stats, setStats] = useState<Stats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedDay, setSelectedDay] = useState<{ date: string; books: DayBook[] } | null>(null);
 
   useEffect(() => {
     fetchStats();
@@ -77,8 +93,8 @@ export function StatsPageClient() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl blur-xl opacity-30" />
-          <div className="relative p-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl blur-xl opacity-30" />
+          <div className="relative p-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl">
             <BarChart3 className="w-8 h-8 text-white" />
           </div>
         </div>
@@ -124,7 +140,7 @@ export function StatsPageClient() {
           {/* Key Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="glass-card rounded-2xl p-6">
-              <BookOpen className="w-8 h-8 text-emerald-400 mb-3" />
+              <BookOpen className="w-8 h-8 text-accent-400 mb-3" />
               <div className="text-3xl font-bold text-white">{stats.booksReadThisYear}</div>
               <div className="text-sm text-gray-400">Books Read in {year}</div>
             </div>
@@ -141,7 +157,7 @@ export function StatsPageClient() {
               <div className="text-sm text-gray-400">Avg Rating</div>
             </div>
             <div className="glass-card rounded-2xl p-6">
-              <Clock className="w-8 h-8 text-purple-400 mb-3" />
+              <Clock className="w-8 h-8 text-accent-400 mb-3" />
               <div className="text-3xl font-bold text-white">
                 {stats.averageReadingDays ? `${stats.averageReadingDays}d` : "—"}
               </div>
@@ -164,8 +180,8 @@ export function StatsPageClient() {
             </Link>
             <div className="glass-card rounded-2xl p-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-emerald-900/40 rounded-xl">
-                  <Library className="w-6 h-6 text-emerald-400" />
+                <div className="p-3 bg-accent-900/40 rounded-xl">
+                  <Library className="w-6 h-6 text-accent-400" />
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-white">{(stats.pagesInProgress ?? 0).toLocaleString()}</div>
@@ -201,7 +217,7 @@ export function StatsPageClient() {
                         isCurrentMonth
                           ? "bg-gradient-to-t from-primary-600 to-primary-400"
                           : count > 0
-                          ? "bg-gradient-to-t from-emerald-600 to-emerald-400"
+                          ? "bg-gradient-to-t from-accent-600 to-accent-400"
                           : "bg-gray-700"
                       }`}
                       style={{ height: `${Math.max(height, 4)}%` }}
@@ -212,6 +228,13 @@ export function StatsPageClient() {
               })}
             </div>
           </div>
+
+          {/* Reading Heatmap */}
+          <ReadingHeatmap
+            year={year}
+            dailyActivity={stats.dailyActivity || {}}
+            onDayClick={(date, activity) => setSelectedDay({ date, books: activity.books })}
+          />
 
           {/* Recent Books */}
           {stats.recentBooks.length > 0 && (
@@ -293,6 +316,13 @@ export function StatsPageClient() {
           </Link>
         </div>
       )}
+
+      {/* Day Activity Modal */}
+      <DayActivityModal
+        date={selectedDay?.date ?? null}
+        books={selectedDay?.books ?? []}
+        onClose={() => setSelectedDay(null)}
+      />
     </div>
   );
 }

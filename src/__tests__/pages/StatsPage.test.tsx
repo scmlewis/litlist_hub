@@ -138,8 +138,9 @@ describe("StatsPageClient", () => {
     render(<StatsPageClient />);
     
     await waitFor(() => {
-      // Look for month labels
-      expect(screen.getByText("Jan")).toBeInTheDocument();
+      // Look for month labels (may appear in both chart and heatmap)
+      const janElements = screen.getAllByText("Jan");
+      expect(janElements.length).toBeGreaterThan(0);
     });
   });
 

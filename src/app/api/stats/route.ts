@@ -145,6 +145,24 @@ export async function GET(request: NextRequest) {
       pageCount: lb.totalPages || lb.book.pageCount,
     }));
 
+    // Daily activity for heatmap (books finished per day)
+    const dailyActivity: Record<string, { count: number; books: { id: string; title: string; coverUrl: string | null; rating: number | null }[] }> = {};
+    booksThisYear.forEach((lb) => {
+      if (lb.finishDate) {
+        const dateKey = lb.finishDate.toISOString().split("T")[0]; // YYYY-MM-DD
+        if (!dailyActivity[dateKey]) {
+          dailyActivity[dateKey] = { count: 0, books: [] };
+        }
+        dailyActivity[dateKey].count++;
+        dailyActivity[dateKey].books.push({
+          id: lb.id,
+          title: lb.book.title,
+          coverUrl: lb.book.coverUrl,
+          rating: lb.rating,
+        });
+      }
+    });
+
     return NextResponse.json({
       year,
       totalBooksRead,
@@ -161,6 +179,7 @@ export async function GET(request: NextRequest) {
         : null,
       recentBooks,
       yearsWithData,
+      dailyActivity,
     });
   } catch (error) {
     console.error("Error fetching stats:", error);

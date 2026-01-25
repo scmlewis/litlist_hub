@@ -88,7 +88,7 @@ export function BookCard({
             )}
 
             {isInList && !status && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-emerald-400">
+              <span className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-primary-400">
                 <Check className="w-4 h-4" />
                 In List
               </span>

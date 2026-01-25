@@ -84,7 +84,7 @@ export function ReadingProgress({
         />
         <button
           onClick={handleSave}
-          className="p-1 text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
+          className="p-1 text-primary-400 hover:text-primary-300 transition-colors cursor-pointer"
           aria-label="Save progress"
         >
           <Check className="w-4 h-4" />

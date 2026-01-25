@@ -103,7 +103,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
         <div className="overflow-y-auto max-h-[90vh]">
           {loading && (
             <div className="flex items-center justify-center py-24">
-              <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
+              <Loader2 className="w-8 h-8 text-primary-400 animate-spin" />
             </div>
           )}
 
@@ -123,7 +123,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
             <>
               {/* Header with cover */}
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-emerald-600/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-primary-600/20 to-transparent" />
                 <div className="relative p-6 flex gap-6">
                   {/* Cover */}
                   <div className="flex-shrink-0">
@@ -231,7 +231,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                 {onAddToList && (
                   <button
                     onClick={handleAddToList}
-                    className="flex-1 min-w-[200px] py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium transition-colors cursor-pointer flex items-center justify-center gap-2"
+                    className="flex-1 min-w-[200px] py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-colors cursor-pointer flex items-center justify-center gap-2"
                   >
                     <BookOpen className="w-5 h-5" />
                     Add to List
