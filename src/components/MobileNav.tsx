@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Library, Upload, LogOut, Target, BarChart3, Download, MoreHorizontal, X } from "lucide-react";
+import { Home, Search, Library, Upload, LogOut, Target, BarChart3, Download, MoreHorizontal, X, Settings } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 export function MobileNav() {
@@ -24,6 +24,7 @@ export function MobileNav() {
     { href: "/stats", icon: BarChart3, label: "Statistics" },
     { href: "/import", icon: Upload, label: "Import" },
     { href: "/export", icon: Download, label: "Export" },
+    { href: "/settings", icon: Settings, label: "Settings" },
   ];
 
   const isActive = (href: string) => {

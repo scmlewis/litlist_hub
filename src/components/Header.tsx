@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { auth, signIn, signOut } from "@/lib/auth";
-import { BookOpen, Search, Library, LogOut, Sparkles, Upload, Target, BarChart3, Download } from "lucide-react";
+import { BookOpen, Search, Library, LogOut, Sparkles, Upload, Target, BarChart3, Download, Settings } from "lucide-react";
 
 export async function Header() {
   const session = await auth();
@@ -77,6 +77,13 @@ export async function Header() {
                     className="rounded-full ring-2 ring-primary-800"
                   />
                 )}
+                <Link
+                  href="/settings"
+                  className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-400 hover:text-primary-400 hover:bg-primary-900/20 rounded-xl transition-all duration-200 cursor-pointer"
+                >
+                  <Settings className="w-4 h-4" />
+                  <span>Settings</span>
+                </Link>
                 <form
                   action={async () => {
                     "use server";
