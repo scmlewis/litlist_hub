@@ -1,0 +1,72 @@
+"use client";
+
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { LogIn, AlertCircle } from "lucide-react";
+
+export function TestLoginForm() {
+  const [email, setEmail] = useState("test@example.com");
+  const [password, setPassword] = useState("test123");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid email or password");
+      } else {
+        router.push("/");
+        router.refresh();
+      }
+    } catch {
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        className="w-full px-4 py-3 text-sm border-0 rounded-xl bg-gray-800/80 text-white shadow-sm focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all duration-200"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        className="w-full px-4 py-3 text-sm border-0 rounded-xl bg-gray-800/80 text-white shadow-sm focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all duration-200"
+      />
+      {error && (
+        <div className="flex items-center gap-2 text-sm text-red-400 bg-red-900/30 px-3 py-2 rounded-lg">
+          <AlertCircle className="w-4 h-4" />
+          {error}
+        </div>
+      )}
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary-500/25 transition-all duration-200 cursor-pointer"
+      >
+        <LogIn className="w-4 h-4" />
+        {loading ? "Signing in..." : "Quick Sign In"}
+      </button>
+    </form>
+  );
+}

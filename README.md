@@ -1,245 +1,185 @@
-# BookShelf Vibe
+# 📚 LitList Hub
 
-A full-stack book tracking application built with Next.js, Cloudflare Pages, D1 Database, and GitHub OAuth. Track your reading journey, organize your books by status, and share your collection with others.
+A modern booklist app to track your reading journey. Search for books, organize them into lists, mark your reading status, and share your lists with friends.
 
 ## Features
 
-- 📚 **Book Management**: Add, edit, and delete books in your personal library
-- 🔍 **Book Search**: Search and add books using Google Books API with automatic cover images
-- 📊 **Reading Status**: Track books as "Want to Read", "Reading", or "Done"
-- 📝 **Notes**: Add personal notes to each book
-- 🔐 **GitHub Authentication**: Secure login with GitHub OAuth
-- 🔗 **Public Sharing**: Generate shareable links to your book collection
-- 📱 **Responsive Design**: Mobile-friendly interface with Tailwind CSS
-- ⚡ **Edge Runtime**: Fast, globally distributed with Cloudflare Pages Functions
+- **🔍 Search Books** - Search millions of books via Open Library API
+- **📖 Track Status** - Mark books as "Want to Read", "Reading", or "Done"
+- **📋 Organize Lists** - Create multiple lists to organize your books
+- **🔗 Share Lists** - Generate shareable links for your public lists
+- **🔐 GitHub Auth** - Secure authentication via GitHub OAuth
 
 ## Tech Stack
 
-- **Frontend**: Next.js (Pages Router), React, Tailwind CSS
-- **Backend**: Cloudflare Pages Functions (Edge Runtime)
-- **Database**: Cloudflare D1 (SQLite)
-- **Authentication**: GitHub OAuth with JWT sessions
-- **API**: Google Books API for book search
-- **Deployment**: Cloudflare Pages
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: SQLite (dev) / PostgreSQL (production)
+- **ORM**: Prisma
+- **Auth**: NextAuth.js v5
+- **Book API**: Open Library API
 
-## Prerequisites
+## Getting Started
 
-- Node.js 18+ installed
-- Cloudflare account
-- GitHub account
-- Wrangler CLI installed globally: `npm install -g wrangler`
+### Prerequisites
 
-## Local Development Setup
+- Node.js 18+
+- npm or yarn
 
-### 1. Clone the Repository
+### 1. Clone and Install
 
-\`\`\`bash
-git clone <your-repo-url>
-cd LitList_Hub
-\`\`\`
-
-### 2. Install Dependencies
-
-\`\`\`bash
+```bash
+git clone https://github.com/yourusername/litlist-hub.git
+cd litlist-hub
 npm install
-\`\`\`
+```
 
-### 3. Set Up Environment Variables
+### 2. Set Up GitHub OAuth
 
-Copy the example environment file:
+1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
+2. Click "New OAuth App"
+3. Fill in:
+   - **Application name**: LitList Hub
+   - **Homepage URL**: `http://localhost:3000`
+   - **Authorization callback URL**: `http://localhost:3000/api/auth/callback/github`
+4. Click "Register application"
+5. Copy the **Client ID** and generate a **Client Secret**
 
-\`\`\`bash
+### 3. Configure Environment
+
+Copy `.env.example` to `.env.local` and fill in your values:
+
+```bash
 cp .env.example .env.local
-\`\`\`
+```
 
-Fill in the values:
+Edit `.env.local`:
 
-- **GITHUB_CLIENT_ID** & **GITHUB_CLIENT_SECRET**: 
-  1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
-  2. Create a new OAuth App
-  3. Set Authorization callback URL to `http://localhost:3000/api/auth/callback`
-  4. Copy the Client ID and generate a Client Secret
+```env
+# Database - SQLite for local development
+DATABASE_URL="file:./dev.db"
 
-- **JWT_SECRET**: Generate a random secret:
-  \`\`\`bash
-  openssl rand -base64 32
-  \`\`\`
+# NextAuth.js - Generate a secret with: openssl rand -base64 32
+AUTH_SECRET="your-random-secret-key"
 
-- **NEXT_PUBLIC_BASE_URL**: Set to `http://localhost:3000` for local development
+# GitHub OAuth - From step 2
+AUTH_GITHUB_ID="your-github-client-id"
+AUTH_GITHUB_SECRET="your-github-client-secret"
+```
 
-### 4. Create D1 Database
+### 4. Initialize Database
 
-\`\`\`bash
-# Login to Cloudflare
-wrangler login
+```bash
+npx prisma db push
+```
 
-# Create D1 database
-wrangler d1 create bookshelf-vibe-db
-\`\`\`
+### 5. Run Development Server
 
-Copy the database ID from the output and update `wrangler.toml`:
-
-\`\`\`toml
-[[d1_databases]]
-binding = "DB"
-database_name = "bookshelf-vibe-db"
-database_id = "your-database-id-here"
-\`\`\`
-
-### 5. Run Database Migration
-
-\`\`\`bash
-wrangler d1 execute bookshelf-vibe-db --file=schema.sql
-\`\`\`
-
-### 6. Start Development Server
-
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
-Visit [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Production Deployment
+## Deployment to Railway
 
-### 1. Create Production D1 Database
+### 1. Create Railway Project
 
-\`\`\`bash
-# Create production database in Cloudflare dashboard or via CLI
-wrangler d1 create bookshelf-vibe-db-prod
+1. Go to [Railway](https://railway.app) and create a new project
+2. Connect your GitHub repository
 
-# Run migration on production database
-wrangler d1 execute bookshelf-vibe-db-prod --file=schema.sql --remote
-\`\`\`
+### 2. Add PostgreSQL Database
 
-### 2. Deploy to Cloudflare Pages
+1. Click "+ New" → "Database" → "PostgreSQL"
+2. Railway automatically provides `DATABASE_URL`
 
-1. Push your code to GitHub
-2. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → Pages
-3. Click "Create a project" → "Connect to Git"
-4. Select your repository
-5. Configure build settings:
-   - **Build command**: `npm run build`
-   - **Build output directory**: `.next`
-   - **Root directory**: `/`
+### 3. Update Prisma for PostgreSQL
 
-### 3. Configure Environment Variables
+For production, update `prisma/schema.prisma`:
 
-In Cloudflare Pages project settings → Environment Variables, add:
+```prisma
+datasource db {
+  provider = "postgresql"  // Change from sqlite
+  url      = env("DATABASE_URL")
+}
+```
 
-- `GITHUB_CLIENT_ID`
-- `GITHUB_CLIENT_SECRET`
-- `JWT_SECRET`
-- `NEXT_PUBLIC_BASE_URL` (your production URL)
+Update field types:
+- Change `authors String @default("[]")` to `authors String[]`
+- Change `status String` to use enum `ReadingStatus`
 
-### 4. Bind D1 Database
+### 4. Set Environment Variables
 
-In your Cloudflare Pages project:
-1. Go to Settings → Functions → D1 Database Bindings
-2. Add binding: Variable name `DB`, D1 database: select your production database
+In Railway dashboard, add:
 
-### 5. Update GitHub OAuth Callback
+```
+AUTH_SECRET=<generate with openssl rand -base64 32>
+AUTH_GITHUB_ID=<your-github-client-id>
+AUTH_GITHUB_SECRET=<your-github-client-secret>
+```
 
-Add your production URL to GitHub OAuth App settings:
-- Callback URL: `https://your-domain.pages.dev/api/auth/callback`
+Update your GitHub OAuth app callback URL to your Railway URL:
+`https://your-app.railway.app/api/auth/callback/github`
+
+### 5. Deploy
+
+Railway auto-deploys on push to main. The `postinstall` script runs `prisma generate` automatically.
+
+## Adding Google OAuth Later
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Create OAuth 2.0 credentials
+3. Add to `.env.local`:
+
+```env
+AUTH_GOOGLE_ID="your-google-client-id"
+AUTH_GOOGLE_SECRET="your-google-client-secret"
+```
+
+4. Update `src/lib/auth.ts`:
+
+```typescript
+import Google from "next-auth/providers/google";
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  providers: [GitHub, Google],  // Add Google
+  // ...
+});
+```
 
 ## Project Structure
 
-\`\`\`
-├── components/          # React components
-│   ├── BookList.tsx    # Book display (table/cards)
-│   ├── BookModal.tsx   # Add/edit book form
-│   ├── BookSearch.tsx  # Google Books search
-│   └── DashboardLayout.tsx
-├── functions/          # Cloudflare Pages Functions
-│   └── api/
-│       ├── auth/       # OAuth endpoints
-│       ├── books/      # CRUD operations
-│       ├── search.ts   # Book search proxy
-│       └── public/     # Public list endpoint
-├── lib/                # Utilities
-│   ├── auth.ts        # JWT & session management
-│   ├── db.ts          # D1 database helpers
-│   └── middleware.ts  # Auth middleware
-├── pages/             # Next.js pages
-│   ├── index.tsx      # Landing page
-│   ├── dashboard.tsx  # Main app dashboard
-│   └── public/[user_id].tsx  # Public book list
-├── schema.sql         # Database schema
-├── wrangler.toml      # Cloudflare configuration
-└── package.json
-\`\`\`
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── auth/[...nextauth]/   # NextAuth route handler
+│   │   ├── books/search/         # Book search API
+│   │   └── lists/                # Lists CRUD API
+│   ├── auth/signin/              # Custom sign-in page
+│   ├── lists/                    # My Lists page
+│   ├── search/                   # Book search page
+│   ├── share/[shareId]/          # Public shared list view
+│   ├── layout.tsx
+│   └── page.tsx                  # Home page
+├── components/
+│   ├── BookCard.tsx
+│   ├── BookSearch.tsx
+│   ├── Header.tsx
+│   └── StatusBadge.tsx
+├── lib/
+│   ├── auth.ts                   # NextAuth configuration
+│   └── prisma.ts                 # Prisma client singleton
+├── services/
+│   └── openLibrary.ts            # Open Library API service
+└── types/
+    └── next-auth.d.ts            # NextAuth type augmentation
 
-## API Endpoints
-
-### Authentication
-- `GET /api/auth/login` - Redirect to GitHub OAuth
-- `GET /api/auth/callback` - OAuth callback handler
-- `GET /api/auth/logout` - Clear session
-
-### Books (Protected)
-- `GET /api/books` - Get user's books
-- `POST /api/books` - Create new book
-- `PUT /api/books/:id` - Update book
-- `DELETE /api/books/:id` - Delete book
-
-### Search
-- `GET /api/search?q={query}` - Search books via Google Books
-
-### Public
-- `GET /api/public/:user_id` - Get public book list
-
-## Database Schema
-
-### Users Table
-- `id` - User ID (TEXT PRIMARY KEY)
-- `email` - Email address (TEXT UNIQUE)
-- `github_id` - GitHub user ID (INTEGER)
-- `created_at` - Timestamp
-
-### Books Table
-- `id` - Book ID (INTEGER AUTO INCREMENT)
-- `user_id` - Foreign key to users
-- `title` - Book title (TEXT, required)
-- `author` - Author name (TEXT)
-- `status` - Reading status: want/reading/done
-- `notes` - Personal notes (TEXT)
-- `goodreads_id` - Google Books ID (TEXT)
-- `cover_url` - Cover image URL (TEXT)
-- `created_at` - Timestamp
-
-## Troubleshooting
-
-### Wrangler D1 Authentication Error
-
-If you encounter OAuth errors with `wrangler d1 create`:
-- Create the database through Cloudflare Dashboard instead
-- Go to Workers & Pages → D1 → Create Database
-- Copy the database ID to `wrangler.toml`
-
-### Next.js Build Errors
-
-Ensure you're using compatible versions:
-\`\`\`bash
-npm install next@latest react@latest react-dom@latest
-\`\`\`
-
-### Missing Environment Variables
-
-Check that all required environment variables are set in:
-- `.env.local` (local development)
-- Cloudflare Pages settings (production)
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
+prisma/
+└── schema.prisma                 # Database schema
+```
 
 ## License
 
-ISC
-
-## Acknowledgments
-
-- Built following Vibe Coding principles
-- Inspired by Goodreads and book tracking apps
-- Uses Google Books API for book data
+MIT
