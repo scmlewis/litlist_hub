@@ -67,9 +67,9 @@ describe("ListFilters", () => {
     
     render(<ListFilters {...defaultProps} onSortOrderChange={onSortOrderChange} />);
     
-    // Find the sort order toggle button (has SortDesc or SortAsc icon)
-    const sortOrderButton = screen.getByTitle("Descending");
-    await user.click(sortOrderButton);
+    // Find the sort order toggle buttons (one in mobile collapsed bar, one in expanded)
+    const sortOrderButtons = screen.getAllByTitle("Descending");
+    await user.click(sortOrderButtons[0]);
     
     expect(onSortOrderChange).toHaveBeenCalledWith("asc");
   });

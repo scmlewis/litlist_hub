@@ -109,11 +109,11 @@ export function ReadingProgress({
       <button
         onClick={() => editable && setIsEditing(true)}
         disabled={!editable}
-        className={`inline-flex items-center gap-1.5 text-sm ${
+        className={`inline-flex items-center gap-1 text-xs sm:text-sm ${
           editable ? "cursor-pointer hover:text-primary-400" : "cursor-default"
         } transition-colors`}
       >
-        <BookOpen className="w-3.5 h-3.5 text-primary-400" />
+        <BookOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary-400" />
         <span className="text-stone-300">
           {totalPages ? `${currentPage ?? 0}/${totalPages}` : `${currentPage ?? 0} pages`}
         </span>

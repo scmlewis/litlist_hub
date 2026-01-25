@@ -71,7 +71,7 @@ export function StatusBadge({ status, onChange, editable = false }: StatusBadgeP
       <select
         value={localStatus}
         onChange={(e) => handleChange(e.target.value as ReadingStatus)}
-        className={`px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r ${config.gradient} ${config.textColor} border-0 cursor-pointer focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 shadow-lg [&>option]:bg-stone-800 [&>option]:text-stone-100`}
+        className={`px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r ${config.gradient} ${config.textColor} border-0 cursor-pointer focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 shadow-lg [&>option]:bg-stone-800 [&>option]:text-stone-100`}
       >
         <option value="WANT_TO_READ">Want to Read</option>
         <option value="READING">Reading</option>
@@ -81,8 +81,8 @@ export function StatusBadge({ status, onChange, editable = false }: StatusBadgeP
   }
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r ${config.gradient} ${config.textColor} shadow-lg`}>
-      <Icon className="w-4 h-4" />
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r ${config.gradient} ${config.textColor} shadow-lg`}>
+      <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
       {config.label}
     </span>
   );

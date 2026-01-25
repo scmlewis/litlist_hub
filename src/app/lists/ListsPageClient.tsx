@@ -454,19 +454,19 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Global Search Bar */}
-      <div className="glass-card rounded-2xl p-4">
-        <div className="flex flex-col sm:flex-row gap-3">
+      <div className="glass-card rounded-2xl p-3 sm:p-4">
+        <div className="flex flex-row gap-2 sm:gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+            <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-stone-400" />
             <input
               ref={searchInputRef}
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search your library... (Ctrl+K)"
-              className="w-full pl-12 pr-10 py-3 bg-stone-800/50 text-white placeholder-stone-500 rounded-xl border border-stone-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all"
+              className="w-full pl-9 sm:pl-12 pr-8 sm:pr-10 py-2 sm:py-3 text-sm sm:text-base bg-stone-800/50 text-white placeholder-stone-500 rounded-xl border border-stone-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all"
             />
             {searchQuery && (
               <button
@@ -477,12 +477,12 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
               </button>
             )}
           </div>
-          <div className="flex items-center gap-2">
-            <Library className="w-4 h-4 text-stone-500" />
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <Library className="w-4 h-4 text-stone-500 hidden sm:block" />
             <select
               value={searchScope}
               onChange={(e) => setSearchScope(e.target.value)}
-              className="px-3 py-3 text-sm bg-stone-800/50 text-stone-300 rounded-xl border border-stone-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
+              className="px-2 py-2 sm:px-3 sm:py-3 text-xs sm:text-sm bg-stone-800/50 text-stone-300 rounded-xl border border-stone-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
             >
               <option value="all">All Lists</option>
               {lists.map((list) => (
@@ -498,10 +498,10 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
       {/* Search Results View */}
       {searchResults !== null ? (
         <div className="glass-card rounded-2xl overflow-hidden">
-          <div className="p-4 border-b border-[var(--card-border)] flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Search className="w-5 h-5 text-primary-400" />
-              <span className="font-medium text-white">Search Results</span>
+          <div className="p-3 sm:p-4 border-b border-[var(--card-border)] flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Search className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" />
+              <span className="font-medium text-white text-sm sm:text-base">Search Results</span>
               <span className="px-2 py-0.5 text-xs bg-primary-900/40 text-primary-300 rounded-full">
                 {searchResults.length} book{searchResults.length !== 1 ? "s" : ""} found
                 {searchScope !== "all" && ` in "${lists.find(l => l.id === searchScope)?.name}"`}
@@ -588,7 +588,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
           <button
             onClick={createList}
             disabled={loadingStates["create"]}
-            className="group w-full flex items-center justify-center gap-2 p-5 border-2 border-dashed border-stone-600 rounded-2xl text-stone-400 hover:border-primary-500 hover:text-primary-400 hover:bg-primary-900/20 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group w-full flex items-center justify-center gap-2 p-3 sm:p-5 border-2 border-dashed border-stone-600 rounded-2xl text-stone-400 hover:border-primary-500 hover:text-primary-400 hover:bg-primary-900/20 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loadingStates["create"] ? (
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -607,59 +607,59 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
               >
           {/* List header */}
           <div
-            className="p-5 flex items-center justify-between cursor-pointer hover:bg-stone-800/50"
+            className="p-3 sm:p-5 flex items-center justify-between cursor-pointer hover:bg-stone-800/50"
             onClick={() => setExpandedList(expandedList === list.id ? null : list.id)}
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl blur-md opacity-30" />
-                <div className="relative p-2.5 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl">
+                <div className="relative p-2 sm:p-2.5 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl">
                   {expandedList === list.id ? (
-                    <BookOpen className="w-5 h-5 text-white" />
+                    <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   ) : (
-                    <BookMarked className="w-5 h-5 text-white" />
+                    <BookMarked className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   )}
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-white">
+                <h3 className="font-semibold text-white text-sm sm:text-base">
                   {list.name}
                 </h3>
-                <p className="text-sm text-stone-400">
+                <p className="text-xs sm:text-sm text-stone-400">
                   {list._count.books} book{list._count.books !== 1 && "s"}
                   {list.isPublic && " • Public"}
                 </p>
               </div>
               {expandedList === list.id ? (
-                <ChevronUp className="w-5 h-5 text-stone-400 ml-2" />
+                <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-stone-400 ml-1 sm:ml-2" />
               ) : (
-                <ChevronDown className="w-5 h-5 text-stone-400 ml-2" />
+                <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-stone-400 ml-1 sm:ml-2" />
               )}
             </div>
-            <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-1 sm:gap-2" onClick={(e) => e.stopPropagation()}>
               <button
                 onClick={() => togglePublic(list.id, list.isPublic)}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 cursor-pointer ${
+                className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-xl transition-all duration-200 cursor-pointer ${
                   list.isPublic
                     ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/25"
                     : "bg-stone-700 text-stone-400 hover:bg-stone-600"
                 }`}
               >
-                {list.isPublic ? <Globe className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-                {list.isPublic ? "Public" : "Private"}
+                {list.isPublic ? <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                <span className="hidden sm:inline">{list.isPublic ? "Public" : "Private"}</span>
               </button>
               {list.isPublic && (
                 <button
                   onClick={() => copyShareLink(list.shareId)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-primary-900/40 text-primary-300 rounded-xl hover:bg-primary-900/60 transition-all duration-200 cursor-pointer"
+                  className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium bg-primary-900/40 text-primary-300 rounded-xl hover:bg-primary-900/60 transition-all duration-200 cursor-pointer"
                 >
-                  <Link2 className="w-4 h-4" />
-                  Copy Link
+                  <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Copy Link</span>
                 </button>
               )}
               <button
                 onClick={() => deleteList(list.id, list.name)}
-                className="p-2 text-stone-400 hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200 cursor-pointer"
+                className="p-1.5 sm:p-2 text-stone-400 hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200 cursor-pointer"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -709,38 +709,95 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                   {filteredBooks.map((listBook) => (
                     <div
                       key={listBook.id}
-                      className="p-4 hover:bg-stone-800/50 transition-all duration-200"
+                      className="p-3 sm:p-4 hover:bg-stone-800/50 transition-all duration-200"
                     >
-                      <div className="flex items-center gap-4">
-                        <div 
-                          className="w-14 h-20 relative flex-shrink-0 rounded-lg overflow-hidden shadow-md cursor-pointer hover:ring-2 hover:ring-primary-400 transition-all"
-                          onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
-                        >
-                          {listBook.book.coverUrl ? (
-                            <Image
-                              src={listBook.book.coverUrl}
-                              alt={listBook.book.title}
-                              fill
-                              className="object-cover"
-                              sizes="56px"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-900/50 to-primary-800/50">
-                              <BookOpen className="w-6 h-6 text-primary-400" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 
-                            className="font-semibold text-white truncate cursor-pointer hover:text-primary-400 transition-colors"
+                      {/* Mobile: Stack layout, Desktop: Horizontal */}
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                        {/* Top row: Cover + Title/Author */}
+                        <div className="flex items-start gap-3">
+                          <div 
+                            className="w-12 h-16 sm:w-14 sm:h-20 relative flex-shrink-0 rounded-lg overflow-hidden shadow-md cursor-pointer hover:ring-2 hover:ring-primary-400 transition-all"
                             onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
                           >
-                            {listBook.book.title}
-                          </h4>
-                          <p className="text-sm text-stone-400 truncate">
-                            {listBook.book.authors.join(", ") || "Unknown Author"}
-                          </p>
-                          <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+                            {listBook.book.coverUrl ? (
+                              <Image
+                                src={listBook.book.coverUrl}
+                                alt={listBook.book.title}
+                                fill
+                                className="object-cover"
+                                sizes="56px"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-900/50 to-primary-800/50">
+                                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-primary-400" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 
+                              className="font-semibold text-white line-clamp-2 sm:line-clamp-1 cursor-pointer hover:text-primary-400 transition-colors text-sm sm:text-base"
+                              onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
+                            >
+                              {listBook.book.title}
+                            </h4>
+                            <p className="text-xs sm:text-sm text-stone-400 truncate">
+                              {listBook.book.authors.join(", ") || "Unknown Author"}
+                            </p>
+                            {/* Mobile: Show rating inline with title */}
+                            <div className="flex items-center gap-2 mt-1 sm:hidden">
+                              <StarRating
+                                rating={listBook.rating}
+                                onChange={(rating) => updateBookRating(list.id, listBook.bookId, rating)}
+                                editable
+                                size="sm"
+                              />
+                            </div>
+                          </div>
+                          {/* Mobile: Quick remove button */}
+                          <button
+                            onClick={() => removeBook(list.id, listBook.bookId, listBook.book.title)}
+                            className="sm:hidden p-1.5 text-stone-500 hover:text-red-500 hover:bg-red-900/30 rounded-lg transition-all duration-200 cursor-pointer"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                        
+                        {/* Mobile: Status + Progress row */}
+                        <div className="flex sm:hidden items-center gap-2 flex-wrap pl-15">
+                          <StatusBadge
+                            status={listBook.status}
+                            onChange={(status) => updateBookStatus(list.id, listBook.bookId, status)}
+                            editable
+                          />
+                          {listBook.status === "READING" && (
+                            <ReadingProgress
+                              currentPage={listBook.currentPage}
+                              totalPages={listBook.totalPages}
+                              onUpdate={(current, total) => 
+                                updateReadingProgress(list.id, listBook.bookId, current, total)
+                              }
+                              editable
+                              compact
+                            />
+                          )}
+                          <button
+                            onClick={() => setExpandedNotes(
+                              expandedNotes === listBook.id ? null : listBook.id
+                            )}
+                            className={`flex items-center gap-1 text-xs transition-colors cursor-pointer ${
+                              listBook.notes || listBook.review
+                                ? "text-amber-400 hover:text-amber-300"
+                                : "text-stone-500 hover:text-stone-400"
+                            }`}
+                          >
+                            <StickyNote className="w-3 h-3" />
+                            {listBook.notes || listBook.review ? "Notes" : "Add"}
+                          </button>
+                        </div>
+
+                        {/* Desktop: Original inline layout */}
+                        <div className="hidden sm:flex flex-1 min-w-0 items-center">
+                          <div className="flex items-center gap-3 flex-wrap">
                             <StarRating
                               rating={listBook.rating}
                               onChange={(rating) => updateBookRating(list.id, listBook.bookId, rating)}
@@ -773,7 +830,9 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                             </button>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 flex-shrink-0">
+                        
+                        {/* Desktop: Action buttons */}
+                        <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
                           <button
                             onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
                             className="p-2 text-stone-400 hover:text-blue-400 hover:bg-blue-900/30 rounded-xl transition-all duration-200 cursor-pointer"

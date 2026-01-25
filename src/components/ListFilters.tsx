@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { 
   Filter, 
   SortAsc, 
@@ -8,7 +9,8 @@ import {
   BookOpen,
   Clock,
   CheckCircle,
-  Star
+  Star,
+  ChevronDown
 } from "lucide-react";
 
 type ReadingStatus = "WANT_TO_READ" | "READING" | "DONE";
@@ -64,8 +66,10 @@ export function ListFilters({
   totalBooks,
   filteredCount,
 }: ListFiltersProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const hasActiveFilters = filterStatus !== null || filterMinRating !== null;
   const isFiltered = filteredCount !== totalBooks;
+  const activeFilterCount = (filterStatus ? 1 : 0) + (filterMinRating ? 1 : 0);
 
   const clearFilters = () => {
     onFilterStatusChange(null);
@@ -73,8 +77,49 @@ export function ListFilters({
   };
 
   return (
-    <div className="p-4 bg-stone-800/30 border-b border-[var(--card-border)]">
-      <div className="flex flex-col gap-3">
+    <div className="p-3 sm:p-4 bg-stone-800/30 border-b border-[var(--card-border)]">
+      {/* Mobile: Collapsed summary bar */}
+      <div className="flex sm:hidden items-center justify-between">
+        <button 
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="flex items-center gap-2 text-sm text-stone-400 cursor-pointer"
+        >
+          <Filter className="w-4 h-4" />
+          <span>Filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}</span>
+          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
+        </button>
+        <div className="flex items-center gap-2">
+          {isFiltered && (
+            <span className="text-xs text-stone-500">
+              {filteredCount}/{totalBooks}
+            </span>
+          )}
+          <button
+            onClick={() => onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")}
+            className="p-1.5 text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
+            title={sortOrder === "asc" ? "Ascending" : "Descending"}
+          >
+            {sortOrder === "asc" ? (
+              <SortAsc className="w-4 h-4" />
+            ) : (
+              <SortDesc className="w-4 h-4" />
+            )}
+          </button>
+          {hasActiveFilters && (
+            <button
+              onClick={clearFilters}
+              className="p-1.5 text-stone-400 hover:text-red-400 hover:bg-red-900/30 rounded-lg transition-colors cursor-pointer"
+              title="Clear filters"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Full filters - always on desktop, collapsible on mobile */}
+      <div className={`${isExpanded ? "block mt-3" : "hidden"} sm:block`}>
+        <div className="flex flex-col gap-3">
         {/* Status Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible sm:flex-wrap">
           <span className="text-xs text-stone-500 uppercase tracking-wider mr-1 flex-shrink-0">Status:</span>
@@ -163,6 +208,7 @@ export function ListFilters({
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
