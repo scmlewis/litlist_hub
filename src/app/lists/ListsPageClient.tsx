@@ -26,7 +26,9 @@ import {
   StickyNote,
   Info,
   Search,
-  Library
+  Library,
+  Edit2,
+  Check
 } from "lucide-react";
 
 type SortField = "addedAt" | "title" | "author" | "rating" | "progress";
@@ -77,6 +79,8 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
   const [selectedBookKey, setSelectedBookKey] = useState<string | null>(null);
   const [expandedNotes, setExpandedNotes] = useState<string | null>(null);
+  const [editingListId, setEditingListId] = useState<string | null>(null);
+  const [editingListName, setEditingListName] = useState("");
   const { showToast } = useToast();
 
   // Filter & Sort State (resets on page load - Option A)
@@ -235,6 +239,49 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
         prev.map((l) => (l.id === listId ? { ...l, isPublic } : l))
       );
       showToast("error", "Failed to update list");
+    }
+  };
+
+  const startEditingList = (listId: string, currentName: string) => {
+    setEditingListId(listId);
+    setEditingListName(currentName);
+  };
+
+  const cancelEditingList = () => {
+    setEditingListId(null);
+    setEditingListName("");
+  };
+
+  const renameList = async (listId: string) => {
+    const newName = editingListName.trim();
+    if (!newName) {
+      showToast("error", "List name cannot be empty");
+      return;
+    }
+
+    const previousLists = lists;
+    
+    // Optimistic update
+    setLists((prev) =>
+      prev.map((l) => (l.id === listId ? { ...l, name: newName } : l))
+    );
+    setEditingListId(null);
+    showToast("success", `Renamed to "${newName}"`);
+
+    try {
+      const response = await fetch(`/api/lists/${listId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newName }),
+      });
+
+      if (!response.ok) {
+        setLists(previousLists);
+        showToast("error", "Failed to rename list");
+      }
+    } catch {
+      setLists(previousLists);
+      showToast("error", "Failed to rename list");
     }
   };
 
@@ -621,11 +668,53 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                   )}
                 </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm sm:text-base">
-                  {list.name}
-                </h3>
-                <p className="text-xs sm:text-sm text-stone-400">
+              <div className="flex-1">
+                {editingListId === list.id ? (
+                  <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                    <input
+                      type="text"
+                      value={editingListName}
+                      onChange={(e) => setEditingListName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") renameList(list.id);
+                        if (e.key === "Escape") cancelEditingList();
+                      }}
+                      className="flex-1 px-3 py-1.5 bg-stone-800 border border-stone-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      autoFocus
+                    />
+                    <button
+                      onClick={() => renameList(list.id)}
+                      className="p-1.5 hover:bg-stone-700 rounded-lg transition-colors"
+                      title="Save"
+                    >
+                      <Check className="w-4 h-4 text-green-500" />
+                    </button>
+                    <button
+                      onClick={cancelEditingList}
+                      className="p-1.5 hover:bg-stone-700 rounded-lg transition-colors"
+                      title="Cancel"
+                    >
+                      <X className="w-4 h-4 text-red-500" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 group">
+                    <h3 className="font-semibold text-white text-sm sm:text-base">
+                      {list.name}
+                    </h3>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        startEditingList(list.id, list.name);
+                      }}
+                      className="p-1 opacity-0 group-hover:opacity-100 hover:bg-stone-700 rounded transition-all"
+                      title="Rename list"
+                    >
+                      <Edit2 className="w-3 h-3 text-stone-400" />
+                    </button>
+                  </div>
+                )}
+                <p className="text-xs sm:text-sm text-stone-400 mt-0.5">
                   {list._count.books} book{list._count.books !== 1 && "s"}
                   {list.isPublic && " • Public"}
                 </p>
@@ -796,15 +885,17 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                         </div>
 
                         {/* Desktop: Original inline layout */}
-                        <div className="hidden sm:flex flex-1 min-w-0 items-center">
-                          <div className="flex items-center gap-3 flex-wrap">
+                        <div className="hidden sm:flex flex-1 min-w-0 items-center gap-4">
+                          <div className="flex items-center min-w-[120px]">
                             <StarRating
                               rating={listBook.rating}
                               onChange={(rating) => updateBookRating(list.id, listBook.bookId, rating)}
                               editable
                               size="sm"
                             />
-                            {listBook.status === "READING" && (
+                          </div>
+                          {listBook.status === "READING" && (
+                            <div className="flex-shrink-0">
                               <ReadingProgress
                                 currentPage={listBook.currentPage}
                                 totalPages={listBook.totalPages}
@@ -814,21 +905,21 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                                 editable
                                 compact
                               />
+                            </div>
+                          )}
+                          <button
+                            onClick={() => setExpandedNotes(
+                              expandedNotes === listBook.id ? null : listBook.id
                             )}
-                            <button
-                              onClick={() => setExpandedNotes(
-                                expandedNotes === listBook.id ? null : listBook.id
-                              )}
-                              className={`flex items-center gap-1 text-xs transition-colors ${
-                                listBook.notes || listBook.review
-                                  ? "text-amber-400 hover:text-amber-300"
-                                  : "text-stone-500 hover:text-stone-400"
-                              }`}
-                            >
-                              <StickyNote className="w-3.5 h-3.5" />
-                              {listBook.notes || listBook.review ? "View notes" : "Add notes"}
-                            </button>
-                          </div>
+                            className={`flex items-center gap-1.5 text-xs font-medium whitespace-nowrap transition-colors ${
+                              listBook.notes || listBook.review
+                                ? "text-amber-400 hover:text-amber-300"
+                                : "text-stone-500 hover:text-stone-400"
+                            }`}
+                          >
+                            <StickyNote className="w-3.5 h-3.5" />
+                            <span>{listBook.notes || listBook.review ? "View notes" : "Add notes"}</span>
+                          </button>
                         </div>
                         
                         {/* Desktop: Action buttons */}
