@@ -72,22 +72,19 @@ function getWeeks(year: number): { date: Date; dateKey: string }[][] {
 }
 
 function getMonthLabels(year: number): { month: string; weekIndex: number }[] {
-  const labels: { month: string; weekIndex: number }[] = [];
   const weeks = getWeeks(year);
   
-  let currentMonth = -1;
-  weeks.forEach((week, weekIndex) => {
+  return weeks.reduce<{ labels: { month: string; weekIndex: number }[]; lastMonth: number }>((acc, week, weekIndex) => {
     const validDays = week.filter((d) => d.dateKey !== "");
     if (validDays.length > 0) {
       const month = validDays[0].date.getMonth();
-      if (month !== currentMonth) {
-        labels.push({ month: MONTHS[month], weekIndex });
-        currentMonth = month;
+      if (month !== acc.lastMonth) {
+        acc.labels.push({ month: MONTHS[month], weekIndex });
+        acc.lastMonth = month;
       }
     }
-  });
-  
-  return labels;
+    return acc;
+  }, { labels: [], lastMonth: -1 }).labels;
 }
 
 export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatmapProps) {
@@ -167,9 +164,7 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
                       isFuture
                         ? "bg-stone-900 cursor-not-allowed"
                         : getColorClass(activity.count)
-                    } ${isToday ? "ring-1 ring-primary-400" : ""} ${
-                      activity.count > 0 ? "cursor-pointer" : "cursor-default"
-                    }`}
+                    } ${isToday ? "ring-1 ring-primary-400" : ""}`}
                     style={{ width: "13px", height: "13px" }}
                     title={`${formattedDate}: ${activity.count} book${activity.count !== 1 ? "s" : ""} finished`}
                     aria-label={`${formattedDate}: ${activity.count} book${activity.count !== 1 ? "s" : ""} finished`}

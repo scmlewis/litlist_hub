@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { StickyNote, Edit2, Save, X, Loader2 } from "lucide-react";
 
 interface BookNotesProps {
@@ -26,14 +26,13 @@ export function BookNotes({
   const [isSaving, setIsSaving] = useState(false);
   const notesRef = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    setNotes(initialNotes || "");
-    setReview(initialReview || "");
-  }, [initialNotes, initialReview, bookId]);
+  const hasContent = useMemo(
+    () => Boolean(initialNotes || initialReview),
+    [initialNotes, initialReview]
+  );
 
   const handleEdit = () => {
     setIsEditing(true);
-    setTimeout(() => notesRef.current?.focus(), 100);
   };
 
   const handleCancel = () => {
@@ -57,7 +56,16 @@ export function BookNotes({
     }
   };
 
-  const hasContent = initialNotes || initialReview;
+  useEffect(() => {
+    setNotes(initialNotes || "");
+    setReview(initialReview || "");
+  }, [initialNotes, initialReview, bookId]);
+
+  useEffect(() => {
+    if (isEditing) {
+      notesRef.current?.focus();
+    }
+  }, [isEditing]);
 
   if (compact) {
     // Compact view for list display
@@ -65,7 +73,7 @@ export function BookNotes({
       return (
         <button
           onClick={handleEdit}
-          className="text-xs text-stone-500 hover:text-stone-400 flex items-center gap-1 transition-colors cursor-pointer"
+          className="text-xs text-stone-500 hover:text-stone-400 flex items-center gap-1 transition-colors"
         >
           <StickyNote className="w-3 h-3" />
           Add notes
@@ -88,7 +96,7 @@ export function BookNotes({
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="px-2 py-1 text-xs bg-primary-600 hover:bg-primary-700 text-white rounded transition-colors disabled:opacity-50 cursor-pointer flex items-center gap-1"
+              className="px-2 py-1 text-xs bg-primary-600 hover:bg-primary-700 text-white rounded transition-colors disabled:opacity-50 flex items-center gap-1"
             >
               {isSaving ? (
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -99,7 +107,7 @@ export function BookNotes({
             </button>
             <button
               onClick={handleCancel}
-              className="px-2 py-1 text-xs bg-stone-700 hover:bg-stone-600 text-stone-300 rounded transition-colors cursor-pointer"
+              className="px-2 py-1 text-xs bg-stone-700 hover:bg-stone-600 text-stone-300 rounded transition-colors"
             >
               Cancel
             </button>
@@ -115,7 +123,7 @@ export function BookNotes({
         </p>
         <button
           onClick={handleEdit}
-          className="absolute -right-1 -top-1 p-1 opacity-0 group-hover:opacity-100 transition-opacity bg-stone-800 rounded cursor-pointer"
+          className="absolute -right-1 -top-1 p-1 opacity-0 group-hover:opacity-100 transition-opacity bg-stone-800 rounded"
         >
           <Edit2 className="w-3 h-3 text-stone-400" />
         </button>
@@ -134,7 +142,7 @@ export function BookNotes({
         {!isEditing && (
           <button
             onClick={handleEdit}
-            className="p-1 text-stone-400 hover:text-stone-300 transition-colors cursor-pointer"
+            className="p-1 text-stone-400 hover:text-stone-300 transition-colors"
           >
             <Edit2 className="w-4 h-4" />
           </button>
@@ -174,7 +182,7 @@ export function BookNotes({
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm rounded-lg transition-colors disabled:opacity-50 cursor-pointer flex items-center gap-2"
+              className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
             >
               {isSaving ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -185,7 +193,7 @@ export function BookNotes({
             </button>
             <button
               onClick={handleCancel}
-              className="px-4 py-2 bg-stone-700 hover:bg-stone-600 text-stone-300 text-sm rounded-lg transition-colors cursor-pointer flex items-center gap-2"
+              className="px-4 py-2 bg-stone-700 hover:bg-stone-600 text-stone-300 text-sm rounded-lg transition-colors flex items-center gap-2"
             >
               <X className="w-4 h-4" />
               Cancel

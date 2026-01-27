@@ -29,10 +29,6 @@ export function GoalsPageClient() {
   const [editTarget, setEditTarget] = useState(12);
   const { showToast } = useToast();
 
-  useEffect(() => {
-    fetchGoal();
-  }, [year]);
-
   const fetchGoal = async () => {
     setIsLoading(true);
     try {
@@ -79,6 +75,10 @@ export function GoalsPageClient() {
   const progress = goal ? Math.min((booksRead / goal.target) * 100, 100) : 0;
   const isComplete = goal && booksRead >= goal.target;
 
+  useEffect(() => {
+    fetchGoal();
+  }, [year]);
+
   return (
     <div className="max-w-2xl mx-auto">
       {/* Header */}
@@ -97,7 +97,7 @@ export function GoalsPageClient() {
       <div className="flex items-center justify-center gap-4 mb-8">
         <button
           onClick={() => setYear(year - 1)}
-          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer"
+          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
@@ -107,7 +107,7 @@ export function GoalsPageClient() {
         <button
           onClick={() => setYear(year + 1)}
           disabled={year >= new Date().getFullYear() + 1}
-          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -205,7 +205,7 @@ export function GoalsPageClient() {
               <span className="text-stone-300">books</span>
               <button
                 onClick={saveGoal}
-                className="p-2 text-primary-400 hover:bg-primary-900/30 rounded-xl transition-colors cursor-pointer"
+                className="p-2 text-primary-400 hover:bg-primary-900/30 rounded-xl transition-colors"
               >
                 <Check className="w-5 h-5" />
               </button>
@@ -214,7 +214,7 @@ export function GoalsPageClient() {
                   setIsEditing(false);
                   setEditTarget(goal.target);
                 }}
-                className="p-2 text-stone-400 hover:bg-stone-700 rounded-xl transition-colors cursor-pointer"
+                className="p-2 text-stone-400 hover:bg-stone-700 rounded-xl transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -222,7 +222,7 @@ export function GoalsPageClient() {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="mx-auto flex items-center gap-2 px-4 py-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer"
+              className="mx-auto flex items-center gap-2 px-4 py-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors"
             >
               <Edit3 className="w-4 h-4" />
               Edit Goal
@@ -256,7 +256,7 @@ export function GoalsPageClient() {
               <span className="text-stone-300">books</span>
               <button
                 onClick={saveGoal}
-                className="px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 transition-colors cursor-pointer"
+                className="px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 transition-colors"
               >
                 Set Goal
               </button>
@@ -264,7 +264,7 @@ export function GoalsPageClient() {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 transition-all duration-200"
             >
               <Target className="w-5 h-5" />
               Set a Goal

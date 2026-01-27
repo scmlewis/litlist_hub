@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReadingHeatmap } from "@/components/ReadingHeatmap";
@@ -65,10 +65,6 @@ export function StatsPageClient() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedDay, setSelectedDay] = useState<{ date: string; books: DayBook[] } | null>(null);
 
-  useEffect(() => {
-    fetchStats();
-  }, [year]);
-
   const fetchStats = async () => {
     setIsLoading(true);
     try {
@@ -84,9 +80,16 @@ export function StatsPageClient() {
     }
   };
 
-  const maxBooksInMonth = stats?.booksPerMonth?.length 
-    ? Math.max(...stats.booksPerMonth, 1) 
-    : 1;
+  const maxBooksInMonth = useMemo(
+    () => stats?.booksPerMonth?.length 
+      ? Math.max(...stats.booksPerMonth, 1) 
+      : 1,
+    [stats?.booksPerMonth]
+  );
+
+  useEffect(() => {
+    fetchStats();
+  }, [year]);
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -107,7 +110,7 @@ export function StatsPageClient() {
         <button
           onClick={() => setYear(year - 1)}
           disabled={stats?.yearsWithData && !stats.yearsWithData.includes(year - 1) && year - 1 < Math.min(...(stats.yearsWithData || [new Date().getFullYear()]))}
-          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
@@ -117,7 +120,7 @@ export function StatsPageClient() {
         <button
           onClick={() => setYear(year + 1)}
           disabled={year >= new Date().getFullYear()}
-          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-5 h-5" />
         </button>

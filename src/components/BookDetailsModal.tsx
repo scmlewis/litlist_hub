@@ -48,6 +48,21 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
     }
   }, [bookKey]);
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) onClose();
+  };
+
+  const handleAddToList = () => {
+    if (details && onAddToList) {
+      onAddToList(
+        details.key,
+        details.title,
+        details.authors?.join(", ") || "Unknown Author"
+      );
+      onClose();
+    }
+  };
+
   useEffect(() => {
     fetchDetails();
   }, [fetchDetails]);
@@ -70,21 +85,6 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
 
   if (!bookKey) return null;
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) onClose();
-  };
-
-  const handleAddToList = () => {
-    if (details && onAddToList) {
-      onAddToList(
-        details.key,
-        details.title,
-        details.authors?.join(", ") || "Unknown Author"
-      );
-      onClose();
-    }
-  };
-
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
@@ -94,7 +94,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-stone-800/50 hover:bg-stone-700/50 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-stone-800/50 hover:bg-stone-700/50 transition-colors"
         >
           <X className="w-5 h-5 text-stone-400" />
         </button>
@@ -112,7 +112,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
               <p className="text-red-400 mb-4">{error}</p>
               <button
                 onClick={fetchDetails}
-                className="px-4 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors cursor-pointer"
+                className="px-4 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors"
               >
                 Try Again
               </button>
@@ -231,7 +231,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                 {onAddToList && (
                   <button
                     onClick={handleAddToList}
-                    className="flex-1 min-w-[200px] py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-colors cursor-pointer flex items-center justify-center gap-2"
+                    className="flex-1 min-w-[200px] py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
                   >
                     <BookOpen className="w-5 h-5" />
                     Add to List

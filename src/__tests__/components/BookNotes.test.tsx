@@ -113,4 +113,71 @@ describe("BookNotes", () => {
     // Should show original notes again
     expect(screen.getByText("Original notes")).toBeInTheDocument();
   });
+
+  it("focuses textarea automatically when entering edit mode", async () => {
+    const user = userEvent.setup();
+    render(<BookNotes {...defaultProps} compact />);
+    
+    await user.click(screen.getByText(/add notes/i));
+    
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText(/personal notes/i)).toHaveFocus();
+    });
+  });
+
+  it("trims whitespace when saving notes", async () => {
+    const user = userEvent.setup();
+    const onSave = vi.fn().mockResolvedValue(undefined);
+    
+    render(<BookNotes {...defaultProps} onSave={onSave} compact />);
+    
+    await user.click(screen.getByText(/add notes/i));
+    await user.type(screen.getByPlaceholderText(/personal notes/i), "  spaces  ");
+    await user.click(screen.getByRole("button", { name: /save/i }));
+    
+    await waitFor(() => {
+      expect(onSave).toHaveBeenCalledWith("spaces", null);
+    });
+  });
+
+  it("saves null when notes are empty string", async () => {
+    const user = userEvent.setup();
+    const onSave = vi.fn().mockResolvedValue(undefined);
+    
+    render(<BookNotes {...defaultProps} onSave={onSave} compact />);
+    
+    await user.click(screen.getByText(/add notes/i));
+    await user.click(screen.getByRole("button", { name: /save/i }));
+    
+    await waitFor(() => {
+      expect(onSave).toHaveBeenCalledWith(null, null);
+    });
+  });
+
+  it("updates notes when initialNotes prop changes", () => {
+    const { rerender } = render(
+      <BookNotes {...defaultProps} initialNotes="First" compact />
+    );
+    
+    expect(screen.getByText("First")).toBeInTheDocument();
+    
+    rerender(
+      <BookNotes {...defaultProps} initialNotes="Second" compact />
+    );
+    
+    expect(screen.getByText("Second")).toBeInTheDocument();
+  });
+
+  it("shows loading state while saving", async () => {
+    const user = userEvent.setup();
+    const onSave = vi.fn(() => new Promise(resolve => setTimeout(resolve, 100)));
+    
+    render(<BookNotes {...defaultProps} onSave={onSave} compact />);
+    
+    await user.click(screen.getByText(/add notes/i));
+    await user.type(screen.getByPlaceholderText(/personal notes/i), "Test");
+    await user.click(screen.getByRole("button", { name: /save/i }));
+    
+    expect(screen.getByRole("button", { name: /save/i })).toBeDisabled();
+  });
 });

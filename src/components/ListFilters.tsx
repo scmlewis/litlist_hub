@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { 
   Filter, 
   SortAsc, 
@@ -67,9 +67,21 @@ export function ListFilters({
   filteredCount,
 }: ListFiltersProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const hasActiveFilters = filterStatus !== null || filterMinRating !== null;
-  const isFiltered = filteredCount !== totalBooks;
-  const activeFilterCount = (filterStatus ? 1 : 0) + (filterMinRating ? 1 : 0);
+  
+  const hasActiveFilters = useMemo(
+    () => filterStatus !== null || filterMinRating !== null,
+    [filterStatus, filterMinRating]
+  );
+  
+  const isFiltered = useMemo(
+    () => filteredCount !== totalBooks,
+    [filteredCount, totalBooks]
+  );
+  
+  const activeFilterCount = useMemo(
+    () => (filterStatus ? 1 : 0) + (filterMinRating ? 1 : 0),
+    [filterStatus, filterMinRating]
+  );
 
   const clearFilters = () => {
     onFilterStatusChange(null);

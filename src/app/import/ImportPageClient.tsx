@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/Toast";
 import { Upload, FileText, CheckCircle, AlertCircle, BookOpen, ArrowRight, Loader2, X } from "lucide-react";
@@ -194,15 +194,18 @@ export function ImportPageClient() {
     setImportResult(null);
   };
 
-  const shelfCounts = parsedBooks.reduce(
-    (acc, book) => {
-      const shelf = book.shelf.toLowerCase();
-      if (shelf === "read") acc.read++;
-      else if (shelf === "currently-reading" || shelf === "reading") acc.reading++;
-      else acc.toRead++;
-      return acc;
-    },
-    { read: 0, reading: 0, toRead: 0 }
+  const shelfCounts = useMemo(
+    () => parsedBooks.reduce(
+      (acc, book) => {
+        const shelf = book.shelf.toLowerCase();
+        if (shelf === "read") acc.read++;
+        else if (shelf === "currently-reading" || shelf === "reading") acc.reading++;
+        else acc.toRead++;
+        return acc;
+      },
+      { read: 0, reading: 0, toRead: 0 }
+    ),
+    [parsedBooks]
   );
 
   return (
