@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Image from "next/image";
 import {
   DndContext,
   DragEndEvent,
@@ -282,12 +283,63 @@ export function BookList({
           </motion.div>
         </SortableContext>
 
-        <DragOverlay>
-          {activeId && (
-            <div className="glass-card rounded-xl p-4 opacity-90 shadow-2xl cursor-grabbing">
-              {books.find((b) => b.id === activeId)?.book.title}
-            </div>
-          )}
+        <DragOverlay dropAnimation={{
+          duration: 200,
+          easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
+        }}>
+          {activeId && (() => {
+            const activeBook = books.find((b) => b.id === activeId);
+            if (!activeBook) return null;
+            
+            return (
+              <div className="glass-card rounded-xl p-4 shadow-2xl border-2 border-accent-500/50 cursor-grabbing transform scale-105 bg-[var(--card-bg)]">
+                <div className="flex items-start gap-4">
+                  {/* Book cover */}
+                  <div className="flex-shrink-0 w-16 h-24 bg-primary-950 rounded-lg overflow-hidden">
+                    {activeBook.book.coverUrl ? (
+                      <Image
+                        src={activeBook.book.coverUrl}
+                        alt={activeBook.book.title}
+                        width={64}
+                        height={96}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-primary-700">
+                        <span className="text-2xl">📚</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Book info */}
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-primary-100 mb-1 truncate">
+                      {activeBook.book.title}
+                    </h4>
+                    <p className="text-sm text-primary-400 mb-2 truncate">
+                      {activeBook.book.authors.join(", ") || "Unknown Author"}
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                        activeBook.status === "DONE" 
+                          ? "bg-emerald-500/20 text-emerald-400"
+                          : activeBook.status === "READING"
+                          ? "bg-blue-500/20 text-blue-400"
+                          : "bg-amber-500/20 text-amber-400"
+                      }`}>
+                        {activeBook.status === "DONE" ? "Done" : activeBook.status === "READING" ? "Reading" : "Want to Read"}
+                      </span>
+                      {activeBook.rating && (
+                        <span className="text-amber-400 text-xs">
+                          {"★".repeat(activeBook.rating)}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
         </DragOverlay>
       </DndContext>
     </div>
