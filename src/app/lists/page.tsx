@@ -19,7 +19,7 @@ export default async function ListsPage() {
     include: {
       books: {
         include: { book: true },
-        orderBy: { order: "asc" },
+        orderBy: { addedAt: "asc" },
       },
       _count: { select: { books: true } },
     },
@@ -29,9 +29,9 @@ export default async function ListsPage() {
   // Parse JSON authors field for client component and cast status
   const lists = rawLists.map((list) => ({
     ...list,
-    books: list.books.map((lb) => ({
+    books: list.books.map((lb, index) => ({
       ...lb,
-      order: lb.order,
+      order: lb.order ?? index,
       status: lb.status as ReadingStatus,
       book: {
         ...lb.book,
