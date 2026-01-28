@@ -14,31 +14,64 @@ export default async function ListsPage() {
     redirect("/api/auth/signin");
   }
 
-  const rawLists = await prisma.list.findMany({
-    where: { userId: session.user.id },
-    include: {
-      books: {
-        include: { book: true },
-        orderBy: { addedAt: "asc" },
-      },
-      _count: { select: { books: true } },
-    },
-    orderBy: { updatedAt: "desc" },
-  });
-
-  // Parse JSON authors field for client component and cast status
-  const lists = rawLists.map((list) => ({
-    ...list,
-    books: list.books.map((lb, index) => ({
-      ...lb,
-      order: lb.order ?? index,
-      status: lb.status as ReadingStatus,
+  let lists: Array<{
+    id: string;
+    name: string;
+    shareId: string;
+    isPublic: boolean;
+    books: Array<{
+      id: string;
+      status: ReadingStatus;
+      bookId: string;
       book: {
-        ...lb.book,
-        authors: JSON.parse(lb.book.authors) as string[],
+        id: string;
+        openLibraryKey: string;
+        title: string;
+        authors: string[];
+        coverUrl: string | null;
+        publishYear: number | null;
+        pageCount: number | null;
+      };
+      rating: number | null;
+      currentPage: number | null;
+      totalPages: number | null;
+      notes: string | null;
+      review: string | null;
+      order: number;
+    }>;
+    _count: { books: number };
+  }> = [];
+
+  try {
+    const rawLists = await prisma.list.findMany({
+      where: { userId: session.user.id },
+      include: {
+        books: {
+          include: { book: true },
+          orderBy: { addedAt: "asc" },
+        },
+        _count: { select: { books: true } },
       },
-    })),
-  }));
+      orderBy: { updatedAt: "desc" },
+    });
+
+    // Parse JSON authors field for client component and cast status
+    lists = rawLists.map((list) => ({
+      ...list,
+      books: list.books.map((lb, index) => ({
+        ...lb,
+        order: (lb as { order?: number }).order ?? index,
+        status: lb.status as ReadingStatus,
+        book: {
+          ...lb.book,
+          authors: JSON.parse(lb.book.authors) as string[],
+        },
+      })),
+    }));
+  } catch (error) {
+    console.error("Failed to fetch lists:", error);
+    // Return empty lists on error - the client will show empty state
+  }
 
   return (
     <div className="max-w-4xl mx-auto">
