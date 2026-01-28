@@ -284,7 +284,7 @@ export function BookList({
         </SortableContext>
 
         <DragOverlay dropAnimation={{
-          duration: 200,
+          duration: 250,
           easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
         }}>
           {activeId && (() => {
@@ -292,7 +292,7 @@ export function BookList({
             if (!activeBook) return null;
             
             return (
-              <div className="glass-card rounded-xl p-4 shadow-2xl border-2 border-accent-500/50 cursor-grabbing transform scale-105 bg-[var(--card-bg)]">
+              <div className="glass-card rounded-xl p-4 shadow-2xl border-2 border-accent-500 cursor-grabbing transform scale-110 bg-[var(--card-bg)] animate-pulse">
                 <div className="flex items-start gap-4">
                   {/* Book cover */}
                   <div className="flex-shrink-0 w-16 h-24 bg-primary-950 rounded-lg overflow-hidden">

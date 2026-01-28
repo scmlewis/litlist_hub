@@ -92,7 +92,7 @@ export function BookListItem({
         visible: { opacity: 1, y: 0 },
       }}
       className={`glass-card rounded-xl p-4 transition-all duration-200 ${
-        isDragging ? "opacity-50 scale-105" : ""
+        isDragging ? "opacity-30 scale-95 ring-2 ring-accent-500/30 ring-dashed" : ""
       } ${selected ? "ring-2 ring-accent-500" : ""} ${
         focused ? "ring-2 ring-primary-500" : ""
       }`}
