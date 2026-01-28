@@ -24,7 +24,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       include: {
         books: {
           include: { book: true },
-          orderBy: { addedAt: "desc" },
+          orderBy: { order: "asc" },
         },
       },
     });

@@ -16,7 +16,7 @@ export async function GET() {
       include: {
         books: {
           include: { book: true },
-          orderBy: { addedAt: "desc" },
+          orderBy: { order: "asc" },
         },
         _count: { select: { books: true } },
       },

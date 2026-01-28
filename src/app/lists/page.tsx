@@ -19,7 +19,7 @@ export default async function ListsPage() {
     include: {
       books: {
         include: { book: true },
-        orderBy: { addedAt: "desc" },
+        orderBy: { order: "asc" },
       },
       _count: { select: { books: true } },
     },
@@ -31,6 +31,7 @@ export default async function ListsPage() {
     ...list,
     books: list.books.map((lb) => ({
       ...lb,
+      order: lb.order,
       status: lb.status as ReadingStatus,
       book: {
         ...lb.book,

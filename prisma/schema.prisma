@@ -97,6 +97,7 @@ model ListBook {
   totalPages  Int?      // Total pages (can override book.pageCount)
   startDate   DateTime? // When started reading
   finishDate  DateTime? // When finished reading
+  order       Int       @default(0) // Custom order within list (for drag-and-drop)
   listId      String
   list        List      @relation(fields: [listId], references: [id], onDelete: Cascade)
   bookId      String
@@ -107,6 +108,7 @@ model ListBook {
   @@unique([listId, bookId])
   @@index([listId])
   @@index([bookId])
+  @@index([listId, order])
 }
 
 model ReadingGoal {

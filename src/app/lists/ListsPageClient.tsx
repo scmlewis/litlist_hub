@@ -11,6 +11,13 @@ import { BookDetailsModal } from "@/components/BookDetailsModal";
 import { ListFilters } from "@/components/ListFilters";
 import { HighlightMatch } from "@/components/HighlightMatch";
 import { useToast } from "@/components/Toast";
+import { BookList } from "@/components/lists/BookList";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { KeyboardShortcutsModal } from "@/components/ui/keyboard-shortcuts-modal";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { 
   BookOpen, 
   BookMarked, 
@@ -56,6 +63,7 @@ interface ListBook {
   totalPages: number | null;
   notes: string | null;
   review: string | null;
+  order: number;
 }
 
 interface List {
@@ -81,7 +89,15 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
   const [expandedNotes, setExpandedNotes] = useState<string | null>(null);
   const [editingListId, setEditingListId] = useState<string | null>(null);
   const [editingListName, setEditingListName] = useState("");
+  const [originalListName, setOriginalListName] = useState("");
   const { showToast } = useToast();
+
+  // Dialog state
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  const [newListName, setNewListName] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string; type: "list" | "book"; listId?: string } | null>(null);
 
   // Filter & Sort State (resets on page load - Option A)
   const [filterStatus, setFilterStatus] = useState<ReadingStatus | null>(null);
@@ -167,16 +183,21 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
     return results;
   }, [searchQuery, searchScope, lists]);
 
+  const openCreateDialog = () => {
+    setNewListName("");
+    setShowCreateDialog(true);
+  };
+
   const createList = async () => {
-    const name = prompt("Enter list name:");
-    if (!name?.trim()) return;
+    const name = newListName.trim();
+    if (!name) return;
 
     setLoading("create", true);
     try {
       const response = await fetch("/api/lists", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim() }),
+        body: JSON.stringify({ name }),
       });
 
       if (response.ok) {
@@ -184,6 +205,8 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
         setLists((prev) => [{ ...data.list, books: [], _count: { books: 0 } }, ...prev]);
         setExpandedList(data.list.id);
         showToast("success", `Created "${name}"`);
+        setShowCreateDialog(false);
+        setNewListName("");
       }
     } catch {
       showToast("error", "Failed to create list");
@@ -192,8 +215,14 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
     }
   };
 
-  const deleteList = async (listId: string, listName: string) => {
-    if (!confirm(`Delete "${listName}"? This cannot be undone.`)) return;
+  const openDeleteDialog = (listId: string, listName: string) => {
+    setDeleteTarget({ id: listId, name: listName, type: "list" });
+    setShowDeleteDialog(true);
+  };
+
+  const deleteList = async () => {
+    if (!deleteTarget) return;
+    const { id: listId, name: listName } = deleteTarget;
 
     // Optimistic update
     const previousLists = lists;
@@ -211,6 +240,19 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
       setLists(previousLists);
       showToast("error", "Failed to delete list");
     }
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    
+    if (deleteTarget.type === "list") {
+      await deleteList();
+    } else if (deleteTarget.type === "book" && deleteTarget.listId) {
+      await removeBook(deleteTarget.listId, deleteTarget.id, deleteTarget.name);
+    }
+    
+    setDeleteTarget(null);
+    setShowDeleteDialog(false);
   };
 
   const togglePublic = async (listId: string, isPublic: boolean) => {
@@ -245,11 +287,13 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
   const startEditingList = (listId: string, currentName: string) => {
     setEditingListId(listId);
     setEditingListName(currentName);
+    setOriginalListName(currentName);
   };
 
   const cancelEditingList = () => {
     setEditingListId(null);
     setEditingListName("");
+    setOriginalListName("");
   };
 
   const renameList = async (listId: string) => {
@@ -259,13 +303,16 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
       return;
     }
 
-    const previousLists = lists;
+    // Capture originalListName in local variable before clearing state
+    const savedOriginalName = originalListName;
     
     // Optimistic update
     setLists((prev) =>
       prev.map((l) => (l.id === listId ? { ...l, name: newName } : l))
     );
     setEditingListId(null);
+    setEditingListName("");
+    setOriginalListName("");
     showToast("success", `Renamed to "${newName}"`);
 
     try {
@@ -276,11 +323,17 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
       });
 
       if (!response.ok) {
-        setLists(previousLists);
+        // Revert using the saved original name
+        setLists((prev) =>
+          prev.map((l) => (l.id === listId ? { ...l, name: savedOriginalName } : l))
+        );
         showToast("error", "Failed to rename list");
       }
     } catch {
-      setLists(previousLists);
+      // Revert using the saved original name
+      setLists((prev) =>
+        prev.map((l) => (l.id === listId ? { ...l, name: savedOriginalName } : l))
+      );
       showToast("error", "Failed to rename list");
     }
   };
@@ -459,44 +512,84 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
     showToast("success", "Share link copied to clipboard!");
   };
 
-  // Keyboard shortcut for search (Ctrl/Cmd + K)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        searchInputRef.current?.focus();
+  const reorderBooks = async (listId: string, bookOrders: Array<{ id: string; order: number }>) => {
+    // Optimistic update
+    const previousLists = lists;
+    setLists((prev) =>
+      prev.map((l) => {
+        if (l.id === listId) {
+          const reorderedBooks = [...l.books].sort((a, b) => {
+            const aOrder = bookOrders.find((bo) => bo.id === a.id)?.order ?? 0;
+            const bOrder = bookOrders.find((bo) => bo.id === b.id)?.order ?? 0;
+            return aOrder - bOrder;
+          });
+          return { ...l, books: reorderedBooks };
+        }
+        return l;
+      })
+    );
+
+    try {
+      const response = await fetch(`/api/lists/${listId}/books/reorder`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookOrders }),
+      });
+
+      if (!response.ok) {
+        setLists(previousLists);
+        showToast("error", "Failed to reorder books");
       }
-      if (e.key === "Escape" && searchQuery) {
-        setSearchQuery("");
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [searchQuery]);
+    } catch {
+      setLists(previousLists);
+      showToast("error", "Failed to reorder books");
+    }
+  };
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts(
+    [
+      {
+        key: "k",
+        ctrl: true,
+        handler: (e) => {
+          e.preventDefault();
+          searchInputRef.current?.focus();
+        },
+      },
+      {
+        key: "Escape",
+        handler: () => {
+          if (searchQuery) {
+            setSearchQuery("");
+          }
+        },
+      },
+      {
+        key: "?",
+        shift: true,
+        handler: () => setShowShortcuts(true),
+      },
+    ],
+    true
+  );
 
   if (lists.length === 0) {
     return (
-      <div className="text-center py-16 glass-card rounded-3xl">
-        <div className="relative inline-block mb-6">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-xl opacity-30" />
-          <div className="relative p-5 bg-gradient-to-br from-primary-900/50 to-primary-800/50 rounded-full">
-            <BookMarked className="w-10 h-10 text-primary-400" />
-          </div>
-        </div>
-        <h3 className="text-xl font-bold text-white mb-2">
-          No lists yet
-        </h3>
-        <p className="text-stone-400 mb-6 max-w-sm mx-auto">
-          Create your first reading list to start tracking your books
-        </p>
-        <button
-          onClick={createList}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 transition-all duration-200"
-        >
-          <Plus className="w-5 h-5" />
-          Create Your First List
-        </button>
-      </div>
+      <EmptyState
+        icon={<BookMarked />}
+        title="No lists yet"
+        description="Create your first reading list to start tracking your books"
+        action={
+          <Button
+            onClick={openCreateDialog}
+            className="bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            Create Your First List
+          </Button>
+        }
+      />
     );
   }
 
@@ -633,7 +726,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
         /* Normal List View */
         <>
           <button
-            onClick={createList}
+            onClick={openCreateDialog}
             disabled={loadingStates["create"]}
             className="group w-full flex items-center justify-center gap-2 p-3 sm:p-5 border-2 border-dashed border-stone-600 rounded-2xl text-stone-400 hover:border-primary-500 hover:text-primary-400 hover:bg-primary-900/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
@@ -747,7 +840,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                 </button>
               )}
               <button
-                onClick={() => deleteList(list.id, list.name)}
+                onClick={() => openDeleteDialog(list.id, list.name)}
                 className="p-1.5 sm:p-2 text-stone-400 hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200"
               >
                 <Trash2 className="w-4 h-4" />
@@ -794,171 +887,22 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                   </button>
                 </div>
               ) : (
-                <div className="divide-y divide-[var(--card-border)]">
-                  {filteredBooks.map((listBook) => (
-                    <div
-                      key={listBook.id}
-                      className="p-3 sm:p-4 hover:bg-stone-800/50 transition-all duration-200"
-                    >
-                      {/* Mobile: Stack layout, Desktop: Horizontal */}
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                        {/* Top row: Cover + Title/Author */}
-                        <div className="flex items-start gap-3">
-                          <div 
-                            className="w-12 h-16 sm:w-14 sm:h-20 relative flex-shrink-0 rounded-lg overflow-hidden shadow-md hover:ring-2 hover:ring-primary-400 transition-all"
-                            onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
-                          >
-                            {listBook.book.coverUrl ? (
-                              <Image
-                                src={listBook.book.coverUrl}
-                                alt={listBook.book.title}
-                                fill
-                                className="object-cover"
-                                sizes="56px"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-900/50 to-primary-800/50">
-                                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-primary-400" />
-                              </div>
-                            )}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h4 
-                              className="font-semibold text-white line-clamp-2 sm:line-clamp-1 hover:text-primary-400 transition-colors text-sm sm:text-base"
-                              onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
-                            >
-                              {listBook.book.title}
-                            </h4>
-                            <p className="text-xs sm:text-sm text-stone-400 truncate">
-                              {listBook.book.authors.join(", ") || "Unknown Author"}
-                            </p>
-                            {/* Mobile: Show rating inline with title */}
-                            <div className="flex items-center gap-2 mt-1 sm:hidden">
-                              <StarRating
-                                rating={listBook.rating}
-                                onChange={(rating) => updateBookRating(list.id, listBook.bookId, rating)}
-                                editable
-                                size="sm"
-                              />
-                            </div>
-                          </div>
-                          {/* Mobile: Quick remove button */}
-                          <button
-                            onClick={() => removeBook(list.id, listBook.bookId, listBook.book.title)}
-                            className="sm:hidden p-1.5 text-stone-500 hover:text-red-500 hover:bg-red-900/30 rounded-lg transition-all duration-200"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-                        
-                        {/* Mobile: Status + Progress row */}
-                        <div className="flex sm:hidden items-center gap-2 flex-wrap pl-15">
-                          <StatusBadge
-                            status={listBook.status}
-                            onChange={(status) => updateBookStatus(list.id, listBook.bookId, status)}
-                            editable
-                          />
-                          {listBook.status === "READING" && (
-                            <ReadingProgress
-                              currentPage={listBook.currentPage}
-                              totalPages={listBook.totalPages}
-                              onUpdate={(current, total) => 
-                                updateReadingProgress(list.id, listBook.bookId, current, total)
-                              }
-                              editable
-                              compact
-                            />
-                          )}
-                          <button
-                            onClick={() => setExpandedNotes(
-                              expandedNotes === listBook.id ? null : listBook.id
-                            )}
-                            className={`flex items-center gap-1 text-xs transition-colors ${
-                              listBook.notes || listBook.review
-                                ? "text-amber-400 hover:text-amber-300"
-                                : "text-stone-500 hover:text-stone-400"
-                            }`}
-                          >
-                            <StickyNote className="w-3 h-3" />
-                            {listBook.notes || listBook.review ? "Notes" : "Add"}
-                          </button>
-                        </div>
-
-                        {/* Desktop: Original inline layout */}
-                        <div className="hidden sm:flex flex-1 min-w-0 items-center gap-4">
-                          <div className="flex items-center min-w-[120px]">
-                            <StarRating
-                              rating={listBook.rating}
-                              onChange={(rating) => updateBookRating(list.id, listBook.bookId, rating)}
-                              editable
-                              size="sm"
-                            />
-                          </div>
-                          {listBook.status === "READING" && (
-                            <div className="flex-shrink-0">
-                              <ReadingProgress
-                                currentPage={listBook.currentPage}
-                                totalPages={listBook.totalPages}
-                                onUpdate={(current, total) => 
-                                  updateReadingProgress(list.id, listBook.bookId, current, total)
-                                }
-                                editable
-                                compact
-                              />
-                            </div>
-                          )}
-                          <button
-                            onClick={() => setExpandedNotes(
-                              expandedNotes === listBook.id ? null : listBook.id
-                            )}
-                            className={`flex items-center gap-1.5 text-xs font-medium whitespace-nowrap transition-colors ${
-                              listBook.notes || listBook.review
-                                ? "text-amber-400 hover:text-amber-300"
-                                : "text-stone-500 hover:text-stone-400"
-                            }`}
-                          >
-                            <StickyNote className="w-3.5 h-3.5" />
-                            <span>{listBook.notes || listBook.review ? "View notes" : "Add notes"}</span>
-                          </button>
-                        </div>
-                        
-                        {/* Desktop: Action buttons */}
-                        <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
-                          <button
-                            onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
-                            className="p-2 text-stone-400 hover:text-blue-400 hover:bg-blue-900/30 rounded-xl transition-all duration-200"
-                            title="View details"
-                          >
-                            <Info className="w-4 h-4" />
-                          </button>
-                          <StatusBadge
-                            status={listBook.status}
-                            onChange={(status) => updateBookStatus(list.id, listBook.bookId, status)}
-                            editable
-                          />
-                          <button
-                            onClick={() => removeBook(list.id, listBook.bookId, listBook.book.title)}
-                            className="p-2 text-stone-400 hover:text-red-500 hover:bg-red-900/30 rounded-xl transition-all duration-200"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Expandable notes section */}
-                      {expandedNotes === listBook.id && (
-                        <BookNotes
-                          bookId={listBook.bookId}
-                          listId={list.id}
-                          initialNotes={listBook.notes}
-                          initialReview={listBook.review}
-                          onSave={(notes, review) => 
-                            updateBookNotes(list.id, listBook.bookId, notes, review)
-                          }
-                        />
-                      )}
-                    </div>
-                  ))}
+                <div className="p-4">
+                  <BookList
+                    listId={list.id}
+                    books={filteredBooks}
+                    onUpdateStatus={(bookId, status) => updateBookStatus(list.id, bookId, status as ReadingStatus)}
+                    onUpdateRating={(bookId, rating) => updateBookRating(list.id, bookId, rating ?? 0)}
+                    onUpdateProgress={(bookId, current, total) => 
+                      updateReadingProgress(list.id, bookId, current, total)
+                    }
+                    onUpdateNotes={(bookId, notes, review) =>
+                      updateBookNotes(list.id, bookId, notes, review)
+                    }
+                    onRemoveBook={(bookId, title) => removeBook(list.id, bookId, title)}
+                    onReorder={(bookOrders) => reorderBooks(list.id, bookOrders)}
+                    onOpenDetails={setSelectedBookKey}
+                  />
                 </div>
               )}
             </div>
@@ -968,6 +912,48 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
           })}
         </>
       )}
+
+      {/* Dialogs */}
+      <ConfirmDialog
+        open={showCreateDialog}
+        onOpenChange={setShowCreateDialog}
+        title="Create New List"
+        description="Enter a name for your new reading list."
+        confirmLabel="Create"
+        onConfirm={createList}
+      >
+        <Input
+          value={newListName}
+          onChange={(e) => setNewListName(e.target.value)}
+          placeholder="My Reading List"
+          className="mt-4"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && newListName.trim()) {
+              createList();
+            }
+          }}
+          autoFocus
+        />
+      </ConfirmDialog>
+
+      <ConfirmDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        title={`Delete ${deleteTarget?.type === "list" ? "List" : "Book"}?`}
+        description={
+          deleteTarget?.type === "list"
+            ? `Are you sure you want to delete "${deleteTarget.name}"? This action cannot be undone.`
+            : `Are you sure you want to remove "${deleteTarget?.name}" from this list?`
+        }
+        confirmLabel="Delete"
+        onConfirm={confirmDelete}
+        variant="destructive"
+      />
+
+      <KeyboardShortcutsModal
+        open={showShortcuts}
+        onOpenChange={setShowShortcuts}
+      />
 
       {/* Book Details Modal */}
       <BookDetailsModal

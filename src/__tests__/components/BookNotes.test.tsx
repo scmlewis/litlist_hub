@@ -170,7 +170,7 @@ describe("BookNotes", () => {
 
   it("shows loading state while saving", async () => {
     const user = userEvent.setup();
-    const onSave = vi.fn(() => new Promise(resolve => setTimeout(resolve, 100)));
+    const onSave = vi.fn((): Promise<void> => new Promise(resolve => setTimeout(resolve, 100)));
     
     render(<BookNotes {...defaultProps} onSave={onSave} compact />);
     

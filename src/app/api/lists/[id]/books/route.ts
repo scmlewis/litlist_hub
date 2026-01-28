@@ -67,12 +67,22 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: "Book already in list" }, { status: 409 });
     }
 
+    // Get the max order value to append new book at the end
+    const maxOrderBook = await prisma.listBook.findFirst({
+      where: { listId },
+      orderBy: { order: "desc" },
+      select: { order: true },
+    });
+    
+    const nextOrder = maxOrderBook ? maxOrderBook.order + 1 : 0;
+
     // Add book to list
     const listBook = await prisma.listBook.create({
       data: {
         listId,
         bookId: book.id,
         status: (status as ReadingStatus) || "WANT_TO_READ",
+        order: nextOrder,
       },
       include: { book: true },
     });
