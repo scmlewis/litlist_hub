@@ -5,6 +5,7 @@ import { Providers } from "@/components/Providers";
 import { MobileNav } from "@/components/MobileNav";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { PageTransition } from "@/components/PageTransition";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
 export const metadata: Metadata = {
   title: "LitList Hub - Track Your Reading",
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background text-foreground antialiased">
         <ErrorBoundary>
           <Providers>
+            <ServiceWorkerRegister />
             <Header />
             <main className="container mx-auto px-4 py-6 sm:py-8 pt-20 sm:pt-24 pb-24 md:pb-8">
               <PageTransition>{children}</PageTransition>

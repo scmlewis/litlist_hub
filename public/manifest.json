@@ -3,6 +3,7 @@
   "short_name": "LitList",
   "description": "Track your reading progress, discover new books, and share your lists with friends.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0d0906",
   "theme_color": "#8b5a2b",
