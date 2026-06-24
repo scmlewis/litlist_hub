@@ -30,13 +30,13 @@ describe("StatusBadge", () => {
   it("applies correct styling for READING", () => {
     const { container } = render(<StatusBadge status="READING" />);
     const badge = container.querySelector("span");
-    expect(badge?.className).toContain("primary");
+    expect(badge?.className).toContain("amber");
   });
 
   it("applies correct styling for DONE", () => {
     const { container } = render(<StatusBadge status="DONE" />);
     const badge = container.querySelector("span");
-    expect(badge?.className).toContain("accent");
+    expect(badge?.className).toContain("green");
   });
 
   it("renders as select when editable with onChange", () => {

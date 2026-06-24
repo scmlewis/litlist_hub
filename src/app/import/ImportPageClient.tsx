@@ -212,35 +212,34 @@ export function ImportPageClient() {
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl blur-xl opacity-30" />
-          <div className="relative p-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl">
-            <Upload className="w-8 h-8 text-white" />
+          <div className="relative p-4 bg-primary rounded-2xl">
+            <Upload className="w-8 h-8 text-primary-foreground" />
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-white mb-2">Import from Goodreads</h1>
-        <p className="text-stone-400">
+        <h1 className="text-3xl font-bold text-foreground mb-2">Import from Goodreads</h1>
+        <p className="text-muted-foreground">
           Upload your Goodreads library export to import all your books
         </p>
       </div>
 
       {/* Instructions */}
-      <div className="glass-card rounded-2xl p-6 mb-6">
-        <h2 className="text-lg font-semibold text-white mb-4">How to export from Goodreads:</h2>
-        <ol className="space-y-3 text-stone-300">
+      <div className="bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl p-6 mb-6">
+        <h2 className="text-lg font-semibold text-foreground mb-4">How to export from Goodreads:</h2>
+        <ol className="space-y-3 text-foreground">
           <li className="flex gap-3">
-            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-900/50 text-primary-400 rounded-full text-sm font-medium">1</span>
-            <span>Go to <a href="https://www.goodreads.com/review/import" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline">goodreads.com/review/import</a></span>
+            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary/10 text-primary rounded-full text-sm font-medium">1</span>
+            <span>Go to <a href="https://www.goodreads.com/review/import" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">goodreads.com/review/import</a></span>
           </li>
           <li className="flex gap-3">
-            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-900/50 text-primary-400 rounded-full text-sm font-medium">2</span>
+            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary/10 text-primary rounded-full text-sm font-medium">2</span>
             <span>Click &quot;Export Library&quot; at the top of the page</span>
           </li>
           <li className="flex gap-3">
-            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-900/50 text-primary-400 rounded-full text-sm font-medium">3</span>
+            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary/10 text-primary rounded-full text-sm font-medium">3</span>
             <span>Wait for the export to complete, then download the CSV file</span>
           </li>
           <li className="flex gap-3">
-            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-900/50 text-primary-400 rounded-full text-sm font-medium">4</span>
+            <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary/10 text-primary rounded-full text-sm font-medium">4</span>
             <span>Upload the file below</span>
           </li>
         </ol>
@@ -249,12 +248,12 @@ export function ImportPageClient() {
       {/* File Upload */}
       {!file ? (
         <label className="block cursor-pointer">
-          <div className="border-2 border-dashed border-stone-600 rounded-2xl p-10 text-center hover:border-primary-500 hover:bg-primary-900/20 transition-all duration-300">
-            <FileText className="w-12 h-12 text-stone-500 mx-auto mb-4" />
-            <p className="text-lg font-medium text-white mb-2">
+          <div className="border-2 border-dashed border-border rounded-2xl p-10 text-center hover:border-primary hover:bg-primary/5 transition-all duration-300">
+            <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-lg font-medium text-foreground mb-2">
               Drop your CSV file here or click to browse
             </p>
-            <p className="text-sm text-stone-400">
+            <p className="text-sm text-muted-foreground">
               Supports Goodreads library export format
             </p>
           </div>
@@ -266,23 +265,23 @@ export function ImportPageClient() {
           />
         </label>
       ) : (
-        <div className="glass-card rounded-2xl p-6">
+        <div className="bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl p-6">
           {/* File info */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary-900/30 rounded-lg">
-                <CheckCircle className="w-5 h-5 text-primary-400" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <CheckCircle className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <p className="font-medium text-white">{file.name}</p>
-                <p className="text-sm text-stone-400">
+                <p className="font-medium text-foreground">{file.name}</p>
+                <p className="text-sm text-muted-foreground">
                   {isParsing ? "Parsing..." : `${parsedBooks.length} books found`}
                 </p>
               </div>
             </div>
             <button
               onClick={clearFile}
-              className="p-2 text-stone-400 hover:text-red-400 transition-colors cursor-pointer"
+              className="p-2 text-muted-foreground hover:text-destructive transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -292,30 +291,30 @@ export function ImportPageClient() {
             <>
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="bg-amber-900/30 p-4 rounded-xl text-center border border-amber-800/50">
-                  <div className="text-2xl font-bold text-amber-300">{shelfCounts.toRead}</div>
-                  <div className="text-sm text-amber-400">Want to Read</div>
+                <div className="bg-amber-50 p-4 rounded-xl text-center border border-amber-200">
+                  <div className="text-2xl font-bold text-amber-700">{shelfCounts.toRead}</div>
+                  <div className="text-sm text-amber-600">Want to Read</div>
                 </div>
-                <div className="bg-primary-900/30 p-4 rounded-xl text-center border border-primary-800/50">
-                  <div className="text-2xl font-bold text-primary-300">{shelfCounts.reading}</div>
-                  <div className="text-sm text-primary-400">Reading</div>
+                <div className="bg-primary/10 p-4 rounded-xl text-center border border-primary/20">
+                  <div className="text-2xl font-bold text-primary">{shelfCounts.reading}</div>
+                  <div className="text-sm text-primary">Reading</div>
                 </div>
-                <div className="bg-accent-900/30 p-4 rounded-xl text-center border border-accent-800/50">
-                  <div className="text-2xl font-bold text-accent-300">{shelfCounts.read}</div>
-                  <div className="text-sm text-accent-400">Read</div>
+                <div className="bg-accent p-4 rounded-xl text-center border border-border">
+                  <div className="text-2xl font-bold text-accent-foreground">{shelfCounts.read}</div>
+                  <div className="text-sm text-accent-foreground">Read</div>
                 </div>
               </div>
 
               {/* List name input */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-stone-300 mb-2">
+                <label className="block text-sm font-medium text-muted-foreground mb-2">
                   Import to list:
                 </label>
                 <input
                   type="text"
                   value={listName}
                   onChange={(e) => setListName(e.target.value)}
-                  className="w-full px-4 py-3 bg-stone-800 border border-stone-600 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-muted border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
                   placeholder="Enter list name"
                 />
               </div>
@@ -324,7 +323,7 @@ export function ImportPageClient() {
               <button
                 onClick={handleImport}
                 disabled={isLoading}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:brightness-110 shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <>
@@ -345,25 +344,25 @@ export function ImportPageClient() {
           {/* Import result */}
           {importResult && (
             <div className="space-y-4">
-              <div className="flex items-center gap-3 p-4 bg-accent-900/30 rounded-xl border border-accent-800/50">
-                <CheckCircle className="w-6 h-6 text-accent-400" />
+              <div className="flex items-center gap-3 p-4 bg-accent rounded-xl border border-border">
+                <CheckCircle className="w-6 h-6 text-accent-foreground" />
                 <div>
-                  <p className="font-medium text-accent-300">Import Complete!</p>
-                  <p className="text-sm text-accent-400">
+                  <p className="font-medium text-accent-foreground">Import Complete!</p>
+                  <p className="text-sm text-accent-foreground">
                     {importResult.imported} imported, {importResult.skipped} skipped (already in list)
                   </p>
                 </div>
               </div>
               
               {importResult.errors.length > 0 && (
-                <div className="p-4 bg-amber-900/30 rounded-xl border border-amber-800/50">
+                <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertCircle className="w-5 h-5 text-amber-400" />
-                    <p className="font-medium text-amber-300">
+                    <AlertCircle className="w-5 h-5 text-amber-600" />
+                    <p className="font-medium text-amber-700">
                       {importResult.errors.length} books had errors
                     </p>
                   </div>
-                  <ul className="text-sm text-amber-400 space-y-1">
+                  <ul className="text-sm text-amber-600 space-y-1">
                     {importResult.errors.slice(0, 5).map((title, i) => (
                       <li key={i}>• {title}</li>
                     ))}
@@ -374,7 +373,7 @@ export function ImportPageClient() {
                 </div>
               )}
 
-              <p className="text-center text-stone-400">
+              <p className="text-center text-muted-foreground">
                 Redirecting to your lists...
               </p>
             </div>

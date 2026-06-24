@@ -87,32 +87,30 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/30 backdrop-blur-sm animate-fade-in"
       onClick={handleBackdropClick}
     >
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden glass-card rounded-2xl animate-slide-up">
-        {/* Close button */}
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden bg-white border border-border rounded-2xl shadow-elevation-3 animate-slide-up">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-stone-800/50 hover:bg-stone-700/50 transition-colors"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
         >
-          <X className="w-5 h-5 text-stone-400" />
+          <X className="w-5 h-5 text-muted-foreground" />
         </button>
 
-        {/* Content */}
         <div className="overflow-y-auto max-h-[90vh]">
           {loading && (
             <div className="flex items-center justify-center py-24">
-              <Loader2 className="w-8 h-8 text-primary-400 animate-spin" />
+              <Loader2 className="w-8 h-8 text-primary animate-spin" />
             </div>
           )}
 
           {error && (
             <div className="flex flex-col items-center justify-center py-24 text-center">
-              <p className="text-red-400 mb-4">{error}</p>
+              <p className="text-destructive mb-4">{error}</p>
               <button
                 onClick={fetchDetails}
-                className="px-4 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors"
+                className="px-4 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm transition-colors"
               >
                 Try Again
               </button>
@@ -121,11 +119,9 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
 
           {details && !loading && (
             <>
-              {/* Header with cover */}
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-primary-600/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
                 <div className="relative p-6 flex gap-6">
-                  {/* Cover */}
                   <div className="flex-shrink-0">
                     {details.coverUrl ? (
                       <Image
@@ -136,26 +132,25 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                         className="rounded-lg shadow-lg object-cover"
                       />
                     ) : (
-                      <div className="w-[150px] h-[225px] bg-gradient-to-br from-stone-700 to-stone-800 rounded-lg flex items-center justify-center">
-                        <BookOpen className="w-12 h-12 text-stone-500" />
+                      <div className="w-[150px] h-[225px] bg-muted rounded-lg flex items-center justify-center">
+                        <BookOpen className="w-12 h-12 text-muted-foreground" />
                       </div>
                     )}
                   </div>
 
-                  {/* Title & basic info */}
                   <div className="flex-1 min-w-0 pt-2">
-                    <h2 className="text-2xl font-bold text-white mb-2 line-clamp-2">
+                    <h2 className="text-2xl font-bold text-foreground mb-2 line-clamp-2">
                       {details.title}
                     </h2>
                     
                     {details.authors && details.authors.length > 0 && (
-                      <div className="flex items-center gap-2 text-stone-300 mb-3">
+                      <div className="flex items-center gap-2 text-muted-foreground mb-3">
                         <User className="w-4 h-4" />
                         <span>{details.authors.join(", ")}</span>
                       </div>
                     )}
 
-                    <div className="flex flex-wrap gap-3 text-sm text-stone-400">
+                    <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
                       {details.publishDate && (
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
@@ -171,7 +166,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                     </div>
 
                     {details.publishers && details.publishers.length > 0 && (
-                      <p className="text-sm text-stone-500 mt-2">
+                      <p className="text-sm text-muted-foreground mt-2">
                         Published by {details.publishers.join(", ")}
                       </p>
                     )}
@@ -179,37 +174,35 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                 </div>
               </div>
 
-              {/* Description */}
               {details.description && (
                 <div className="px-6 pb-4">
-                  <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                    <Star className="w-4 h-4 text-amber-400" />
+                  <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <Star className="w-4 h-4 text-amber-500" />
                     Description
                   </h3>
-                  <p className="text-stone-300 leading-relaxed whitespace-pre-line">
+                  <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
                     {details.description}
                   </p>
                 </div>
               )}
 
-              {/* Subjects/Tags */}
               {details.subjects && details.subjects.length > 0 && (
                 <div className="px-6 pb-4">
-                  <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                    <Tag className="w-4 h-4 text-blue-400" />
+                  <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <Tag className="w-4 h-4 text-blue-500" />
                     Subjects
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {details.subjects.slice(0, 15).map((subject, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 text-xs rounded-full bg-stone-800 text-stone-300"
+                        className="px-3 py-1 text-xs rounded-full bg-muted text-muted-foreground"
                       >
                         {subject}
                       </span>
                     ))}
                     {details.subjects.length > 15 && (
-                      <span className="px-3 py-1 text-xs rounded-full bg-stone-800/50 text-stone-500">
+                      <span className="px-3 py-1 text-xs rounded-full bg-muted/50 text-muted-foreground">
                         +{details.subjects.length - 15} more
                       </span>
                     )}
@@ -217,21 +210,19 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                 </div>
               )}
 
-              {/* ISBN */}
               {details.isbn && (
                 <div className="px-6 pb-4">
-                  <p className="text-sm text-stone-500">
-                    ISBN: <span className="text-stone-400 font-mono">{details.isbn}</span>
+                  <p className="text-sm text-muted-foreground">
+                    ISBN: <span className="text-foreground font-mono">{details.isbn}</span>
                   </p>
                 </div>
               )}
 
-              {/* Actions */}
               <div className="px-6 pb-6 flex flex-wrap gap-3">
                 {onAddToList && (
                   <button
                     onClick={handleAddToList}
-                    className="flex-1 min-w-[200px] py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 min-w-[200px] py-3 px-4 bg-primary text-primary-foreground rounded-full font-medium transition-colors flex items-center justify-center gap-2 shadow-elevation-1 hover:shadow-elevation-2"
                   >
                     <BookOpen className="w-5 h-5" />
                     Add to List
@@ -241,7 +232,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                   href={details.openLibraryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 py-3 px-4 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded-xl font-medium transition-colors"
+                  className="flex items-center gap-2 py-3 px-4 bg-muted text-foreground rounded-full font-medium transition-colors hover:bg-muted/80"
                 >
                   <ExternalLink className="w-5 h-5" />
                   Open Library

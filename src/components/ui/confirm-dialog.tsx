@@ -43,18 +43,18 @@ export function ConfirmDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="glass-card border-primary-700 max-w-md">
+      <DialogContent className="max-w-md">
         <DialogHeader>
           {variant === "destructive" && (
             <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-5 h-5 text-red-500" />
-              <span className="text-sm font-medium text-red-500">Warning</span>
+              <AlertTriangle className="w-5 h-5 text-destructive" />
+              <span className="text-sm font-medium text-destructive">Warning</span>
             </div>
           )}
-          <DialogTitle className="text-2xl font-semibold text-primary-100">
+          <DialogTitle className="text-xl font-semibold text-foreground">
             {title}
           </DialogTitle>
-          <DialogDescription className="text-primary-300">
+          <DialogDescription className="text-muted-foreground">
             {description}
           </DialogDescription>
           {children}
@@ -64,7 +64,6 @@ export function ConfirmDialog({
             variant="outline"
             onClick={() => onOpenChange(false)}
             disabled={loading}
-            className="border-primary-700 text-primary-300 hover:text-primary-200"
           >
             {cancelLabel}
           </Button>
@@ -72,11 +71,6 @@ export function ConfirmDialog({
             variant={variant === "destructive" ? "destructive" : "default"}
             onClick={handleConfirm}
             disabled={loading}
-            className={
-              variant === "default"
-                ? "bg-primary-500 hover:bg-primary-600 text-white"
-                : ""
-            }
           >
             {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
             {confirmLabel}

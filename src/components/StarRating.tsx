@@ -28,7 +28,6 @@ export function StarRating({
 
   const handleClick = (starIndex: number) => {
     if (!editable || !onChange) return;
-    // If clicking the same rating, clear it
     if (rating === starIndex) {
       onChange(0);
     } else {
@@ -61,14 +60,14 @@ export function StarRating({
               className={`${sizeClasses[size]} transition-colors ${
                 isFilled
                   ? "fill-amber-400 text-amber-400"
-                  : "fill-transparent text-stone-500"
+                  : "fill-transparent text-muted-foreground"
               }`}
             />
           </button>
         );
       })}
       {rating !== null && rating > 0 && (
-        <span className="ml-1.5 text-sm text-stone-400 font-medium">
+        <span className="ml-1.5 text-sm text-muted-foreground font-medium">
           {rating}/5
         </span>
       )}

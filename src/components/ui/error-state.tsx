@@ -18,16 +18,12 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-      <Icon className="w-16 h-16 text-red-500 mb-4" />
-      <h3 className="text-xl font-semibold text-primary-100 mb-2">{title}</h3>
-      <p className="text-primary-300 mb-6 max-w-md">{description}</p>
+      <Icon className="w-16 h-16 text-destructive mb-4" />
+      <h3 className="text-xl font-semibold text-foreground mb-2">{title}</h3>
+      <p className="text-muted-foreground mb-6 max-w-md">{description}</p>
       {action || (
         onRetry && (
-          <Button
-            onClick={onRetry}
-            variant="outline"
-            className="border-primary-700 text-primary-300 hover:text-primary-200"
-          >
+          <Button onClick={onRetry} variant="outline">
             <RefreshCw className="w-4 h-4 mr-2" />
             Try Again
           </Button>

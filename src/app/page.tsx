@@ -10,19 +10,18 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="text-center py-20">
         <div className="relative inline-block mb-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-400 via-primary-500 to-accent-500 rounded-3xl blur-2xl opacity-30 scale-150" />
-          <div className="relative p-5 bg-gradient-to-br from-primary-500 via-primary-600 to-accent-600 rounded-3xl shadow-2xl shadow-primary-500/30">
-            <BookOpen className="w-14 h-14 text-white" strokeWidth={1.5} />
+          <div className="relative p-5 bg-primary rounded-3xl shadow-elevation-2">
+            <BookOpen className="w-14 h-14 text-primary-foreground" strokeWidth={1.5} />
           </div>
         </div>
         
         <h1 className="text-6xl md:text-7xl font-extrabold mb-6 tracking-tight">
-          <span className="bg-gradient-to-r from-white via-stone-100 to-white bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-foreground via-foreground/80 to-foreground bg-clip-text text-transparent">
             LitList Hub
           </span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-stone-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
           Your personal reading companion. Track books, build lists, and share your literary journey.
         </p>
         
@@ -31,7 +30,7 @@ export default async function Home() {
             <>
               <Link
                 href="/search"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-300 cursor-pointer shadow-xl shadow-primary-500/30 hover:shadow-primary-500/50 hover:scale-[1.02]"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-semibold transition-all duration-300 cursor-pointer shadow-elevation-1 hover:shadow-elevation-2 hover:scale-[1.02]"
               >
                 <Search className="w-5 h-5" />
                 Search Books
@@ -39,7 +38,7 @@ export default async function Home() {
               </Link>
               <Link
                 href="/lists"
-                className="group inline-flex items-center gap-3 px-8 py-4 glass-card text-white rounded-2xl font-semibold hover:bg-white/10 transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-white border border-border text-foreground rounded-2xl font-semibold hover:bg-muted/50 transition-all duration-300 cursor-pointer hover:scale-[1.02]"
               >
                 <BookMarked className="w-5 h-5" />
                 My Lists
@@ -49,7 +48,7 @@ export default async function Home() {
           ) : (
             <Link
               href="/auth/signin"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-300 cursor-pointer shadow-xl shadow-primary-500/30 hover:shadow-primary-500/50 hover:scale-[1.02]"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-semibold transition-all duration-300 cursor-pointer shadow-elevation-1 hover:shadow-elevation-2 hover:scale-[1.02]"
             >
               <Sparkles className="w-5 h-5" />
               Get Started Free
@@ -62,57 +61,54 @@ export default async function Home() {
       {/* Features Section */}
       <section className="py-16">
         <div className="text-center mb-12">
-          <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary-900/40 text-primary-300 rounded-full text-sm font-medium mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
             <Sparkles className="w-4 h-4" />
             Features
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             Everything you need to track your reading
           </h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="group p-8 glass-card rounded-3xl hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+          <div className="group p-8 bg-white border border-border rounded-3xl shadow-elevation-1 hover:scale-[1.02] transition-all duration-300 cursor-pointer">
             <div className="relative inline-block mb-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
-              <div className="relative p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl">
+              <div className="relative p-4 bg-blue-500 rounded-2xl">
                 <Search className="w-7 h-7 text-white" />
               </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-white">
+            <h3 className="text-xl font-bold mb-3 text-foreground">
               Discover Books
             </h3>
-            <p className="text-stone-400 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               Search millions of books from the Open Library database. Find your next great read.
             </p>
           </div>
 
-          <div className="group p-8 glass-card rounded-3xl hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+          <div className="group p-8 bg-white border border-border rounded-3xl shadow-elevation-1 hover:scale-[1.02] transition-all duration-300 cursor-pointer">
             <div className="relative inline-block mb-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
-              <div className="relative p-4 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl">
+              <div className="relative p-4 bg-emerald-500 rounded-2xl">
                 <BookMarked className="w-7 h-7 text-white" />
               </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-white">
+            <h3 className="text-xl font-bold mb-3 text-foreground">
               Track Progress
             </h3>
-            <p className="text-stone-400 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               Mark books as want to read, currently reading, or finished. Never lose track again.
             </p>
           </div>
 
-          <div className="group p-8 glass-card rounded-3xl hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+          <div className="group p-8 bg-white border border-border rounded-3xl shadow-elevation-1 hover:scale-[1.02] transition-all duration-300 cursor-pointer">
             <div className="relative inline-block mb-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-400 to-violet-600 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
-              <div className="relative p-4 bg-gradient-to-br from-violet-500 to-violet-600 rounded-2xl">
+              <div className="relative p-4 bg-violet-500 rounded-2xl">
                 <Share2 className="w-7 h-7 text-white" />
               </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-white">
+            <h3 className="text-xl font-bold mb-3 text-foreground">
               Share Lists
             </h3>
-            <p className="text-stone-400 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               Create shareable links to show friends what you&apos;re reading. Inspire others.
             </p>
           </div>

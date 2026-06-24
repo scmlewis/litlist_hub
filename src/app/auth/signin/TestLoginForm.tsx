@@ -52,17 +52,17 @@ export function TestLoginForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
-        className="w-full px-4 py-3 text-sm border-0 rounded-xl bg-stone-800/80 text-white shadow-sm focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all duration-200"
+        className="w-full px-4 py-3 text-sm border-0 rounded-xl bg-muted text-foreground shadow-sm focus:ring-2 focus:ring-ring focus:outline-none transition-all duration-200"
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
-        className="w-full px-4 py-3 text-sm border-0 rounded-xl bg-stone-800/80 text-white shadow-sm focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all duration-200"
+        className="w-full px-4 py-3 text-sm border-0 rounded-xl bg-muted text-foreground shadow-sm focus:ring-2 focus:ring-ring focus:outline-none transition-all duration-200"
       />
       {error && (
-        <div className="flex items-center gap-2 text-sm text-red-400 bg-red-900/30 px-3 py-2 rounded-lg">
+        <div className="flex items-center gap-2 text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-lg">
           <AlertCircle className="w-4 h-4" />
           {error}
         </div>
@@ -70,7 +70,7 @@ export function TestLoginForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary-500/25 transition-all duration-200 cursor-pointer"
+        className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm bg-primary text-primary-foreground rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-200 cursor-pointer"
       >
         <LogIn className="w-4 h-4" />
         {loading ? "Signing in..." : "Quick Sign In"}

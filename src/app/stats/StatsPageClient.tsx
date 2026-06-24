@@ -96,13 +96,12 @@ export function StatsPageClient() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl blur-xl opacity-30" />
-          <div className="relative p-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl">
-            <BarChart3 className="w-8 h-8 text-white" />
+          <div className="relative p-4 bg-primary rounded-xl">
+            <BarChart3 className="w-8 h-8 text-primary-foreground" />
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-white mb-2">Reading Statistics</h1>
-        <p className="text-stone-400">Track your reading journey</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Reading Statistics</h1>
+        <p className="text-muted-foreground">Track your reading journey</p>
       </div>
 
       {/* Year Selector */}
@@ -110,17 +109,17 @@ export function StatsPageClient() {
         <button
           onClick={() => setYear(year - 1)}
           disabled={stats?.yearsWithData && !stats.yearsWithData.includes(year - 1) && year - 1 < Math.min(...(stats.yearsWithData || [new Date().getFullYear()]))}
-          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
-        <span className="text-2xl font-bold text-white min-w-[100px] text-center">
+        <span className="text-2xl font-bold text-foreground min-w-[100px] text-center">
           {year}
         </span>
         <button
           onClick={() => setYear(year + 1)}
           disabled={year >= new Date().getFullYear()}
-          className="p-2 text-stone-400 hover:text-white hover:bg-stone-700 rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -130,10 +129,10 @@ export function StatsPageClient() {
         <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="glass-card rounded-2xl p-6 animate-pulse">
-                <div className="h-8 w-8 bg-stone-700 rounded-lg mb-3" />
-                <div className="h-8 w-16 bg-stone-700 rounded mb-2" />
-                <div className="h-4 w-24 bg-stone-700 rounded" />
+              <div key={i} className="bg-white border border-border rounded-xl shadow-elevation-1 p-6 animate-pulse">
+                <div className="h-8 w-8 bg-muted rounded-lg mb-3" />
+                <div className="h-8 w-16 bg-muted rounded mb-2" />
+                <div className="h-4 w-24 bg-muted rounded" />
               </div>
             ))}
           </div>
@@ -142,90 +141,90 @@ export function StatsPageClient() {
         <div className="space-y-6">
           {/* Key Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="glass-card rounded-2xl p-6">
-              <BookOpen className="w-8 h-8 text-accent-400 mb-3" />
-              <div className="text-3xl font-bold text-white">{stats.booksReadThisYear}</div>
-              <div className="text-sm text-stone-400">Books Read in {year}</div>
+            <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6">
+              <BookOpen className="w-8 h-8 text-accent-foreground mb-3" />
+              <div className="text-3xl font-bold text-foreground">{stats.booksReadThisYear}</div>
+              <div className="text-sm text-muted-foreground">Books Read in {year}</div>
             </div>
-            <div className="glass-card rounded-2xl p-6">
+            <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6">
               <Library className="w-8 h-8 text-blue-400 mb-3" />
-              <div className="text-3xl font-bold text-white">{stats.pagesThisYear.toLocaleString()}</div>
-              <div className="text-sm text-stone-400">Pages Read</div>
+              <div className="text-3xl font-bold text-foreground">{stats.pagesThisYear.toLocaleString()}</div>
+              <div className="text-sm text-muted-foreground">Pages Read</div>
             </div>
-            <div className="glass-card rounded-2xl p-6">
+            <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6">
               <Star className="w-8 h-8 text-amber-400 mb-3" />
-              <div className="text-3xl font-bold text-white">
+              <div className="text-3xl font-bold text-foreground">
                 {stats.averageRating ? stats.averageRating.toFixed(1) : "—"}
               </div>
-              <div className="text-sm text-stone-400">Avg Rating</div>
+              <div className="text-sm text-muted-foreground">Avg Rating</div>
             </div>
-            <div className="glass-card rounded-2xl p-6">
-              <Clock className="w-8 h-8 text-accent-400 mb-3" />
-              <div className="text-3xl font-bold text-white">
+            <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6">
+              <Clock className="w-8 h-8 text-accent-foreground mb-3" />
+              <div className="text-3xl font-bold text-foreground">
                 {stats.averageReadingDays ? `${stats.averageReadingDays}d` : "—"}
               </div>
-              <div className="text-sm text-stone-400">Avg Time per Book</div>
+              <div className="text-sm text-muted-foreground">Avg Time per Book</div>
             </div>
           </div>
 
           {/* Reading Status */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <Link href="/lists" className="glass-card rounded-2xl p-6 hover:bg-stone-800/50 transition-colors">
+            <Link href="/lists" className="bg-white border border-border rounded-xl shadow-elevation-1 p-6 hover:bg-muted/50 transition-colors">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-primary-900/40 rounded-xl">
-                  <TrendingUp className="w-6 h-6 text-primary-400" />
+                <div className="p-3 bg-accent rounded-xl">
+                  <TrendingUp className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-white">{stats.currentlyReading}</div>
-                  <div className="text-sm text-stone-400">Currently Reading</div>
+                  <div className="text-2xl font-bold text-foreground">{stats.currentlyReading}</div>
+                  <div className="text-sm text-muted-foreground">Currently Reading</div>
                 </div>
               </div>
             </Link>
-            <div className="glass-card rounded-2xl p-6">
+            <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-accent-900/40 rounded-xl">
-                  <Library className="w-6 h-6 text-accent-400" />
+                <div className="p-3 bg-muted rounded-xl">
+                  <Library className="w-6 h-6 text-accent-foreground" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-white">{(stats.pagesInProgress ?? 0).toLocaleString()}</div>
-                  <div className="text-sm text-stone-400">Pages in Progress</div>
+                  <div className="text-2xl font-bold text-foreground">{(stats.pagesInProgress ?? 0).toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground">Pages in Progress</div>
                 </div>
               </div>
             </div>
-            <Link href="/lists" className="glass-card rounded-2xl p-6 hover:bg-stone-800/50 transition-colors">
+            <Link href="/lists" className="bg-white border border-border rounded-xl shadow-elevation-1 p-6 hover:bg-muted/50 transition-colors">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-amber-900/40 rounded-xl">
+                <div className="p-3 bg-amber-50 rounded-xl">
                   <BookMarked className="w-6 h-6 text-amber-400" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-white">{stats.wantToRead}</div>
-                  <div className="text-sm text-stone-400">Want to Read</div>
+                  <div className="text-2xl font-bold text-foreground">{stats.wantToRead}</div>
+                  <div className="text-sm text-muted-foreground">Want to Read</div>
                 </div>
               </div>
             </Link>
           </div>
 
           {/* Monthly Chart */}
-          <div className="glass-card rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-6">Books Read per Month</h3>
+          <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-6">Books Read per Month</h3>
             <div className="flex items-end justify-between gap-2 h-40">
               {stats.booksPerMonth.map((count, index) => {
                 const height = (count / maxBooksInMonth) * 100;
                 const isCurrentMonth = year === new Date().getFullYear() && index === new Date().getMonth();
                 return (
                   <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                    <span className="text-sm text-stone-400">{count > 0 ? count : ""}</span>
+                    <span className="text-sm text-muted-foreground">{count > 0 ? count : ""}</span>
                     <div
                       className={`w-full rounded-t-lg transition-all duration-500 ${
                         isCurrentMonth
-                          ? "bg-gradient-to-t from-primary-600 to-primary-400"
+                          ? "bg-primary"
                           : count > 0
-                          ? "bg-gradient-to-t from-accent-600 to-accent-400"
-                          : "bg-stone-700"
+                          ? "bg-secondary"
+                          : "bg-muted"
                       }`}
                       style={{ height: `${Math.max(height, 4)}%` }}
                     />
-                    <span className="text-xs text-stone-500">{MONTHS[index]}</span>
+                    <span className="text-xs text-muted-foreground">{MONTHS[index]}</span>
                   </div>
                 );
               })}
@@ -241,11 +240,11 @@ export function StatsPageClient() {
 
           {/* Recent Books */}
           {stats.recentBooks.length > 0 && (
-            <div className="glass-card rounded-2xl p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Recently Finished</h3>
+            <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6">
+              <h3 className="text-lg font-semibold text-foreground mb-4">Recently Finished</h3>
               <div className="space-y-3">
                 {stats.recentBooks.map((book) => (
-                  <div key={book.id} className="flex items-center gap-4 p-3 bg-stone-800/50 rounded-xl">
+                  <div key={book.id} className="flex items-center gap-4 p-3 bg-muted/50 rounded-xl">
                     <div className="w-12 h-16 relative flex-shrink-0 rounded-lg overflow-hidden">
                       {book.coverUrl ? (
                         <Image
@@ -256,14 +255,14 @@ export function StatsPageClient() {
                           sizes="48px"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-stone-700">
-                          <BookOpen className="w-5 h-5 text-stone-500" />
+                        <div className="w-full h-full flex items-center justify-center bg-muted">
+                          <BookOpen className="w-5 h-5 text-muted-foreground" />
                         </div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-white truncate">{book.title}</h4>
-                      <p className="text-sm text-stone-400 truncate">
+                      <h4 className="font-medium text-foreground truncate">{book.title}</h4>
+                      <p className="text-sm text-muted-foreground truncate">
                         {book.authors.join(", ") || "Unknown Author"}
                       </p>
                     </div>
@@ -280,16 +279,16 @@ export function StatsPageClient() {
           )}
 
           {/* All-time Stats */}
-          <div className="glass-card rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">All-Time Stats</h3>
+          <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-4">All-Time Stats</h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 bg-stone-800/50 rounded-xl">
-                <div className="text-2xl font-bold text-white">{stats.totalBooksRead}</div>
-                <div className="text-sm text-stone-400">Total Books Read</div>
+              <div className="p-4 bg-muted/50 rounded-xl">
+                <div className="text-2xl font-bold text-foreground">{stats.totalBooksRead}</div>
+                <div className="text-sm text-muted-foreground">Total Books Read</div>
               </div>
-              <div className="p-4 bg-stone-800/50 rounded-xl">
-                <div className="text-2xl font-bold text-white">{stats.totalPagesRead.toLocaleString()}</div>
-                <div className="text-sm text-stone-400">Total Pages Read</div>
+              <div className="p-4 bg-muted/50 rounded-xl">
+                <div className="text-2xl font-bold text-foreground">{stats.totalPagesRead.toLocaleString()}</div>
+                <div className="text-sm text-muted-foreground">Total Pages Read</div>
               </div>
             </div>
           </div>
@@ -297,24 +296,24 @@ export function StatsPageClient() {
           {/* Goal Link */}
           <Link
             href="/goals"
-            className="block glass-card rounded-2xl p-6 hover:bg-stone-800/50 transition-colors"
+            className="block bg-white border border-border rounded-xl shadow-elevation-1 p-6 hover:bg-muted/50 transition-colors"
           >
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-amber-900/40 rounded-xl">
+              <div className="p-3 bg-amber-50 rounded-xl">
                 <Target className="w-6 h-6 text-amber-400" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-white">Set a Reading Goal</h3>
-                <p className="text-sm text-stone-400">Challenge yourself to read more</p>
+                <h3 className="font-semibold text-foreground">Set a Reading Goal</h3>
+                <p className="text-sm text-muted-foreground">Challenge yourself to read more</p>
               </div>
-              <ChevronRight className="w-5 h-5 text-stone-400" />
+              <ChevronRight className="w-5 h-5 text-muted-foreground" />
             </div>
           </Link>
         </div>
       ) : (
-        <div className="glass-card rounded-2xl p-8 text-center">
-          <p className="text-stone-400">No reading data available yet.</p>
-          <Link href="/search" className="text-primary-400 hover:underline">
+        <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-8 text-center">
+          <p className="text-muted-foreground">No reading data available yet.</p>
+          <Link href="/search" className="text-primary hover:underline">
             Start adding books →
           </Link>
         </div>

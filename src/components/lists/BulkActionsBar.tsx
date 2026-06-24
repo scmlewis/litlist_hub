@@ -30,29 +30,24 @@ export function BulkActionsBar({
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="glass-card rounded-xl p-4 border-accent-500 border-2 sticky top-20 z-10"
+      className="bg-white border-2 border-primary rounded-xl p-4 shadow-elevation-2 sticky top-20 z-10"
     >
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <CheckSquare className="w-5 h-5 text-accent-500" />
-          <span className="font-semibold text-primary-100">
+          <CheckSquare className="w-5 h-5 text-primary" />
+          <span className="font-semibold text-foreground">
             {selectedCount} book{selectedCount !== 1 ? "s" : ""} selected
           </span>
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Set Status */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-primary-700 text-primary-300 hover:text-primary-200"
-              >
+              <Button variant="outline" size="sm">
                 Set Status
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="glass-card border-primary-700">
+            <DropdownMenuContent>
               <DropdownMenuItem onClick={() => onSetStatus("WANT_TO_READ")}>
                 Want to Read
               </DropdownMenuItem>
@@ -65,19 +60,14 @@ export function BulkActionsBar({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Set Rating */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-primary-700 text-primary-300 hover:text-primary-200"
-              >
+              <Button variant="outline" size="sm">
                 <Star className="w-4 h-4 mr-1" />
                 Rate
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="glass-card border-primary-700">
+            <DropdownMenuContent>
               {[5, 4, 3, 2, 1].map((rating) => (
                 <DropdownMenuItem key={rating} onClick={() => onSetRating(rating)}>
                   {"★".repeat(rating)}{"☆".repeat(5 - rating)}
@@ -86,24 +76,12 @@ export function BulkActionsBar({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Delete */}
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={onDelete}
-            className="gap-1"
-          >
+          <Button variant="destructive" size="sm" onClick={onDelete} className="gap-1">
             <Trash2 className="w-4 h-4" />
             Delete
           </Button>
 
-          {/* Cancel */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onCancel}
-            className="text-primary-400 hover:text-primary-300"
-          >
+          <Button variant="ghost" size="sm" onClick={onCancel}>
             <X className="w-4 h-4" />
           </Button>
         </div>

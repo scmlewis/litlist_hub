@@ -55,19 +55,19 @@ export function BookSearch({ onAddBook, existingBookKeys = [] }: BookSearchProps
         className="flex flex-col sm:flex-row gap-3"
       >
         <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search books by title, author, or ISBN..."
-            className="w-full pl-12 pr-4 py-3.5 sm:py-4 glass-card rounded-2xl text-white placeholder-stone-500 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all duration-200"
+            className="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-ring focus:border-primary focus:outline-none transition-all duration-200"
           />
         </div>
         <button
           type="submit"
           disabled={loading || !query.trim()}
-          className="px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-semibold hover:from-primary-600 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+          className="px-6 sm:px-8 py-3.5 bg-primary text-primary-foreground rounded-xl font-medium hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-200 flex items-center justify-center gap-2"
         >
           {loading ? (
             <>
@@ -84,7 +84,7 @@ export function BookSearch({ onAddBook, existingBookKeys = [] }: BookSearchProps
       </form>
 
       {error && (
-        <div className="flex items-center gap-3 p-4 glass-card rounded-2xl border-red-800 text-red-400">
+        <div className="flex items-center gap-3 p-4 bg-destructive/10 border border-destructive/20 text-destructive rounded-xl">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
           {error}
         </div>
@@ -93,10 +93,10 @@ export function BookSearch({ onAddBook, existingBookKeys = [] }: BookSearchProps
       {results.length > 0 && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-xl font-bold text-foreground">
               Search Results
             </h3>
-            <span className="px-3 py-1 bg-primary-900/40 text-primary-300 text-sm font-medium rounded-full">
+            <span className="px-3 py-1 bg-accent text-accent-foreground text-sm font-medium rounded-full">
               {results.length} found
             </span>
           </div>

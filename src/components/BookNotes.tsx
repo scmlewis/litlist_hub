@@ -68,12 +68,11 @@ export function BookNotes({
   }, [isEditing]);
 
   if (compact) {
-    // Compact view for list display
     if (!hasContent && !isEditing) {
       return (
         <button
           onClick={handleEdit}
-          className="text-xs text-stone-500 hover:text-stone-400 flex items-center gap-1 transition-colors"
+          className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
         >
           <StickyNote className="w-3 h-3" />
           Add notes
@@ -83,20 +82,20 @@ export function BookNotes({
 
     if (isEditing) {
       return (
-        <div className="mt-2 p-3 bg-stone-900/50 rounded-lg border border-stone-800">
+        <div className="mt-2 p-3 bg-muted rounded-lg">
           <textarea
             ref={notesRef}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Personal notes..."
-            className="w-full bg-transparent text-sm text-stone-300 resize-none focus:outline-none placeholder-stone-600"
+            className="w-full bg-transparent text-sm text-foreground resize-none focus:outline-none placeholder-muted-foreground"
             rows={2}
           />
           <div className="flex gap-2 mt-2">
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="px-2 py-1 text-xs bg-primary-600 hover:bg-primary-700 text-white rounded transition-colors disabled:opacity-50 flex items-center gap-1"
+              className="px-2 py-1 text-xs bg-primary text-primary-foreground rounded-full transition-colors disabled:opacity-50 flex items-center gap-1"
             >
               {isSaving ? (
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -107,7 +106,7 @@ export function BookNotes({
             </button>
             <button
               onClick={handleCancel}
-              className="px-2 py-1 text-xs bg-stone-700 hover:bg-stone-600 text-stone-300 rounded transition-colors"
+              className="px-2 py-1 text-xs bg-secondary text-secondary-foreground rounded-full transition-colors"
             >
               Cancel
             </button>
@@ -118,31 +117,30 @@ export function BookNotes({
 
     return (
       <div className="mt-2 group relative">
-        <p className="text-xs text-stone-500 italic line-clamp-2">
+        <p className="text-xs text-muted-foreground italic line-clamp-2">
           {initialNotes}
         </p>
         <button
           onClick={handleEdit}
-          className="absolute -right-1 -top-1 p-1 opacity-0 group-hover:opacity-100 transition-opacity bg-stone-800 rounded"
+          className="absolute -right-1 -top-1 p-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white border border-border rounded"
         >
-          <Edit2 className="w-3 h-3 text-stone-400" />
+          <Edit2 className="w-3 h-3 text-muted-foreground" />
         </button>
       </div>
     );
   }
 
-  // Full view for detailed editing
   return (
-    <div className="mt-4 p-4 glass-card rounded-xl">
+    <div className="mt-4 p-4 bg-white border border-border rounded-xl">
       <div className="flex items-center justify-between mb-3">
-        <h4 className="text-sm font-medium text-white flex items-center gap-2">
-          <StickyNote className="w-4 h-4 text-primary-400" />
+        <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
+          <StickyNote className="w-4 h-4 text-primary" />
           Notes & Review
         </h4>
         {!isEditing && (
           <button
             onClick={handleEdit}
-            className="p-1 text-stone-400 hover:text-stone-300 transition-colors"
+            className="p-1 text-muted-foreground hover:text-foreground transition-colors"
           >
             <Edit2 className="w-4 h-4" />
           </button>
@@ -152,7 +150,7 @@ export function BookNotes({
       {isEditing ? (
         <div className="space-y-4">
           <div>
-            <label className="block text-xs text-stone-500 mb-1">
+            <label className="block text-xs text-muted-foreground mb-1">
               Personal Notes
             </label>
             <textarea
@@ -160,20 +158,20 @@ export function BookNotes({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Your personal notes about this book..."
-              className="w-full p-3 bg-stone-900/50 border border-stone-800 rounded-lg text-sm text-stone-300 resize-none focus:outline-none focus:border-primary-600 placeholder-stone-600"
+              className="w-full p-3 bg-muted border border-border rounded-lg text-sm text-foreground resize-none focus:outline-none focus:ring-2 focus:ring-ring placeholder-muted-foreground"
               rows={3}
             />
           </div>
           
           <div>
-            <label className="block text-xs text-stone-500 mb-1">
+            <label className="block text-xs text-muted-foreground mb-1">
               Review
             </label>
             <textarea
               value={review}
               onChange={(e) => setReview(e.target.value)}
               placeholder="Write your review of this book..."
-              className="w-full p-3 bg-stone-900/50 border border-stone-800 rounded-lg text-sm text-stone-300 resize-none focus:outline-none focus:border-primary-600 placeholder-stone-600"
+              className="w-full p-3 bg-muted border border-border rounded-lg text-sm text-foreground resize-none focus:outline-none focus:ring-2 focus:ring-ring placeholder-muted-foreground"
               rows={4}
             />
           </div>
@@ -182,7 +180,7 @@ export function BookNotes({
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-primary text-primary-foreground text-sm rounded-full transition-colors disabled:opacity-50 flex items-center gap-2"
             >
               {isSaving ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -193,7 +191,7 @@ export function BookNotes({
             </button>
             <button
               onClick={handleCancel}
-              className="px-4 py-2 bg-stone-700 hover:bg-stone-600 text-stone-300 text-sm rounded-lg transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-secondary text-secondary-foreground text-sm rounded-full transition-colors flex items-center gap-2"
             >
               <X className="w-4 h-4" />
               Cancel
@@ -204,8 +202,8 @@ export function BookNotes({
         <div className="space-y-3">
           {initialNotes ? (
             <div>
-              <p className="text-xs text-stone-500 mb-1">Notes</p>
-              <p className="text-sm text-stone-300 whitespace-pre-wrap">
+              <p className="text-xs text-muted-foreground mb-1">Notes</p>
+              <p className="text-sm text-foreground whitespace-pre-wrap">
                 {initialNotes}
               </p>
             </div>
@@ -213,15 +211,15 @@ export function BookNotes({
           
           {initialReview ? (
             <div>
-              <p className="text-xs text-stone-500 mb-1">Review</p>
-              <p className="text-sm text-stone-300 whitespace-pre-wrap">
+              <p className="text-xs text-muted-foreground mb-1">Review</p>
+              <p className="text-sm text-foreground whitespace-pre-wrap">
                 {initialReview}
               </p>
             </div>
           ) : null}
 
           {!hasContent && (
-            <p className="text-sm text-stone-500 italic">
+            <p className="text-sm text-muted-foreground italic">
               No notes or review yet. Click the edit button to add some!
             </p>
           )}

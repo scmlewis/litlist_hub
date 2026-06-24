@@ -149,22 +149,18 @@ export function ListAccordion({
   };
 
   return (
-    <div className="glass-card rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-black/20 transition-all duration-300">
-      {/* List header */}
+    <div className="bg-white border border-border rounded-xl shadow-elevation-1 overflow-hidden">
       <div
-        className="p-3 sm:p-5 flex items-center justify-between hover:bg-stone-800/50 cursor-pointer"
+        className="p-4 sm:p-5 flex items-center justify-between hover:bg-muted/50 cursor-pointer transition-colors"
         onClick={onToggle}
       >
         <div className="flex items-center gap-3 sm:gap-4">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl blur-md opacity-30" />
-            <div className="relative p-2 sm:p-2.5 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl">
-              {isExpanded ? (
-                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              ) : (
-                <BookMarked className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              )}
-            </div>
+          <div className="p-2 sm:p-2.5 bg-primary rounded-xl">
+            {isExpanded ? (
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground" />
+            ) : (
+              <BookMarked className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground" />
+            )}
           </div>
           <div className="flex-1">
             {isEditing ? (
@@ -177,27 +173,27 @@ export function ListAccordion({
                     if (e.key === "Enter") handleSaveName();
                     if (e.key === "Escape") onCancelRename();
                   }}
-                  className="flex-1 px-3 py-1.5 bg-stone-800 border border-stone-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="flex-1 px-3 py-1.5 bg-muted border border-border rounded-lg text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   autoFocus
                 />
                 <button
                   onClick={handleSaveName}
-                  className="p-1.5 hover:bg-stone-700 rounded-lg transition-colors"
+                  className="p-1.5 hover:bg-muted rounded-lg transition-colors"
                   title="Save"
                 >
-                  <Check className="w-4 h-4 text-green-500" />
+                  <Check className="w-4 h-4 text-green-600" />
                 </button>
                 <button
                   onClick={onCancelRename}
-                  className="p-1.5 hover:bg-stone-700 rounded-lg transition-colors"
+                  className="p-1.5 hover:bg-muted rounded-lg transition-colors"
                   title="Cancel"
                 >
-                  <X className="w-4 h-4 text-red-500" />
+                  <X className="w-4 h-4 text-destructive" />
                 </button>
               </div>
             ) : (
               <div className="flex items-center gap-2 group">
-                <h3 className="font-semibold text-white text-sm sm:text-base">
+                <h3 className="font-semibold text-foreground text-sm sm:text-base">
                   {list.name}
                 </h3>
                 <button
@@ -205,31 +201,31 @@ export function ListAccordion({
                     e.stopPropagation();
                     onStartRename();
                   }}
-                  className="p-1 opacity-0 group-hover:opacity-100 hover:bg-stone-700 rounded transition-all"
+                  className="p-1 opacity-0 group-hover:opacity-100 hover:bg-muted rounded transition-all"
                   title="Rename list"
                 >
-                  <Edit2 className="w-3 h-3 text-stone-400" />
+                  <Edit2 className="w-3 h-3 text-muted-foreground" />
                 </button>
               </div>
             )}
-            <p className="text-xs sm:text-sm text-stone-400 mt-0.5">
+            <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
               {list._count.books} book{list._count.books !== 1 && "s"}
               {list.isPublic && " • Public"}
             </p>
           </div>
           {isExpanded ? (
-            <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-stone-400 ml-1 sm:ml-2" />
+            <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground ml-1 sm:ml-2" />
           ) : (
-            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-stone-400 ml-1 sm:ml-2" />
+            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground ml-1 sm:ml-2" />
           )}
         </div>
         <div className="flex items-center gap-1 sm:gap-2" onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => onTogglePublic(list.id, list.isPublic)}
-            className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-xl transition-all duration-200 ${
+            className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-full transition-colors duration-200 ${
               list.isPublic
-                ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/25"
-                : "bg-stone-700 text-stone-400 hover:bg-stone-600"
+                ? "bg-green-50 text-green-700 border border-green-200"
+                : "bg-muted text-muted-foreground border border-border"
             }`}
           >
             {list.isPublic ? <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
@@ -238,7 +234,7 @@ export function ListAccordion({
           {list.isPublic && (
             <button
               onClick={() => onCopyShareLink(list.shareId)}
-              className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium bg-primary-900/40 text-primary-300 rounded-xl hover:bg-primary-900/60 transition-all duration-200"
+              className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium bg-accent text-accent-foreground rounded-full hover:bg-accent/80 transition-colors"
             >
               <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Copy Link</span>
@@ -246,16 +242,15 @@ export function ListAccordion({
           )}
           <button
             onClick={() => onDeleteList(list.id, list.name)}
-            className="p-1.5 sm:p-2 text-stone-400 hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200"
+            className="p-1.5 sm:p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full transition-colors"
           >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* List books */}
       {isExpanded && (
-        <div className="border-t border-[var(--card-border)]">
+        <div className="border-t border-border">
           {list.books.length > 0 && (
             <ListFilters
               filterStatus={filterStatus}
@@ -272,20 +267,20 @@ export function ListAccordion({
           )}
           {list.books.length === 0 ? (
             <div className="p-10 text-center">
-              <p className="text-stone-400 mb-2">No books yet</p>
-              <Link href="/search" className="text-primary-400 hover:underline font-medium">
+              <p className="text-muted-foreground mb-2">No books yet</p>
+              <Link href="/search" className="text-primary hover:underline font-medium">
                 Search for books to add →
               </Link>
             </div>
           ) : sortedBooks.length === 0 ? (
             <div className="p-10 text-center">
-              <p className="text-stone-400 mb-2">No books match your filters</p>
+              <p className="text-muted-foreground mb-2">No books match your filters</p>
               <button
                 onClick={() => {
                   onFilterStatusChange(null);
                   onFilterMinRatingChange(null);
                 }}
-                className="text-primary-400 hover:underline font-medium"
+                className="text-primary hover:underline font-medium"
               >
                 Clear filters
               </button>

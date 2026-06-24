@@ -59,8 +59,8 @@ export function ReadingProgress({
 
   if (isEditing) {
     return (
-      <div className="flex items-center gap-2 bg-stone-800/50 rounded-xl px-3 py-2">
-        <BookOpen className="w-4 h-4 text-primary-400 flex-shrink-0" />
+      <div className="flex items-center gap-2 bg-muted rounded-lg px-3 py-2">
+        <BookOpen className="w-4 h-4 text-primary flex-shrink-0" />
         <input
           ref={currentPageRef}
           type="number"
@@ -69,29 +69,29 @@ export function ReadingProgress({
           value={editCurrentPage}
           onChange={(e) => setEditCurrentPage(Math.max(0, parseInt(e.target.value) || 0))}
           onKeyDown={handleKeyDown}
-          className="w-14 px-2 py-1 text-sm bg-stone-700 border border-stone-600 rounded-lg text-white text-center focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="w-14 px-2 py-1 text-sm bg-background border border-border rounded-lg text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
           placeholder="Page"
         />
-        <span className="text-stone-400">/</span>
+        <span className="text-muted-foreground">/</span>
         <input
           type="number"
           min={1}
           value={editTotalPages}
           onChange={(e) => setEditTotalPages(Math.max(1, parseInt(e.target.value) || 1))}
           onKeyDown={handleKeyDown}
-          className="w-14 px-2 py-1 text-sm bg-stone-700 border border-stone-600 rounded-lg text-white text-center focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="w-14 px-2 py-1 text-sm bg-background border border-border rounded-lg text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
           placeholder="Total"
         />
         <button
           onClick={handleSave}
-          className="p-1 text-primary-400 hover:text-primary-300 transition-colors cursor-pointer"
+          className="p-1 text-primary hover:text-primary/80 transition-colors"
           aria-label="Save progress"
         >
           <Check className="w-4 h-4" />
         </button>
         <button
           onClick={handleCancel}
-          className="p-1 text-stone-400 hover:text-stone-300 transition-colors cursor-pointer"
+          className="p-1 text-muted-foreground hover:text-foreground transition-colors"
           aria-label="Cancel"
         >
           <X className="w-4 h-4" />
@@ -110,15 +110,15 @@ export function ReadingProgress({
         onClick={() => editable && setIsEditing(true)}
         disabled={!editable}
         className={`inline-flex items-center gap-1 text-xs sm:text-sm ${
-          editable ? "cursor-pointer hover:text-primary-400" : "cursor-default"
+          editable ? "cursor-pointer hover:text-primary" : "cursor-default"
         } transition-colors`}
       >
-        <BookOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary-400" />
-        <span className="text-stone-300">
+        <BookOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary" />
+        <span className="text-muted-foreground">
           {totalPages ? `${currentPage ?? 0}/${totalPages}` : `${currentPage ?? 0} pages`}
         </span>
         {percentage > 0 && (
-          <span className="text-primary-400 font-medium">({percentage}%)</span>
+          <span className="text-primary font-medium">({percentage}%)</span>
         )}
       </button>
     );
@@ -131,22 +131,22 @@ export function ReadingProgress({
       className={`w-full ${editable ? "cursor-pointer" : "cursor-default"}`}
     >
       <div className="flex items-center justify-between text-sm mb-1.5">
-        <div className="flex items-center gap-1.5 text-stone-300">
-          <BookOpen className="w-4 h-4 text-primary-400" />
+        <div className="flex items-center gap-1.5 text-muted-foreground">
+          <BookOpen className="w-4 h-4 text-primary" />
           <span>
             {totalPages ? `${currentPage ?? 0} of ${totalPages} pages` : `${currentPage ?? 0} pages read`}
           </span>
         </div>
-        <span className="text-primary-400 font-medium">{percentage}%</span>
+        <span className="text-primary font-medium">{percentage}%</span>
       </div>
-      <div className="h-2 bg-stone-700 rounded-full overflow-hidden">
+      <div className="h-2 bg-muted rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-primary-500 to-primary-400 rounded-full transition-all duration-500"
+          className="h-full bg-primary rounded-full transition-all duration-500"
           style={{ width: `${percentage}%` }}
         />
       </div>
       {editable && (
-        <p className="text-xs text-stone-500 mt-1">Click to update progress</p>
+        <p className="text-xs text-muted-foreground mt-1">Click to update progress</p>
       )}
     </button>
   );

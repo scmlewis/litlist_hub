@@ -13,11 +13,11 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
     <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
       <div className="mb-4 opacity-40">
         {React.cloneElement(icon, {
-          className: "w-20 h-20 text-primary-500",
+          className: "w-20 h-20 text-muted-foreground",
         })}
       </div>
-      <h3 className="text-xl font-semibold text-primary-100 mb-2">{title}</h3>
-      <p className="text-primary-300 mb-6 max-w-md">{description}</p>
+      <h3 className="text-xl font-semibold text-foreground mb-2">{title}</h3>
+      <p className="text-muted-foreground mb-6 max-w-md">{description}</p>
       {action}
     </div>
   );

@@ -57,27 +57,27 @@ export function ExportPageClient() {
       title: "JSON Export",
       description: "Complete data export with all details. Best for backups and data portability.",
       icon: FileJson,
-      color: "text-blue-400",
-      bgColor: "bg-blue-900/30",
-      borderColor: "border-blue-800/50",
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
+      borderColor: "border-blue-200",
     },
     {
       format: "csv" as ExportFormat,
       title: "CSV Export",
       description: "Spreadsheet-compatible format. Good for viewing in Excel or Google Sheets.",
       icon: FileText,
-      color: "text-emerald-400",
-      bgColor: "bg-emerald-900/30",
-      borderColor: "border-emerald-800/50",
+      color: "text-emerald-600",
+      bgColor: "bg-emerald-50",
+      borderColor: "border-emerald-200",
     },
     {
       format: "goodreads" as ExportFormat,
       title: "Goodreads Format",
       description: "Compatible with Goodreads import. Transfer your library to other platforms.",
       icon: FileText,
-      color: "text-amber-400",
-      bgColor: "bg-amber-900/30",
-      borderColor: "border-amber-800/50",
+      color: "text-amber-600",
+      bgColor: "bg-amber-50",
+      borderColor: "border-amber-200",
     },
   ];
 
@@ -86,13 +86,12 @@ export function ExportPageClient() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl blur-xl opacity-30" />
-          <div className="relative p-4 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl">
+          <div className="relative p-4 bg-emerald-500 rounded-2xl">
             <Download className="w-8 h-8 text-white" />
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-white mb-2">Export Your Data</h1>
-        <p className="text-stone-400">
+        <h1 className="text-3xl font-bold text-foreground mb-2">Export Your Data</h1>
+        <p className="text-muted-foreground">
           Download your reading lists, progress, and statistics
         </p>
       </div>
@@ -109,23 +108,23 @@ export function ExportPageClient() {
               key={option.format}
               onClick={() => handleExport(option.format)}
               disabled={isExporting !== null}
-              className={`w-full p-6 glass-card rounded-2xl text-left transition-all duration-200 hover:bg-stone-800/50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border ${option.borderColor}`}
+              className={`w-full p-6 bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl text-left transition-all duration-200 hover:bg-muted/50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
             >
               <div className="flex items-start gap-4">
                 <div className={`p-3 rounded-xl ${option.bgColor}`}>
                   <Icon className={`w-6 h-6 ${option.color}`} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white mb-1">
+                  <h3 className="text-lg font-semibold text-foreground mb-1">
                     {option.title}
                   </h3>
-                  <p className="text-sm text-stone-400">{option.description}</p>
+                  <p className="text-sm text-muted-foreground">{option.description}</p>
                 </div>
                 <div className="flex-shrink-0">
                   {isLoading ? (
-                    <Loader2 className="w-6 h-6 text-stone-400 animate-spin" />
+                    <Loader2 className="w-6 h-6 text-muted-foreground animate-spin" />
                   ) : isComplete ? (
-                    <CheckCircle className="w-6 h-6 text-emerald-400" />
+                    <CheckCircle className="w-6 h-6 text-emerald-600" />
                   ) : (
                     <Download className={`w-6 h-6 ${option.color}`} />
                   )}
@@ -137,35 +136,35 @@ export function ExportPageClient() {
       </div>
 
       {/* Info */}
-      <div className="mt-8 p-6 glass-card rounded-2xl">
-        <h3 className="text-lg font-semibold text-white mb-4">📦 What&apos;s Included</h3>
-        <ul className="space-y-2 text-stone-400">
+      <div className="mt-8 p-6 bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl">
+        <h3 className="text-lg font-semibold text-foreground mb-4">📦 What&apos;s Included</h3>
+        <ul className="space-y-2 text-muted-foreground">
           <li className="flex items-start gap-2">
-            <span className="text-emerald-400">✓</span>
+            <span className="text-emerald-600">✓</span>
             All your reading lists and their books
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-400">✓</span>
+            <span className="text-emerald-600">✓</span>
             Reading status (Want to Read, Reading, Done)
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-400">✓</span>
+            <span className="text-emerald-600">✓</span>
             Your ratings, notes, and reviews
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-400">✓</span>
+            <span className="text-emerald-600">✓</span>
             Reading progress and dates
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-400">✓</span>
+            <span className="text-emerald-600">✓</span>
             Reading goals (JSON format only)
           </li>
         </ul>
       </div>
 
       {/* Privacy Note */}
-      <div className="mt-4 p-4 bg-blue-900/20 border border-blue-800/50 rounded-xl">
-        <p className="text-sm text-blue-300">
+      <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+        <p className="text-sm text-blue-700">
           <strong>Privacy:</strong> Your data is yours. Downloads are processed 
           locally and we don&apos;t store copies of your exports.
         </p>
