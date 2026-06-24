@@ -92,7 +92,7 @@ export function BookListItem({
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 },
       }}
-      className={`bg-white border border-border rounded-xl p-4 shadow-elevation-1 transition-all duration-200 ${
+      className={`bg-card border border-border rounded-xl p-4 shadow-elevation-1 transition-all duration-200 ${
         isDragging ? "opacity-30 scale-95 ring-2 ring-border ring-dashed" : ""
       } ${selected ? "ring-2 ring-primary" : ""} ${
         focused ? "ring-2 ring-ring" : ""

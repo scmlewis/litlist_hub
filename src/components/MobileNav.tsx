@@ -39,11 +39,11 @@ export function MobileNav() {
       {/* More Menu Overlay */}
       {showMore && (
         <div
-          className="md:hidden fixed inset-0 z-40 bg-foreground/20 backdrop-blur-sm animate-fade-in"
+          className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm animate-fade-in"
           onClick={() => setShowMore(false)}
         >
           <div
-            className="absolute bottom-20 left-4 right-4 p-4 bg-white border border-border rounded-2xl shadow-elevation-3 animate-slide-up"
+            className="absolute bottom-20 left-4 right-4 p-4 bg-card border border-border rounded-2xl shadow-elevation-3 animate-slide-up"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
@@ -66,7 +66,7 @@ export function MobileNav() {
                     onClick={() => setShowMore(false)}
                     className={`flex flex-col items-center gap-2 p-4 rounded-xl transition-colors duration-150 ${
                       active
-                        ? "text-primary bg-accent"
+                        ? "text-primary bg-muted"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                   >
@@ -91,7 +91,7 @@ export function MobileNav() {
       )}
 
       {/* Bottom Navigation — M3 Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-border bottom-nav">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-t border-border bottom-nav">
         <div className="flex items-center justify-around py-2 px-2">
           {mainNavItems.map((item) => {
             const Icon = item.icon;
@@ -106,7 +106,7 @@ export function MobileNav() {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                <div className={`p-1.5 rounded-full transition-colors duration-150 ${active ? "bg-accent" : ""}`}>
+                <div className={`p-1.5 rounded-full transition-colors duration-150 ${active ? "bg-muted" : ""}`}>
                   <Icon className="w-5 h-5" />
                 </div>
                 <span className="text-xs font-medium">{item.label}</span>
@@ -121,7 +121,7 @@ export function MobileNav() {
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <div className={`p-1.5 rounded-full transition-colors duration-150 ${showMore || isMoreActive ? "bg-accent" : ""}`}>
+            <div className={`p-1.5 rounded-full transition-colors duration-150 ${showMore || isMoreActive ? "bg-muted" : ""}`}>
               <MoreHorizontal className="w-5 h-5" />
             </div>
             <span className="text-xs font-medium">More</span>

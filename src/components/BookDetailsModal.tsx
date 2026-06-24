@@ -87,10 +87,10 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/30 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
       onClick={handleBackdropClick}
     >
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden bg-white border border-border rounded-2xl shadow-elevation-3 animate-slide-up">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden bg-card border-border shadow-elevation-3 rounded-2xl animate-slide-up">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
@@ -110,7 +110,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
               <p className="text-destructive mb-4">{error}</p>
               <button
                 onClick={fetchDetails}
-                className="px-4 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm transition-colors"
+                className="px-4 py-2 bg-muted text-foreground hover:bg-muted/80 rounded-lg text-sm transition-colors"
               >
                 Try Again
               </button>
@@ -232,7 +232,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
                   href={details.openLibraryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 py-3 px-4 bg-muted text-foreground rounded-full font-medium transition-colors hover:bg-muted/80"
+                  className="flex items-center gap-2 py-3 px-4 bg-muted text-foreground hover:bg-muted/80 rounded-full font-medium transition-colors"
                 >
                   <ExternalLink className="w-5 h-5" />
                   Open Library

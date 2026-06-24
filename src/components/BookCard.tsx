@@ -27,7 +27,7 @@ export function BookCard({
   isInList = false,
 }: BookCardProps) {
   return (
-    <div className="group flex gap-4 p-4 bg-white border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-200">
+    <div className="group flex gap-4 p-4 bg-card border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-200">
       <div className="flex-shrink-0 w-20 h-28 relative rounded-lg overflow-hidden shadow-sm">
         {book.coverUrl ? (
           <Image
@@ -88,7 +88,7 @@ export function BookCard({
             )}
 
             {isInList && !status && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-primary">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-tertiary">
                 <Check className="w-4 h-4" />
                 In List
               </span>

@@ -84,8 +84,8 @@ export function GoalsPageClient() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
-          <div className="relative p-4 bg-primary rounded-xl">
-            <Target className="w-8 h-8 text-primary-foreground" />
+          <div className="relative p-4 bg-primary text-primary-foreground rounded-2xl">
+            <Target className="w-8 h-8" />
           </div>
         </div>
         <h1 className="text-3xl font-bold text-foreground mb-2">Reading Goals</h1>
@@ -113,7 +113,7 @@ export function GoalsPageClient() {
       </div>
 
       {isLoading ? (
-        <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-8 text-center">
+        <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-8 text-center">
           <div className="animate-pulse">
             <div className="h-32 w-32 mx-auto bg-muted rounded-full mb-4" />
             <div className="h-6 w-48 mx-auto bg-muted rounded mb-2" />
@@ -121,7 +121,7 @@ export function GoalsPageClient() {
           </div>
         </div>
       ) : goal ? (
-        <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-8">
+        <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-8">
           {/* Progress Circle */}
           <div className="relative w-48 h-48 mx-auto mb-6">
             <svg className="w-full h-full transform -rotate-90">
@@ -170,7 +170,7 @@ export function GoalsPageClient() {
 
           {/* Stats */}
           <div className="text-center mb-6">
-            <p className="text-lg text-foreground">
+            <p className="text-lg text-muted-foreground">
               {isComplete ? (
                 <span className="flex items-center justify-center gap-2">
                   <Sparkles className="w-5 h-5 text-primary" />
@@ -204,7 +204,7 @@ export function GoalsPageClient() {
               <span className="text-foreground">books</span>
               <button
                 onClick={saveGoal}
-                className="p-2 text-primary hover:bg-accent rounded-xl transition-colors"
+                className="p-2 text-tertiary hover:bg-accent rounded-xl transition-colors"
               >
                 <Check className="w-5 h-5" />
               </button>
@@ -229,9 +229,9 @@ export function GoalsPageClient() {
           )}
         </div>
       ) : (
-        <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-8 text-center">
+        <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-8 text-center">
           <div className="relative inline-block mb-6">
-            <div className="relative p-5 bg-accent rounded-full">
+            <div className="relative p-5 bg-muted rounded-full">
               <BookOpen className="w-10 h-10 text-primary" />
             </div>
           </div>
@@ -272,7 +272,7 @@ export function GoalsPageClient() {
       )}
 
       {/* Tips */}
-      <div className="mt-8 p-6 bg-white border border-border rounded-xl shadow-elevation-1">
+      <div className="mt-8 p-6 bg-card border border-border rounded-xl shadow-elevation-1">
         <h3 className="text-lg font-semibold text-foreground mb-4">📚 Reading Tips</h3>
         <ul className="space-y-2 text-muted-foreground">
           <li className="flex items-start gap-2">

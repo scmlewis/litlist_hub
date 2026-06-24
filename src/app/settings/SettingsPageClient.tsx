@@ -58,8 +58,8 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
-          <div className="p-3 bg-primary/10 rounded-2xl">
-            <Settings className="w-8 h-8 text-primary" />
+          <div className="p-3 bg-primary text-primary-foreground rounded-2xl">
+            <Settings className="w-8 h-8" />
           </div>
           <div>
             <h1 className="text-3xl font-bold text-foreground">Settings</h1>
@@ -68,7 +68,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
         </div>
 
         {/* Account Info Card */}
-        <div className="bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl p-6 mb-6">
+        <div className="bg-card border border-border shadow-elevation-1 rounded-xl p-6 mb-6">
           <div className="flex items-center gap-2 mb-4">
             <User className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold text-foreground">Account Info</h2>
@@ -91,7 +91,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
         </div>
 
         {/* Data Management Card */}
-        <div className="bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl p-6 mb-6">
+        <div className="bg-card border border-border shadow-elevation-1 rounded-xl p-6 mb-6">
           <div className="flex items-center gap-2 mb-4">
             <Shield className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold text-foreground">Data Management</h2>
@@ -101,7 +101,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
           </p>
           <Link
             href="/export"
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl font-medium transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-secondary text-secondary-foreground rounded-xl font-medium transition-colors hover:opacity-80"
           >
             <Download className="w-4 h-4" />
             Export Your Data
@@ -109,10 +109,10 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
         </div>
 
         {/* Danger Zone */}
-        <div className="bg-white border border-destructive/30 rounded-xl shadow-elevation-1 rounded-2xl p-6">
+        <div className="bg-card border border-destructive/30 rounded-xl shadow-elevation-1 p-6">
           <div className="flex items-center gap-2 mb-4">
             <AlertTriangle className="w-5 h-5 text-destructive" />
-            <h2 className="text-lg font-semibold text-destructive">Danger Zone</h2>
+            <h2 className="text-lg font-semibold text-foreground">Danger Zone</h2>
           </div>
           <p className="text-muted-foreground mb-4">
             Once you delete your account, there is no going back. All your reading
@@ -120,7 +120,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
           </p>
           <button
             onClick={() => setShowDeleteModal(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-destructive/10 hover:bg-destructive/20 text-destructive rounded-xl font-medium transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 bg-destructive text-destructive-foreground rounded-xl font-medium transition-colors cursor-pointer"
           >
             <Trash2 className="w-4 h-4" />
             Delete Account
@@ -135,10 +135,10 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setShowDeleteModal(false)}
           />
-          <div className="relative bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl p-6 max-w-md w-full animate-scale-in">
+          <div className="relative bg-card border border-border shadow-elevation-1 rounded-xl p-6 max-w-md w-full animate-scale-in">
             <button
               onClick={() => setShowDeleteModal(false)}
-              className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+              className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -163,12 +163,12 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
                 </ul>
               </div>
 
-              <div className="p-4 bg-muted/50 rounded-xl">
+              <div className="p-4 bg-muted rounded-xl">
                 <p className="text-foreground text-sm mb-2">
                   Before deleting, consider{" "}
                   <Link
                     href="/export"
-                    className="text-primary hover:text-primary underline"
+                    className="text-primary hover:underline"
                     onClick={() => setShowDeleteModal(false)}
                   >
                     exporting your data
@@ -187,7 +187,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
                   value={confirmText}
                   onChange={(e) => setConfirmText(e.target.value)}
                   placeholder="DELETE"
-                  className="w-full px-4 py-3 bg-muted border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-destructive"
+                  className="w-full px-4 py-3 bg-muted border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary rounded-xl"
                 />
               </div>
 
@@ -198,14 +198,14 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowDeleteModal(false)}
-                  className="flex-1 px-4 py-3 bg-secondary hover:bg-secondary/80 text-foreground rounded-xl font-medium transition-colors cursor-pointer"
+                  className="flex-1 px-4 py-3 bg-secondary text-secondary-foreground rounded-xl font-medium transition-colors cursor-pointer hover:opacity-80"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleDeleteAccount}
                   disabled={confirmText !== "DELETE" || isDeleting}
-                  className="flex-1 px-4 py-3 bg-destructive hover:bg-destructive disabled:bg-destructive/50 disabled:text-destructive/50 text-white rounded-xl font-medium transition-colors cursor-pointer disabled:cursor-not-allowed"
+                  className="flex-1 px-4 py-3 bg-destructive text-destructive-foreground rounded-xl font-medium transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isDeleting ? "Deleting..." : "Delete Forever"}
                 </button>

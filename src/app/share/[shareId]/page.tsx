@@ -76,11 +76,11 @@ export default async function SharePage({ params }: SharePageProps) {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="bg-accent/30 p-4 rounded-xl text-center border border-border">
+        <div className="bg-card p-4 rounded-xl text-center border border-border">
           <div className="flex justify-center mb-2">
-            <BookMarked className="w-5 h-5 text-accent-foreground" />
+            <BookMarked className="w-5 h-5 text-accent" />
           </div>
-          <div className="text-2xl font-bold text-accent-foreground">
+          <div className="text-2xl font-bold text-accent">
             {statusCounts.WANT_TO_READ}
           </div>
           <div className="text-sm text-muted-foreground">Want to Read</div>
@@ -94,11 +94,11 @@ export default async function SharePage({ params }: SharePageProps) {
           </div>
           <div className="text-sm text-muted-foreground">Reading</div>
         </div>
-        <div className="bg-green-500/10 p-4 rounded-xl text-center border border-border">
+        <div className="bg-card p-4 rounded-xl text-center border border-border">
           <div className="flex justify-center mb-2">
-            <CheckCircle className="w-5 h-5 text-green-600" />
+            <CheckCircle className="w-5 h-5 text-tertiary" />
           </div>
-          <div className="text-2xl font-bold text-green-600">
+          <div className="text-2xl font-bold text-tertiary">
             {statusCounts.DONE}
           </div>
           <div className="text-sm text-muted-foreground">Done</div>
@@ -115,7 +115,7 @@ export default async function SharePage({ params }: SharePageProps) {
           {list.books.map((listBook) => (
             <div
               key={listBook.id}
-              className="flex items-center gap-4 p-4 bg-white border border-border rounded-xl shadow-elevation-1 hover:bg-muted/50 transition-colors duration-200"
+              className="flex items-center gap-4 p-4 bg-card border border-border rounded-xl shadow-elevation-1 hover:bg-muted/50 transition-colors duration-200"
             >
               <div className="w-16 h-20 relative flex-shrink-0 bg-muted rounded-lg overflow-hidden">
                 {listBook.book.coverUrl ? (

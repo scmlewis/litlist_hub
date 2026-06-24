@@ -61,7 +61,7 @@ export function BookSearch({ onAddBook, existingBookKeys = [] }: BookSearchProps
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search books by title, author, or ISBN..."
-            className="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-ring focus:border-primary focus:outline-none transition-all duration-200"
+            className="w-full pl-12 pr-4 py-3.5 bg-muted border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-primary focus:outline-none transition-all duration-200"
           />
         </div>
         <button
@@ -96,7 +96,7 @@ export function BookSearch({ onAddBook, existingBookKeys = [] }: BookSearchProps
             <h3 className="text-xl font-bold text-foreground">
               Search Results
             </h3>
-            <span className="px-3 py-1 bg-accent text-accent-foreground text-sm font-medium rounded-full">
+            <span className="px-3 py-1 bg-muted text-muted-foreground text-sm font-medium rounded-full">
               {results.length} found
             </span>
           </div>

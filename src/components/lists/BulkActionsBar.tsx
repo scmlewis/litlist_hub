@@ -30,7 +30,7 @@ export function BulkActionsBar({
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="bg-white border-2 border-primary rounded-xl p-4 shadow-elevation-2 sticky top-20 z-10"
+      className="bg-card border-2 border-primary rounded-xl p-4 shadow-elevation-2 sticky top-20 z-10"
     >
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">

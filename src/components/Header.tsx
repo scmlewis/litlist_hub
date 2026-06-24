@@ -8,7 +8,7 @@ export async function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-3">
-      <nav className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between bg-white/80 backdrop-blur-md border border-border rounded-2xl shadow-elevation-1">
+      <nav className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between bg-card/80 backdrop-blur-md border border-border rounded-2xl shadow-elevation-1">
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="p-1.5 bg-primary rounded-xl transition-transform duration-200 group-hover:scale-105">
             <BookOpen className="w-5 h-5 text-primary-foreground" />
@@ -24,42 +24,42 @@ export async function Header() {
             <>
               <Link
                 href="/search"
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors duration-150"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
               >
                 <Search className="w-4 h-4" />
                 <span>Search</span>
               </Link>
               <Link
                 href="/lists"
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors duration-150"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
               >
                 <Library className="w-4 h-4" />
                 <span>My Lists</span>
               </Link>
               <Link
                 href="/import"
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors duration-150"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
               >
                 <Upload className="w-4 h-4" />
                 <span>Import</span>
               </Link>
               <Link
                 href="/goals"
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors duration-150"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
               >
                 <Target className="w-4 h-4" />
                 <span>Goals</span>
               </Link>
               <Link
                 href="/stats"
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors duration-150"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
               >
                 <BarChart3 className="w-4 h-4" />
                 <span>Stats</span>
               </Link>
               <Link
                 href="/export"
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors duration-150"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
               >
                 <Download className="w-4 h-4" />
                 <span>Export</span>
@@ -76,7 +76,7 @@ export async function Header() {
                 )}
                 <Link
                   href="/settings"
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors duration-150"
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
                 >
                   <Settings className="w-4 h-4" />
                   <span>Settings</span>

@@ -24,19 +24,19 @@ describe("StatusBadge", () => {
   it("applies correct styling for WANT_TO_READ", () => {
     const { container } = render(<StatusBadge status="WANT_TO_READ" />);
     const badge = container.querySelector("span");
-    expect(badge?.className).toContain("blue");
+    expect(badge?.className).toContain("muted");
   });
 
   it("applies correct styling for READING", () => {
     const { container } = render(<StatusBadge status="READING" />);
     const badge = container.querySelector("span");
-    expect(badge?.className).toContain("amber");
+    expect(badge?.className).toContain("muted");
   });
 
   it("applies correct styling for DONE", () => {
     const { container } = render(<StatusBadge status="DONE" />);
     const badge = container.querySelector("span");
-    expect(badge?.className).toContain("green");
+    expect(badge?.className).toContain("muted");
   });
 
   it("renders as select when editable with onChange", () => {

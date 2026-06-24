@@ -212,8 +212,8 @@ export function ImportPageClient() {
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
-          <div className="relative p-4 bg-primary rounded-2xl">
-            <Upload className="w-8 h-8 text-primary-foreground" />
+          <div className="relative p-4 bg-primary text-primary-foreground rounded-2xl">
+            <Upload className="w-8 h-8" />
           </div>
         </div>
         <h1 className="text-3xl font-bold text-foreground mb-2">Import from Goodreads</h1>
@@ -223,7 +223,7 @@ export function ImportPageClient() {
       </div>
 
       {/* Instructions */}
-      <div className="bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl p-6 mb-6">
+      <div className="bg-card border border-border shadow-elevation-1 rounded-xl p-6 mb-6">
         <h2 className="text-lg font-semibold text-foreground mb-4">How to export from Goodreads:</h2>
         <ol className="space-y-3 text-foreground">
           <li className="flex gap-3">
@@ -248,7 +248,7 @@ export function ImportPageClient() {
       {/* File Upload */}
       {!file ? (
         <label className="block cursor-pointer">
-          <div className="border-2 border-dashed border-border rounded-2xl p-10 text-center hover:border-primary hover:bg-primary/5 transition-all duration-300">
+          <div className="bg-muted border-2 border-dashed border-border rounded-xl p-10 text-center hover:border-primary transition-all duration-300">
             <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
             <p className="text-lg font-medium text-foreground mb-2">
               Drop your CSV file here or click to browse
@@ -265,12 +265,12 @@ export function ImportPageClient() {
           />
         </label>
       ) : (
-        <div className="bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl p-6">
+        <div className="bg-card border border-border shadow-elevation-1 rounded-xl p-6">
           {/* File info */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg">
-                <CheckCircle className="w-5 h-5 text-primary" />
+                <CheckCircle className="w-5 h-5 text-tertiary" />
               </div>
               <div>
                 <p className="font-medium text-foreground">{file.name}</p>
@@ -281,7 +281,7 @@ export function ImportPageClient() {
             </div>
             <button
               onClick={clearFile}
-              className="p-2 text-muted-foreground hover:text-destructive transition-colors cursor-pointer"
+              className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -291,17 +291,17 @@ export function ImportPageClient() {
             <>
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="bg-amber-50 p-4 rounded-xl text-center border border-amber-200">
-                  <div className="text-2xl font-bold text-amber-700">{shelfCounts.toRead}</div>
-                  <div className="text-sm text-amber-600">Want to Read</div>
+                <div className="bg-muted p-4 rounded-xl text-center border border-border">
+                  <div className="text-2xl font-bold text-primary">{shelfCounts.toRead}</div>
+                  <div className="text-sm text-primary">Want to Read</div>
                 </div>
                 <div className="bg-primary/10 p-4 rounded-xl text-center border border-primary/20">
                   <div className="text-2xl font-bold text-primary">{shelfCounts.reading}</div>
                   <div className="text-sm text-primary">Reading</div>
                 </div>
                 <div className="bg-accent p-4 rounded-xl text-center border border-border">
-                  <div className="text-2xl font-bold text-accent-foreground">{shelfCounts.read}</div>
-                  <div className="text-sm text-accent-foreground">Read</div>
+                  <div className="text-2xl font-bold text-foreground">{shelfCounts.read}</div>
+                  <div className="text-sm text-foreground">Read</div>
                 </div>
               </div>
 
@@ -314,7 +314,7 @@ export function ImportPageClient() {
                   type="text"
                   value={listName}
                   onChange={(e) => setListName(e.target.value)}
-                  className="w-full px-4 py-3 bg-muted border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
+                  className="w-full px-4 py-3 bg-muted border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary rounded-xl"
                   placeholder="Enter list name"
                 />
               </div>
@@ -323,11 +323,11 @@ export function ImportPageClient() {
               <button
                 onClick={handleImport}
                 disabled={isLoading}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:brightness-110 shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-primary text-primary-foreground rounded-xl font-semibold shadow-elevation-1 transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 className="w-5 h-5 animate-spin text-primary" />
                     Importing...
                   </>
                 ) : (
@@ -344,25 +344,25 @@ export function ImportPageClient() {
           {/* Import result */}
           {importResult && (
             <div className="space-y-4">
-              <div className="flex items-center gap-3 p-4 bg-accent rounded-xl border border-border">
-                <CheckCircle className="w-6 h-6 text-accent-foreground" />
+              <div className="flex items-center gap-3 p-4 bg-tertiary/10 rounded-xl border border-tertiary/30">
+                <CheckCircle className="w-6 h-6 text-tertiary" />
                 <div>
-                  <p className="font-medium text-accent-foreground">Import Complete!</p>
-                  <p className="text-sm text-accent-foreground">
+                  <p className="font-medium text-foreground">Import Complete!</p>
+                  <p className="text-sm text-muted-foreground">
                     {importResult.imported} imported, {importResult.skipped} skipped (already in list)
                   </p>
                 </div>
               </div>
               
               {importResult.errors.length > 0 && (
-                <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
+                <div className="p-4 bg-muted rounded-xl border border-border">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertCircle className="w-5 h-5 text-amber-600" />
-                    <p className="font-medium text-amber-700">
+                    <AlertCircle className="w-5 h-5 text-destructive" />
+                    <p className="font-medium text-foreground">
                       {importResult.errors.length} books had errors
                     </p>
                   </div>
-                  <ul className="text-sm text-amber-600 space-y-1">
+                  <ul className="text-sm text-muted-foreground space-y-1">
                     {importResult.errors.slice(0, 5).map((title, i) => (
                       <li key={i}>• {title}</li>
                     ))}

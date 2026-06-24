@@ -7,7 +7,7 @@ const isDev = process.env.NODE_ENV === "development";
 export default function SignInPage() {
   return (
     <div className="max-w-md mx-auto mt-8 px-4">
-      <div className="bg-white border border-border rounded-3xl p-8 shadow-elevation-2">
+      <div className="bg-card border border-border rounded-3xl p-8 shadow-elevation-2">
         <div className="flex justify-center mb-6">
           <div className="p-4 bg-primary rounded-2xl shadow-elevation-1">
             <BookOpen className="w-10 h-10 text-primary-foreground" strokeWidth={1.5} />
@@ -45,11 +45,11 @@ export default function SignInPage() {
                 <div className="w-full border-t border-border"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-muted-foreground font-medium">or use test account</span>
+                <span className="px-4 bg-card text-muted-foreground font-medium">or use test account</span>
               </div>
             </div>
 
-            <div className="p-5 bg-primary/10 border border-border rounded-2xl">
+            <div className="p-5 bg-card border border-border rounded-2xl">
               <div className="flex items-center gap-2 mb-4">
                 <div className="p-1.5 bg-primary rounded-lg">
                   <FlaskConical className="w-3.5 h-3.5 text-primary-foreground" />

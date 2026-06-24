@@ -57,27 +57,24 @@ export function ExportPageClient() {
       title: "JSON Export",
       description: "Complete data export with all details. Best for backups and data portability.",
       icon: FileJson,
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200",
+      iconColor: "text-primary",
+      iconBg: "bg-primary/10",
     },
     {
       format: "csv" as ExportFormat,
       title: "CSV Export",
       description: "Spreadsheet-compatible format. Good for viewing in Excel or Google Sheets.",
       icon: FileText,
-      color: "text-emerald-600",
-      bgColor: "bg-emerald-50",
-      borderColor: "border-emerald-200",
+      iconColor: "text-tertiary",
+      iconBg: "bg-tertiary/10",
     },
     {
       format: "goodreads" as ExportFormat,
       title: "Goodreads Format",
       description: "Compatible with Goodreads import. Transfer your library to other platforms.",
       icon: FileText,
-      color: "text-amber-600",
-      bgColor: "bg-amber-50",
-      borderColor: "border-amber-200",
+      iconColor: "text-secondary",
+      iconBg: "bg-secondary/10",
     },
   ];
 
@@ -86,8 +83,8 @@ export function ExportPageClient() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
-          <div className="relative p-4 bg-emerald-500 rounded-2xl">
-            <Download className="w-8 h-8 text-white" />
+          <div className="relative p-4 bg-primary text-primary-foreground rounded-2xl">
+            <Download className="w-8 h-8" />
           </div>
         </div>
         <h1 className="text-3xl font-bold text-foreground mb-2">Export Your Data</h1>
@@ -108,11 +105,11 @@ export function ExportPageClient() {
               key={option.format}
               onClick={() => handleExport(option.format)}
               disabled={isExporting !== null}
-              className={`w-full p-6 bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl text-left transition-all duration-200 hover:bg-muted/50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
+              className="w-full p-6 bg-card border border-border rounded-xl shadow-elevation-1 text-left transition-all duration-200 hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-xl ${option.bgColor}`}>
-                  <Icon className={`w-6 h-6 ${option.color}`} />
+                <div className={`p-3 rounded-xl ${option.iconBg}`}>
+                  <Icon className={`w-6 h-6 ${option.iconColor}`} />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-foreground mb-1">
@@ -122,11 +119,11 @@ export function ExportPageClient() {
                 </div>
                 <div className="flex-shrink-0">
                   {isLoading ? (
-                    <Loader2 className="w-6 h-6 text-muted-foreground animate-spin" />
+                    <Loader2 className="w-6 h-6 text-primary animate-spin" />
                   ) : isComplete ? (
-                    <CheckCircle className="w-6 h-6 text-emerald-600" />
+                    <CheckCircle className="w-6 h-6 text-tertiary" />
                   ) : (
-                    <Download className={`w-6 h-6 ${option.color}`} />
+                    <Download className={`w-6 h-6 ${option.iconColor}`} />
                   )}
                 </div>
               </div>
@@ -136,35 +133,35 @@ export function ExportPageClient() {
       </div>
 
       {/* Info */}
-      <div className="mt-8 p-6 bg-white border border-border rounded-xl shadow-elevation-1 rounded-2xl">
+      <div className="mt-8 p-6 bg-card border border-border shadow-elevation-1 rounded-xl">
         <h3 className="text-lg font-semibold text-foreground mb-4">📦 What&apos;s Included</h3>
         <ul className="space-y-2 text-muted-foreground">
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600">✓</span>
+            <span className="text-tertiary">✓</span>
             All your reading lists and their books
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600">✓</span>
+            <span className="text-tertiary">✓</span>
             Reading status (Want to Read, Reading, Done)
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600">✓</span>
+            <span className="text-tertiary">✓</span>
             Your ratings, notes, and reviews
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600">✓</span>
+            <span className="text-tertiary">✓</span>
             Reading progress and dates
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600">✓</span>
+            <span className="text-tertiary">✓</span>
             Reading goals (JSON format only)
           </li>
         </ul>
       </div>
 
       {/* Privacy Note */}
-      <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-        <p className="text-sm text-blue-700">
+      <div className="mt-4 p-4 bg-muted border border-border rounded-xl">
+        <p className="text-sm text-muted-foreground">
           <strong>Privacy:</strong> Your data is yours. Downloads are processed 
           locally and we don&apos;t store copies of your exports.
         </p>

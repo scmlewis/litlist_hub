@@ -16,7 +16,7 @@ export default function StatsLoading() {
       <div className="space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white border border-border rounded-xl shadow-elevation-1 p-6 animate-pulse">
+            <div key={i} className="bg-card border border-border rounded-xl shadow-elevation-1 p-6 animate-pulse">
               <div className="h-8 w-8 bg-muted rounded-lg mb-3" />
               <div className="h-8 w-16 bg-muted rounded mb-2" />
               <div className="h-4 w-24 bg-muted rounded" />
@@ -26,7 +26,7 @@ export default function StatsLoading() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white border border-border rounded-xl shadow-elevation-1 p-6 animate-pulse">
+            <div key={i} className="bg-card border border-border rounded-xl shadow-elevation-1 p-6 animate-pulse">
               <div className="flex items-center gap-4">
                 <div className="h-12 w-12 bg-muted rounded-xl" />
                 <div>
@@ -38,7 +38,7 @@ export default function StatsLoading() {
           ))}
         </div>
 
-        <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-6 animate-pulse">
+        <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6 animate-pulse">
           <div className="h-5 w-40 bg-muted rounded mb-6" />
           <div className="flex items-end justify-between gap-2 h-40">
             {Array.from({ length: 12 }).map((_, i) => (

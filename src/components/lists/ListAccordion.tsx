@@ -149,7 +149,7 @@ export function ListAccordion({
   };
 
   return (
-    <div className="bg-white border border-border rounded-xl shadow-elevation-1 overflow-hidden">
+    <div className="bg-card border border-border rounded-xl shadow-elevation-1 overflow-hidden">
       <div
         className="p-4 sm:p-5 flex items-center justify-between hover:bg-muted/50 cursor-pointer transition-colors"
         onClick={onToggle}
@@ -181,7 +181,7 @@ export function ListAccordion({
                   className="p-1.5 hover:bg-muted rounded-lg transition-colors"
                   title="Save"
                 >
-                  <Check className="w-4 h-4 text-green-600" />
+                  <Check className="w-4 h-4 text-tertiary" />
                 </button>
                 <button
                   onClick={onCancelRename}
@@ -224,7 +224,7 @@ export function ListAccordion({
             onClick={() => onTogglePublic(list.id, list.isPublic)}
             className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-full transition-colors duration-200 ${
               list.isPublic
-                ? "bg-green-50 text-green-700 border border-green-200"
+                ? "bg-tertiary/20 text-tertiary border border-tertiary/30"
                 : "bg-muted text-muted-foreground border border-border"
             }`}
           >
@@ -234,7 +234,7 @@ export function ListAccordion({
           {list.isPublic && (
             <button
               onClick={() => onCopyShareLink(list.shareId)}
-              className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium bg-accent text-accent-foreground rounded-full hover:bg-accent/80 transition-colors"
+              className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium bg-muted text-muted-foreground rounded-full hover:bg-muted/80 transition-colors"
             >
               <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Copy Link</span>

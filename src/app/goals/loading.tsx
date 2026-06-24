@@ -13,7 +13,7 @@ export default function GoalsLoading() {
         <div className="h-9 w-9 bg-muted rounded-xl animate-pulse" />
       </div>
 
-      <div className="bg-white border border-border rounded-xl shadow-elevation-1 p-8 animate-pulse">
+      <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-8 animate-pulse">
         <div className="h-48 w-48 mx-auto bg-muted rounded-full mb-6" />
         <div className="h-6 w-48 mx-auto bg-muted rounded mb-2" />
         <div className="h-4 w-32 mx-auto bg-muted rounded" />

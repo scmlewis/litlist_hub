@@ -14,7 +14,7 @@ export function Skeleton({ className = "" }: SkeletonProps) {
 
 export function BookCardSkeleton() {
   return (
-    <div className="flex gap-4 p-4 bg-white border border-border rounded-xl shadow-elevation-1">
+    <div className="flex gap-4 p-4 bg-card border border-border rounded-xl shadow-elevation-1">
       <Skeleton className="w-20 h-28 rounded-lg flex-shrink-0" />
       <div className="flex-1 flex flex-col gap-2">
         <Skeleton className="h-5 w-3/4" />
@@ -31,7 +31,7 @@ export function BookCardSkeleton() {
 
 export function ListCardSkeleton() {
   return (
-    <div className="bg-white border border-border rounded-xl shadow-elevation-1 overflow-hidden">
+    <div className="bg-card border border-border rounded-xl shadow-elevation-1 overflow-hidden">
       <div className="p-5 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Skeleton className="w-10 h-10 rounded-xl" />

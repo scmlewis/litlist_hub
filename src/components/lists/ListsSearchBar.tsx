@@ -14,7 +14,7 @@ interface ListsSearchBarProps {
 export const ListsSearchBar = forwardRef<HTMLInputElement, ListsSearchBarProps>(
   ({ searchQuery, onSearchQueryChange, searchScope, onSearchScopeChange, lists }, ref) => {
     return (
-      <div className="bg-white border border-border rounded-xl p-3 sm:p-4 shadow-elevation-1">
+      <div className="bg-card border border-border rounded-xl p-3 sm:p-4 shadow-elevation-1">
         <div className="flex flex-row gap-2 sm:gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />

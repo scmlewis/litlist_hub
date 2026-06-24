@@ -59,7 +59,7 @@ export function StarRating({
             <Star
               className={`${sizeClasses[size]} transition-colors ${
                 isFilled
-                  ? "fill-amber-400 text-amber-400"
+                  ? "fill-amber-500 text-amber-500"
                   : "fill-transparent text-muted-foreground"
               }`}
             />

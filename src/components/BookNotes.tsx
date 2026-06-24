@@ -82,7 +82,7 @@ export function BookNotes({
 
     if (isEditing) {
       return (
-        <div className="mt-2 p-3 bg-muted rounded-lg">
+        <div className="mt-2 p-3 bg-card rounded-lg">
           <textarea
             ref={notesRef}
             value={notes}
@@ -122,7 +122,7 @@ export function BookNotes({
         </p>
         <button
           onClick={handleEdit}
-          className="absolute -right-1 -top-1 p-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white border border-border rounded"
+          className="absolute -right-1 -top-1 p-1 opacity-0 group-hover:opacity-100 transition-opacity bg-card border border-border rounded"
         >
           <Edit2 className="w-3 h-3 text-muted-foreground" />
         </button>
@@ -131,7 +131,7 @@ export function BookNotes({
   }
 
   return (
-    <div className="mt-4 p-4 bg-white border border-border rounded-xl">
+    <div className="mt-4 p-4 bg-card border border-border rounded-xl">
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
           <StickyNote className="w-4 h-4 text-primary" />

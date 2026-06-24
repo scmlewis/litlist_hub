@@ -11,14 +11,13 @@ describe("StarRating", () => {
 
   it("displays the correct number of filled stars based on rating", () => {
     const { container } = render(<StarRating rating={3} />);
-    // Check for filled stars (fill-amber-400 class)
-    const filledStars = container.querySelectorAll(".fill-amber-400");
+    const filledStars = container.querySelectorAll(".fill-amber-500");
     expect(filledStars.length).toBe(3);
   });
 
   it("displays no filled stars when rating is null", () => {
     const { container } = render(<StarRating rating={null} />);
-    const filledStars = container.querySelectorAll(".fill-amber-400");
+    const filledStars = container.querySelectorAll(".fill-amber-500");
     expect(filledStars.length).toBe(0);
   });
 
