@@ -11,7 +11,7 @@ vi.mock("@/components/Toast", () => ({
 }));
 
 // Import after mocking
-import { GoalsPageClient } from "@/app/goals/GoalsPageClient";
+import { GoalsPageClient } from "@/app/(protected)/goals/GoalsPageClient";
 
 describe("GoalsPageClient", () => {
   beforeEach(() => {

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Library, BookMarked, BookOpen, CheckCircle } from "lucide-react";
@@ -153,9 +154,9 @@ export default async function SharePage({ params }: SharePageProps) {
       <div className="mt-12 text-center text-sm text-muted-foreground">
         <p>
           Track your own reading at{" "}
-          <a href="/" className="text-primary hover:underline">
+          <Link href="/" className="text-primary hover:underline">
             LitList Hub
-          </a>
+          </Link>
         </p>
       </div>
     </div>

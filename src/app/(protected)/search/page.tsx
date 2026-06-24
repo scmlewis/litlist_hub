@@ -1,15 +1,7 @@
-import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
 import { SearchPageClient } from "./SearchPageClient";
 import { Search } from "lucide-react";
 
-export default async function SearchPage() {
-  const session = await auth();
-
-  if (!session) {
-    redirect("/api/auth/signin");
-  }
-
+export default function SearchPage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex items-center gap-4 mb-8">

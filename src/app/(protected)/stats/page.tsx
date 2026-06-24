@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
 import { StatsPageClient } from "./StatsPageClient";
 
 export const metadata = {
@@ -7,13 +5,7 @@ export const metadata = {
   description: "View your reading statistics and progress",
 };
 
-export default async function StatsPage() {
-  const session = await auth();
-
-  if (!session) {
-    redirect("/auth/signin");
-  }
-
+export default function StatsPage() {
   return (
     <main className="container mx-auto px-4 py-8">
       <StatsPageClient />

@@ -10,7 +10,7 @@ vi.mock("@/components/Toast", () => ({
 }));
 
 // Import after mocking
-import { ListsPageClient } from "@/app/lists/ListsPageClient";
+import { ListsPageClient } from "@/app/(protected)/lists/ListsPageClient";
 
 // Mock fetch globally
 global.fetch = vi.fn();

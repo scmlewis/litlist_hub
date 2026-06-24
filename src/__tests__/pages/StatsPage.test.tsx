@@ -9,7 +9,7 @@ vi.mock("@/components/Toast", () => ({
 }));
 
 // Import after mocking
-import { StatsPageClient } from "@/app/stats/StatsPageClient";
+import { StatsPageClient } from "@/app/(protected)/stats/StatsPageClient";
 
 describe("StatsPageClient", () => {
   beforeEach(() => {

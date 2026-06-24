@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -9,10 +8,6 @@ import type { ReadingStatus } from "@/types";
 
 export default async function ListsPage() {
   const session = await auth();
-
-  if (!session?.user?.id) {
-    redirect("/api/auth/signin");
-  }
 
   let lists: Array<{
     id: string;
@@ -44,7 +39,7 @@ export default async function ListsPage() {
 
   try {
     const rawLists = await prisma.list.findMany({
-      where: { userId: session.user.id },
+      where: { userId: session!.user!.id },
       include: {
         books: {
           include: { book: true },
@@ -55,7 +50,6 @@ export default async function ListsPage() {
       orderBy: { updatedAt: "desc" },
     });
 
-    // Parse JSON authors field for client component and cast status
     lists = rawLists.map((list) => ({
       ...list,
       books: list.books.map((lb, index) => ({
@@ -70,7 +64,6 @@ export default async function ListsPage() {
     }));
   } catch (error) {
     console.error("Failed to fetch lists:", error);
-    // Return empty lists on error - the client will show empty state
   }
 
   return (
