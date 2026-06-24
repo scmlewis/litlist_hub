@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-type ReadingStatus = "WANT_TO_READ" | "READING" | "DONE";
+import type { ReadingStatus } from "@/types";
 
 interface RouteParams {
   params: Promise<{ id: string; bookId: string }>;

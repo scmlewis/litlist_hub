@@ -13,9 +13,7 @@ import {
   ChevronDown
 } from "lucide-react";
 
-type ReadingStatus = "WANT_TO_READ" | "READING" | "DONE";
-type SortField = "addedAt" | "title" | "author" | "rating" | "progress";
-type SortOrder = "asc" | "desc";
+import type { ReadingStatus, SortField, SortOrder } from "@/types";
 
 interface ListFiltersProps {
   filterStatus: ReadingStatus | null;

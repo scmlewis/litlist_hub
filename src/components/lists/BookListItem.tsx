@@ -12,6 +12,7 @@ import { HighlightMatch } from "@/components/HighlightMatch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { GripVertical, Trash2, Info } from "lucide-react";
 import { useState } from "react";
+import type { ReadingStatus } from "@/types";
 
 interface BookListItemProps {
   listBook: {
@@ -182,7 +183,7 @@ export function BookListItem({
           {/* Status and Rating */}
           <div className="flex items-center gap-3 mb-3">
             <StatusBadge
-              status={listBook.status as any}
+              status={listBook.status as ReadingStatus}
             />
             <StarRating
               rating={listBook.rating}

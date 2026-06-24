@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-// Helper to deduplicate books by openLibraryKey (same book in multiple lists counts once)
 function deduplicateBooks<T extends { book: { openLibraryKey: string } }>(books: T[]): T[] {
   const seen = new Set<string>();
   return books.filter((lb) => {
@@ -12,7 +11,6 @@ function deduplicateBooks<T extends { book: { openLibraryKey: string } }>(books:
   });
 }
 
-// GET /api/stats - Get reading statistics for current user
 export async function GET(request: NextRequest) {
   const session = await auth();
 
@@ -26,20 +24,25 @@ export async function GET(request: NextRequest) {
     : new Date().getFullYear();
 
   try {
-    // Get all finished books for the user
-    const allFinishedBooks = await prisma.listBook.findMany({
+    // Single query: fetch all listBooks with status in [DONE, READING, WANT_TO_READ]
+    const allBooks = await prisma.listBook.findMany({
       where: {
         list: { userId: session.user.id },
-        status: "DONE",
+        status: { in: ["DONE", "READING", "WANT_TO_READ"] },
       },
-      include: {
-        book: true,
-      },
+      include: { book: true },
       orderBy: { finishDate: "desc" },
     });
 
-    // Deduplicate: same book in multiple lists counts once
+    // Partition by status
+    const allFinishedBooks = allBooks.filter((lb) => lb.status === "DONE");
     const finishedBooks = deduplicateBooks(allFinishedBooks);
+
+    const allCurrentlyReading = allBooks.filter((lb) => lb.status === "READING");
+    const currentlyReadingBooks = deduplicateBooks(allCurrentlyReading);
+
+    const allWantToRead = allBooks.filter((lb) => lb.status === "WANT_TO_READ");
+    const wantToRead = deduplicateBooks(allWantToRead).length;
 
     // Filter by year for yearly stats
     const yearStart = new Date(`${year}-01-01`);
@@ -49,11 +52,9 @@ export async function GET(request: NextRequest) {
       return lb.finishDate >= yearStart && lb.finishDate < yearEnd;
     });
 
-    // Calculate stats
     const totalBooksRead = finishedBooks.length;
     const booksReadThisYear = booksThisYear.length;
 
-    // Total pages read
     const totalPagesRead = finishedBooks.reduce((sum, lb) => {
       const pages = lb.totalPages || lb.book.pageCount || 0;
       return sum + pages;
@@ -64,14 +65,12 @@ export async function GET(request: NextRequest) {
       return sum + pages;
     }, 0);
 
-    // Average rating
     const ratedBooks = finishedBooks.filter((lb) => lb.rating !== null);
     const averageRating =
       ratedBooks.length > 0
         ? ratedBooks.reduce((sum, lb) => sum + (lb.rating || 0), 0) / ratedBooks.length
         : null;
 
-    // Books per month this year
     const booksPerMonth: number[] = Array(12).fill(0);
     booksThisYear.forEach((lb) => {
       if (lb.finishDate) {
@@ -80,33 +79,12 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    // Currently reading books (deduplicated)
-    const allCurrentlyReading = await prisma.listBook.findMany({
-      where: {
-        list: { userId: session.user.id },
-        status: "READING",
-      },
-      include: { book: true },
-    });
-    const currentlyReadingBooks = deduplicateBooks(allCurrentlyReading);
     const currentlyReading = currentlyReadingBooks.length;
 
-    // Pages in progress (pages read so far in currently reading books)
     const pagesInProgress = currentlyReadingBooks.reduce((sum, lb) => {
       return sum + (lb.currentPage || 0);
     }, 0);
 
-    // Want to read (deduplicated)
-    const allWantToRead = await prisma.listBook.findMany({
-      where: {
-        list: { userId: session.user.id },
-        status: "WANT_TO_READ",
-      },
-      include: { book: true },
-    });
-    const wantToRead = deduplicateBooks(allWantToRead).length;
-
-    // Average reading time (days between start and finish)
     const booksWithDates = finishedBooks.filter(
       (lb) => lb.startDate && lb.finishDate
     );
@@ -121,20 +99,17 @@ export async function GET(request: NextRequest) {
           }, 0) / booksWithDates.length
         : null;
 
-    // Get years with data for navigation
     const yearsWithData = [...new Set(
       allFinishedBooks
         .filter(lb => lb.finishDate)
         .map(lb => lb.finishDate!.getFullYear())
     )].sort((a, b) => b - a);
-    
-    // Always include current year
+
     const currentYear = new Date().getFullYear();
     if (!yearsWithData.includes(currentYear)) {
       yearsWithData.unshift(currentYear);
     }
 
-    // Recent books
     const recentBooks = booksThisYear.slice(0, 5).map((lb) => ({
       id: lb.id,
       title: lb.book.title,
@@ -145,11 +120,10 @@ export async function GET(request: NextRequest) {
       pageCount: lb.totalPages || lb.book.pageCount,
     }));
 
-    // Daily activity for heatmap (books finished per day)
     const dailyActivity: Record<string, { count: number; books: { id: string; title: string; coverUrl: string | null; rating: number | null }[] }> = {};
     booksThisYear.forEach((lb) => {
       if (lb.finishDate) {
-        const dateKey = lb.finishDate.toISOString().split("T")[0]; // YYYY-MM-DD
+        const dateKey = lb.finishDate.toISOString().split("T")[0];
         if (!dailyActivity[dateKey]) {
           dailyActivity[dateKey] = { count: 0, books: [] };
         }

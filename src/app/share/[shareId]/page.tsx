@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Library, BookMarked, BookOpen, CheckCircle } from "lucide-react";
 
-type ReadingStatus = "WANT_TO_READ" | "READING" | "DONE";
+import type { ReadingStatus } from "@/types";
 
 interface SharePageProps {
   params: Promise<{ shareId: string }>;

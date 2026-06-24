@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { BookMarked, BookOpen, CheckCircle } from "lucide-react";
-
-type ReadingStatus = "WANT_TO_READ" | "READING" | "DONE";
+import type { ReadingStatus } from "@/types";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
 interface StatusBadgeProps {
   status: ReadingStatus;
@@ -39,10 +39,11 @@ const statusConfig: Record<ReadingStatus, {
 
 export function StatusBadge({ status, onChange, editable = false }: StatusBadgeProps) {
   const [localStatus, setLocalStatus] = useState(status);
+  const [pendingStatus, setPendingStatus] = useState<ReadingStatus | null>(null);
+  const [showConfirm, setShowConfirm] = useState(false);
   const config = statusConfig[localStatus];
   const Icon = config.icon;
 
-  // Sync local status with prop when it changes
   useEffect(() => {
     setLocalStatus(status);
   }, [status]);
@@ -50,33 +51,52 @@ export function StatusBadge({ status, onChange, editable = false }: StatusBadgeP
   const handleChange = (newStatus: ReadingStatus) => {
     if (!onChange) return;
     
-    // Confirm when changing from DONE to another status
     if (status === "DONE" && newStatus !== "DONE") {
-      const confirmed = window.confirm(
-        "Changing from Done will clear the finish date. Continue?"
-      );
-      if (!confirmed) {
-        // Reset the select to original value
-        setLocalStatus(status);
-        return;
-      }
+      setPendingStatus(newStatus);
+      setShowConfirm(true);
+      return;
     }
     
     setLocalStatus(newStatus);
     onChange(newStatus);
   };
 
+  const confirmChange = () => {
+    if (pendingStatus) {
+      setLocalStatus(pendingStatus);
+      onChange?.(pendingStatus);
+      setPendingStatus(null);
+    }
+    setShowConfirm(false);
+  };
+
+  const cancelChange = () => {
+    setPendingStatus(null);
+    setShowConfirm(false);
+  };
+
   if (editable && onChange) {
     return (
-      <select
-        value={localStatus}
-        onChange={(e) => handleChange(e.target.value as ReadingStatus)}
-        className={`px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r ${config.gradient} ${config.textColor} border-0 cursor-pointer focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 shadow-lg [&>option]:bg-stone-800 [&>option]:text-stone-100`}
-      >
-        <option value="WANT_TO_READ">Want to Read</option>
-        <option value="READING">Reading</option>
-        <option value="DONE">Done</option>
-      </select>
+      <>
+        <select
+          value={localStatus}
+          onChange={(e) => handleChange(e.target.value as ReadingStatus)}
+          className={`px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r ${config.gradient} ${config.textColor} border-0 cursor-pointer focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 shadow-lg [&>option]:bg-stone-800 [&>option]:text-stone-100`}
+        >
+          <option value="WANT_TO_READ">Want to Read</option>
+          <option value="READING">Reading</option>
+          <option value="DONE">Done</option>
+        </select>
+        <ConfirmDialog
+          open={showConfirm}
+          onOpenChange={setShowConfirm}
+          title="Change from Done?"
+          description="Changing from Done will clear the finish date. Continue?"
+          confirmLabel="Continue"
+          onConfirm={confirmChange}
+          cancelLabel="Cancel"
+        />
+      </>
     );
   }
 

@@ -5,7 +5,7 @@ import { BookData } from "@/services/openLibrary";
 import { StatusBadge } from "./StatusBadge";
 import { Plus, X, BookOpen, Check } from "lucide-react";
 
-type ReadingStatus = "WANT_TO_READ" | "READING" | "DONE";
+import type { ReadingStatus } from "@/types";
 
 interface BookCardProps {
   book: BookData & { id?: string };

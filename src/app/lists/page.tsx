@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { ListsPageClient } from "./ListsPageClient";
 import { Library, Plus } from "lucide-react";
 
-type ReadingStatus = "WANT_TO_READ" | "READING" | "DONE";
+import type { ReadingStatus } from "@/types";
 
 export default async function ListsPage() {
   const session = await auth();
