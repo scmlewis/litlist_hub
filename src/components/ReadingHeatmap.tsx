@@ -96,11 +96,11 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
   const isCurrentYear = year === today.getFullYear();
 
   return (
-    <div className="glass-card rounded-2xl p-6">
+    <div className="glass-card rounded-2xl p-6 overflow-hidden">
       <h3 className="text-lg font-semibold text-white mb-4">Reading Activity</h3>
       
       {/* Month labels */}
-      <div className="flex mb-2 ml-10">
+      <div className="flex mb-2 ml-10 overflow-hidden">
         <div className="flex" style={{ gap: "3px" }}>
           {weeks.map((_, weekIndex) => {
             const label = monthLabels.find((l) => l.weekIndex === weekIndex);
