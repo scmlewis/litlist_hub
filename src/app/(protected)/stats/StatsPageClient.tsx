@@ -224,7 +224,7 @@ export function StatsPageClient() {
                       }`}
                       style={{ height: `${Math.max(height, 4)}%` }}
                     />
-                    <span className="text-xs text-muted-foreground">{MONTHS[index]}</span>
+                    <span className="text-[10px] sm:text-xs text-muted-foreground">{MONTHS[index]}</span>
                   </div>
                 );
               })}

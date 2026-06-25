@@ -54,7 +54,7 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-24 md:pb-8 px-4">
+    <>
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
@@ -214,6 +214,6 @@ export function SettingsPageClient({ user }: SettingsPageClientProps) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

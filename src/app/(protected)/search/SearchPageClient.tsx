@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BookSearch } from "@/components/BookSearch";
 import { BookData } from "@/services/openLibrary";
 import { useToast } from "@/components/Toast";
-import { Plus, Loader2 } from "lucide-react";
+import { Plus, Loader2, Check, X } from "lucide-react";
 
 interface List {
   id: string;
@@ -16,6 +16,9 @@ export function SearchPageClient() {
   const [selectedListId, setSelectedListId] = useState<string>("");
   const [existingBookKeys, setExistingBookKeys] = useState<string[]>([]);
   const [isCreatingList, setIsCreatingList] = useState(false);
+  const [showNewListInput, setShowNewListInput] = useState(false);
+  const [newListName, setNewListName] = useState("");
+  const newListInputRef = useRef<HTMLInputElement>(null);
   const { showToast } = useToast();
 
   const fetchLists = async () => {
@@ -47,15 +50,15 @@ export function SearchPageClient() {
   };
 
   const createNewList = async () => {
-    const name = prompt("Enter list name:");
-    if (!name?.trim()) return;
+    const name = newListName.trim();
+    if (!name) return;
 
     setIsCreatingList(true);
     try {
       const response = await fetch("/api/lists", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim() }),
+        body: JSON.stringify({ name }),
       });
 
       if (response.ok) {
@@ -63,6 +66,8 @@ export function SearchPageClient() {
         setLists((prev) => [data.list, ...prev]);
         setSelectedListId(data.list.id);
         showToast("success", `Created list "${name}"`);
+        setShowNewListInput(false);
+        setNewListName("");
       }
     } catch (error) {
       console.error("Failed to create list:", error);
@@ -115,6 +120,12 @@ export function SearchPageClient() {
     }
   }, [selectedListId]);
 
+  useEffect(() => {
+    if (showNewListInput && newListInputRef.current) {
+      newListInputRef.current.focus();
+    }
+  }, [showNewListInput]);
+
   return (
     <div className="space-y-6">
       {/* List selector */}
@@ -134,18 +145,47 @@ export function SearchPageClient() {
             </option>
           ))}
         </select>
-        <button
-          onClick={createNewList}
-          disabled={isCreatingList}
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold bg-secondary text-secondary-foreground rounded-xl hover:bg-secondary/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isCreatingList ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
+        {showNewListInput ? (
+          <div className="flex items-center gap-2">
+            <input
+              ref={newListInputRef}
+              type="text"
+              value={newListName}
+              onChange={(e) => setNewListName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") createNewList();
+                if (e.key === "Escape") {
+                  setShowNewListInput(false);
+                  setNewListName("");
+                }
+              }}
+              placeholder="List name..."
+              className="flex-1 px-4 py-2.5 rounded-xl bg-muted border border-border text-foreground focus:ring-2 focus:ring-ring focus:outline-none shadow-sm transition-all duration-200"
+            />
+            <button
+              onClick={createNewList}
+              disabled={isCreatingList || !newListName.trim()}
+              className="p-2.5 text-tertiary hover:bg-accent rounded-xl transition-colors disabled:opacity-50"
+            >
+              {isCreatingList ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+            </button>
+            <button
+              onClick={() => { setShowNewListInput(false); setNewListName(""); }}
+              className="p-2.5 text-muted-foreground hover:bg-muted rounded-xl transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setShowNewListInput(true)}
+            disabled={isCreatingList}
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold bg-secondary text-secondary-foreground rounded-xl hover:bg-secondary/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             <Plus className="w-4 h-4" />
-          )}
-          New List
-        </button>
+            New List
+          </button>
+        )}
       </div>
 
       {/* Book search */}

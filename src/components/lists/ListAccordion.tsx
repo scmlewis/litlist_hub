@@ -201,7 +201,7 @@ export function ListAccordion({
                     e.stopPropagation();
                     onStartRename();
                   }}
-                  className="p-1 opacity-0 group-hover:opacity-100 hover:bg-muted rounded transition-all"
+                  className="p-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 hover:bg-muted rounded transition-all"
                   title="Rename list"
                 >
                   <Edit2 className="w-3 h-3 text-muted-foreground" />

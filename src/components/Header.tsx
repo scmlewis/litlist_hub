@@ -7,7 +7,7 @@ export async function Header() {
   const session = await auth();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-3">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-3 header-safe-top">
       <nav className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between bg-card/80 backdrop-blur-md border border-border rounded-2xl shadow-elevation-1">
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="p-1.5 bg-primary rounded-xl transition-transform duration-200 group-hover:scale-105">

@@ -69,7 +69,7 @@ export function ReadingProgress({
           value={editCurrentPage}
           onChange={(e) => setEditCurrentPage(Math.max(0, parseInt(e.target.value) || 0))}
           onKeyDown={handleKeyDown}
-          className="w-14 px-2 py-1 text-sm bg-muted border border-border rounded-lg text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
+          className="w-16 px-2 py-1.5 text-sm bg-muted border border-border rounded-lg text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
           placeholder="Page"
         />
         <span className="text-muted-foreground">/</span>
@@ -79,19 +79,19 @@ export function ReadingProgress({
           value={editTotalPages}
           onChange={(e) => setEditTotalPages(Math.max(1, parseInt(e.target.value) || 1))}
           onKeyDown={handleKeyDown}
-          className="w-14 px-2 py-1 text-sm bg-muted border border-border rounded-lg text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
+          className="w-16 px-2 py-1.5 text-sm bg-muted border border-border rounded-lg text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
           placeholder="Total"
         />
         <button
           onClick={handleSave}
-          className="p-1 text-tertiary hover:text-tertiary/80 transition-colors"
+          className="p-2 text-tertiary hover:text-tertiary/80 transition-colors"
           aria-label="Save progress"
         >
           <Check className="w-4 h-4" />
         </button>
         <button
           onClick={handleCancel}
-          className="p-1 text-muted-foreground hover:text-foreground transition-colors"
+          className="p-2 text-muted-foreground hover:text-foreground transition-colors"
           aria-label="Cancel"
         >
           <X className="w-4 h-4" />

@@ -134,10 +134,10 @@ export default async function SharePage({ params }: SharePageProps) {
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground">
+                <h3 className="font-semibold text-foreground truncate">
                   {listBook.book.title}
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground truncate">
                   {listBook.book.authors.join(", ") || "Unknown Author"}
                 </p>
                 {listBook.book.publishYear && (

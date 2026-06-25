@@ -106,7 +106,7 @@ export function ListFilters({
           )}
           <button
             onClick={() => onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")}
-            className="p-1.5 text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
+            className="p-2.5 text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
             title={sortOrder === "asc" ? "Ascending" : "Descending"}
           >
             {sortOrder === "asc" ? (
@@ -118,7 +118,7 @@ export function ListFilters({
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="p-1.5 text-stone-400 hover:text-red-400 hover:bg-red-900/30 rounded-lg transition-colors cursor-pointer"
+              className="p-2.5 text-stone-400 hover:text-red-400 hover:bg-red-900/30 rounded-lg transition-colors cursor-pointer"
               title="Clear filters"
             >
               <X className="w-4 h-4" />
@@ -161,7 +161,7 @@ export function ListFilters({
             <select
               value={filterMinRating ?? ""}
               onChange={(e) => onFilterMinRatingChange(e.target.value ? Number(e.target.value) : null)}
-              className="px-3 py-1.5 text-sm bg-stone-700/50 text-stone-300 rounded-lg border border-stone-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
+              className="px-3 py-2 text-sm bg-stone-700/50 text-stone-300 rounded-lg border border-stone-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer min-h-[44px]"
             >
               {RATING_OPTIONS.map((option) => (
                 <option key={option.value ?? "any"} value={option.value ?? ""}>
@@ -179,7 +179,7 @@ export function ListFilters({
             <select
               value={sortBy}
               onChange={(e) => onSortByChange(e.target.value as SortField)}
-              className="px-3 py-1.5 text-sm bg-stone-700/50 text-stone-300 rounded-lg border border-stone-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
+              className="px-3 py-2 text-sm bg-stone-700/50 text-stone-300 rounded-lg border border-stone-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer min-h-[44px]"
             >
               {SORT_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -189,7 +189,7 @@ export function ListFilters({
             </select>
             <button
               onClick={() => onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")}
-              className="p-1.5 text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
+              className="p-2.5 text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
               title={sortOrder === "asc" ? "Ascending" : "Descending"}
             >
               {sortOrder === "asc" ? (
@@ -210,7 +210,7 @@ export function ListFilters({
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="inline-flex items-center gap-1 px-2 py-1 text-xs text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-2.5 py-2 text-xs text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-3 h-3" />
                 Clear

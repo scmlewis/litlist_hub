@@ -65,7 +65,7 @@ export function MobileNav() {
                 <X className="w-5 h-5 text-muted-foreground" />
               </button>
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               {moreNavItems.map((item) => {
                 const Icon = item.icon;
                 const active = activeStates[item.href];

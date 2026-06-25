@@ -121,18 +121,18 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
             <>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
-                <div className="relative p-6 flex gap-6">
-                  <div className="flex-shrink-0">
+                <div className="relative p-6 flex flex-col sm:flex-row gap-4 sm:gap-6">
+                  <div className="flex-shrink-0 mx-auto sm:mx-0">
                     {details.coverUrl ? (
                       <Image
                         src={details.coverUrl}
                         alt={details.title}
                         width={150}
                         height={225}
-                        className="rounded-lg shadow-lg object-cover"
+                        className="rounded-lg shadow-lg object-cover w-[120px] h-[180px] sm:w-[150px] sm:h-[225px]"
                       />
                     ) : (
-                      <div className="w-[150px] h-[225px] bg-muted rounded-lg flex items-center justify-center">
+                      <div className="w-[120px] h-[180px] sm:w-[150px] sm:h-[225px] bg-muted rounded-lg flex items-center justify-center">
                         <BookOpen className="w-12 h-12 text-muted-foreground" />
                       </div>
                     )}

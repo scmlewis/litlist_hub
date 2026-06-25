@@ -19,9 +19,9 @@ export function StarRating({
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
   const sizeClasses = {
-    sm: "w-3.5 h-3.5",
-    md: "w-5 h-5",
-    lg: "w-6 h-6",
+    sm: "w-5 h-5",
+    md: "w-6 h-6",
+    lg: "w-7 h-7",
   };
 
   const displayRating = hoverRating ?? rating ?? 0;
@@ -37,7 +37,7 @@ export function StarRating({
 
   return (
     <div
-      className="inline-flex items-center gap-0.5"
+      className="inline-flex items-center gap-1"
       onMouseLeave={() => setHoverRating(null)}
     >
       {[1, 2, 3, 4, 5].map((starIndex) => {

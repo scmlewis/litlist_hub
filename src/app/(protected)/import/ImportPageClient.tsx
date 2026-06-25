@@ -251,7 +251,7 @@ export function ImportPageClient() {
           <div className="bg-muted border-2 border-dashed border-border rounded-xl p-10 text-center hover:border-primary transition-all duration-300">
             <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
             <p className="text-lg font-medium text-foreground mb-2">
-              Drop your CSV file here or click to browse
+              Tap to select a CSV file
             </p>
             <p className="text-sm text-muted-foreground">
               Supports Goodreads library export format

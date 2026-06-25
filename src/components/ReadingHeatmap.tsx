@@ -132,7 +132,8 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
         </div>
 
         {/* Heatmap grid */}
-        <div className="flex overflow-x-auto" style={{ gap: "3px" }}>
+        <div className="relative">
+          <div className="flex overflow-x-auto scrollbar-hide" style={{ gap: "3px" }}>
           {weeks.map((week, weekIndex) => (
             <div key={weekIndex} className="flex flex-col" style={{ gap: "3px" }}>
               {week.map((day, dayIndex) => {
@@ -173,6 +174,8 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
               })}
             </div>
           ))}
+          </div>
+          <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-card to-transparent pointer-events-none" />
         </div>
       </div>
 

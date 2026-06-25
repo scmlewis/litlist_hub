@@ -15,7 +15,7 @@ export default async function Home() {
           </div>
         </div>
         
-        <h1 className="text-6xl md:text-7xl font-extrabold mb-6 tracking-tight">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
           <span className="bg-gradient-to-r from-foreground via-foreground/80 to-foreground bg-clip-text text-transparent">
             LitList Hub
           </span>
@@ -71,7 +71,7 @@ export default async function Home() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="group p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
             <div className="relative inline-block mb-6">
               <div className="relative p-4 bg-blue-500/20 text-blue-400 rounded-2xl">
                 <Search className="w-7 h-7" />
@@ -85,7 +85,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="group p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
             <div className="relative inline-block mb-6">
               <div className="relative p-4 bg-tertiary/20 text-tertiary rounded-2xl">
                 <BookMarked className="w-7 h-7" />
@@ -99,7 +99,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="group p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
             <div className="relative inline-block mb-6">
               <div className="relative p-4 bg-purple-500/20 text-purple-400 rounded-2xl">
                 <Share2 className="w-7 h-7" />

@@ -191,7 +191,7 @@ export function GoalsPageClient() {
 
           {/* Edit Goal */}
           {isEditing ? (
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <label className="text-foreground">Target:</label>
               <input
                 type="number"
@@ -199,24 +199,26 @@ export function GoalsPageClient() {
                 max={365}
                 value={editTarget}
                 onChange={(e) => setEditTarget(parseInt(e.target.value) || 1)}
-                className="w-20 px-3 py-2 bg-muted border border-border rounded-xl text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
+                className="w-24 px-3 py-2.5 bg-muted border border-border rounded-xl text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
               />
               <span className="text-foreground">books</span>
-              <button
-                onClick={saveGoal}
-                className="p-2 text-tertiary hover:bg-accent rounded-xl transition-colors"
-              >
-                <Check className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => {
-                  setIsEditing(false);
-                  setEditTarget(goal.target);
-                }}
-                className="p-2 text-muted-foreground hover:bg-muted rounded-xl transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={saveGoal}
+                  className="p-2.5 text-tertiary hover:bg-accent rounded-xl transition-colors"
+                >
+                  <Check className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => {
+                    setIsEditing(false);
+                    setEditTarget(goal.target);
+                  }}
+                  className="p-2.5 text-muted-foreground hover:bg-muted rounded-xl transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           ) : (
             <button
@@ -241,7 +243,7 @@ export function GoalsPageClient() {
           </p>
 
           {isEditing ? (
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <label className="text-foreground">I want to read</label>
               <input
                 type="number"
@@ -249,12 +251,12 @@ export function GoalsPageClient() {
                 max={365}
                 value={editTarget}
                 onChange={(e) => setEditTarget(parseInt(e.target.value) || 1)}
-                className="w-20 px-3 py-2 bg-muted border border-border rounded-xl text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
+                className="w-24 px-3 py-2.5 bg-muted border border-border rounded-xl text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring"
               />
               <span className="text-foreground">books</span>
               <button
                 onClick={saveGoal}
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-xl font-semibold shadow-elevation-1 hover:shadow-elevation-2 transition-all"
+                className="px-4 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold shadow-elevation-1 hover:shadow-elevation-2 transition-all"
               >
                 Set Goal
               </button>

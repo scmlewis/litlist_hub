@@ -104,6 +104,14 @@ body {
    ============================================================ */
 
 @layer components {
+  .glass-card {
+    background: rgba(28, 23, 20, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--shape-lg);
+  }
+
   .surface-card {
     background: hsl(var(--card));
     box-shadow: var(--elevation-1);
@@ -252,6 +260,15 @@ body {
   animation: slide-in-right 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+@keyframes scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-scale-in {
+  animation: scale-in 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* ============================================================
    Scrollbar
    ============================================================ */
@@ -296,10 +313,25 @@ body {
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
-@media (max-width: 640px) {
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
+.header-safe-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+@layer base {
+  button, a, [role="button"], input, select, textarea {
+    @apply min-h-[44px];
+  }
+  input[type="checkbox"], input[type="radio"] {
+    @apply min-h-0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
