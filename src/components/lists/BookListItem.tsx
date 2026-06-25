@@ -178,6 +178,8 @@ export function BookListItem({
           <div className="flex flex-wrap items-center gap-2 mt-2">
             <StatusBadge
               status={listBook.status as ReadingStatus}
+              editable
+              onChange={(newStatus) => onUpdateStatus(newStatus)}
             />
             <StarRating
               rating={listBook.rating}

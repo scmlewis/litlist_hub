@@ -109,7 +109,7 @@ export function MobileNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl min-w-[64px] transition-colors duration-150 ${
+                className={`flex flex-col items-center gap-1 px-2 py-1.5 rounded-xl flex-1 min-w-0 transition-colors duration-150 ${
                   active
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
@@ -118,13 +118,13 @@ export function MobileNav() {
                 <div className={`p-1.5 rounded-full transition-colors duration-150 ${active ? "bg-muted" : ""}`}>
                   <Icon className="w-5 h-5" />
                 </div>
-                <span className="text-xs font-medium">{item.label}</span>
+                <span className="text-[10px] sm:text-xs font-medium truncate">{item.label}</span>
               </Link>
             );
           })}
           <button
             onClick={() => setShowMore(!showMore)}
-            className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl min-w-[64px] transition-colors duration-150 ${
+            className={`flex flex-col items-center gap-1 px-2 py-1.5 rounded-xl flex-1 min-w-0 transition-colors duration-150 ${
               showMore || isMoreActive
                 ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
@@ -133,7 +133,7 @@ export function MobileNav() {
             <div className={`p-1.5 rounded-full transition-colors duration-150 ${showMore || isMoreActive ? "bg-muted" : ""}`}>
               <MoreHorizontal className="w-5 h-5" />
             </div>
-            <span className="text-xs font-medium">More</span>
+            <span className="text-[10px] sm:text-xs font-medium">More</span>
           </button>
         </div>
       </nav>
