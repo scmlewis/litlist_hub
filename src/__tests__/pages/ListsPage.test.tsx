@@ -53,10 +53,10 @@ describe("ListsPageClient - Rename List Feature", () => {
         expect(screen.getAllByText("My Reading List")).toHaveLength(2); // In select and in list
       });
 
-      // The edit button should exist but be hidden initially (opacity-0)
+      // The edit button should exist but be hidden on desktop (opacity-0 via md:opacity-0)
       const editButtons = screen.getAllByTitle("Rename list");
       expect(editButtons[0]).toBeInTheDocument();
-      expect(editButtons[0]).toHaveClass("opacity-0");
+      expect(editButtons[0].className).toContain("md:opacity-0");
     });
   });
 

@@ -53,13 +53,12 @@ describe("StarRating", () => {
 
   it("renders with different sizes", () => {
     const { rerender, container } = render(<StarRating rating={3} size="sm" />);
-    // sm uses w-3.5, check for the SVG having correct class
-    expect(container.querySelector("svg.w-3\\.5")).toBeTruthy();
-
-    rerender(<StarRating rating={3} size="md" />);
     expect(container.querySelector("svg.w-5")).toBeTruthy();
 
-    rerender(<StarRating rating={3} size="lg" />);
+    rerender(<StarRating rating={3} size="md" />);
     expect(container.querySelector("svg.w-6")).toBeTruthy();
+
+    rerender(<StarRating rating={3} size="lg" />);
+    expect(container.querySelector("svg.w-7")).toBeTruthy();
   });
 });

@@ -93,19 +93,18 @@ export function StatsPageClient() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className="relative inline-block mb-4">
-          <div className="relative p-4 bg-primary text-primary-foreground rounded-2xl">
-            <BarChart3 className="w-8 h-8" />
-          </div>
+      {/* Compact Header */}
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2.5 bg-primary text-primary-foreground rounded-xl">
+          <BarChart3 className="w-5 h-5" />
         </div>
-        <h1 className="text-3xl font-bold text-foreground mb-2">Reading Statistics</h1>
-        <p className="text-muted-foreground">Track your reading journey</p>
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Statistics</h1>
+        </div>
       </div>
 
       {/* Year Selector */}
-      <div className="flex items-center justify-center gap-4 mb-8">
+      <div className="flex items-center justify-center gap-4 mb-6">
         <button
           onClick={() => setYear(year - 1)}
           disabled={stats?.yearsWithData && !stats.yearsWithData.includes(year - 1) && year - 1 < Math.min(...(stats.yearsWithData || [new Date().getFullYear()]))}
@@ -126,78 +125,78 @@ export function StatsPageClient() {
       </div>
 
       {isLoading ? (
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-card border border-border rounded-xl shadow-elevation-1 p-6 animate-pulse">
-                <div className="h-8 w-8 bg-muted rounded-lg mb-3" />
-                <div className="h-8 w-16 bg-muted rounded mb-2" />
-                <div className="h-4 w-24 bg-muted rounded" />
+              <div key={i} className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6 animate-pulse">
+                <div className="h-6 w-6 sm:h-8 sm:w-8 bg-muted rounded-lg mb-2 sm:mb-3" />
+                <div className="h-6 w-12 sm:h-8 sm:w-16 bg-muted rounded mb-1 sm:mb-2" />
+                <div className="h-3 w-16 sm:h-4 sm:w-24 bg-muted rounded" />
               </div>
             ))}
           </div>
         </div>
       ) : stats ? (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Key Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6">
-              <BookOpen className="w-8 h-8 text-primary mb-3" />
-              <div className="text-3xl font-bold text-foreground">{stats.booksReadThisYear}</div>
-              <div className="text-sm text-muted-foreground">Books Read in {year}</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6">
+              <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
+              <div className="text-2xl sm:text-3xl font-bold text-foreground">{stats.booksReadThisYear}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Books Read in {year}</div>
             </div>
-            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6">
-              <Library className="w-8 h-8 text-tertiary mb-3" />
-              <div className="text-3xl font-bold text-foreground">{stats.pagesThisYear.toLocaleString()}</div>
-              <div className="text-sm text-muted-foreground">Pages Read</div>
+            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6">
+              <Library className="w-6 h-6 sm:w-8 sm:h-8 text-tertiary mb-2 sm:mb-3" />
+              <div className="text-2xl sm:text-3xl font-bold text-foreground">{stats.pagesThisYear.toLocaleString()}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Pages Read</div>
             </div>
-            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6">
-              <Star className="w-8 h-8 text-accent mb-3" />
-              <div className="text-3xl font-bold text-foreground">
+            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6">
+              <Star className="w-6 h-6 sm:w-8 sm:h-8 text-accent mb-2 sm:mb-3" />
+              <div className="text-2xl sm:text-3xl font-bold text-foreground">
                 {stats.averageRating ? stats.averageRating.toFixed(1) : "—"}
               </div>
-              <div className="text-sm text-muted-foreground">Avg Rating</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Avg Rating</div>
             </div>
-            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6">
-              <Clock className="w-8 h-8 text-primary mb-3" />
-              <div className="text-3xl font-bold text-foreground">
+            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6">
+              <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3" />
+              <div className="text-2xl sm:text-3xl font-bold text-foreground">
                 {stats.averageReadingDays ? `${stats.averageReadingDays}d` : "—"}
               </div>
-              <div className="text-sm text-muted-foreground">Avg Time per Book</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Avg Time per Book</div>
             </div>
           </div>
 
           {/* Reading Status */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <Link href="/lists" className="bg-card border border-border rounded-xl shadow-elevation-1 p-6 hover:bg-muted transition-colors">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-primary/20 text-primary rounded-xl">
-                  <TrendingUp className="w-6 h-6" />
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+            <Link href="/lists" className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6 hover:bg-muted transition-colors">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="p-2.5 sm:p-3 bg-primary/20 text-primary rounded-xl">
+                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-foreground">{stats.currentlyReading}</div>
-                  <div className="text-sm text-muted-foreground">Currently Reading</div>
+                  <div className="text-xl sm:text-2xl font-bold text-foreground">{stats.currentlyReading}</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Currently Reading</div>
                 </div>
               </div>
             </Link>
-            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-muted text-muted-foreground rounded-xl">
-                  <Library className="w-6 h-6" />
+            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="p-2.5 sm:p-3 bg-muted text-muted-foreground rounded-xl">
+                  <Library className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-foreground">{(stats.pagesInProgress ?? 0).toLocaleString()}</div>
+                  <div className="text-xl sm:text-2xl font-bold text-foreground">{(stats.pagesInProgress ?? 0).toLocaleString()}</div>
                   <div className="text-sm text-muted-foreground">Pages in Progress</div>
                 </div>
               </div>
             </div>
-            <Link href="/lists" className="bg-card border border-border rounded-xl shadow-elevation-1 p-6 hover:bg-muted transition-colors">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-tertiary/20 text-tertiary rounded-xl">
-                  <BookMarked className="w-6 h-6" />
+            <Link href="/lists" className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6 hover:bg-muted transition-colors">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="p-2.5 sm:p-3 bg-tertiary/20 text-tertiary rounded-xl">
+                  <BookMarked className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-foreground">{stats.wantToRead}</div>
+                  <div className="text-xl sm:text-2xl font-bold text-foreground">{stats.wantToRead}</div>
                   <div className="text-sm text-muted-foreground">Want to Read</div>
                 </div>
               </div>
@@ -205,8 +204,8 @@ export function StatsPageClient() {
           </div>
 
           {/* Monthly Chart */}
-          <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-6">Books Read per Month</h3>
+          <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-4 sm:mb-6">Books Read per Month</h3>
             <div className="flex items-end justify-between gap-2 h-40">
               {stats.booksPerMonth.map((count, index) => {
                 const height = (count / maxBooksInMonth) * 100;
@@ -240,8 +239,8 @@ export function StatsPageClient() {
 
           {/* Recent Books */}
           {stats.recentBooks.length > 0 && (
-            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4">Recently Finished</h3>
+            <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Recently Finished</h3>
               <div className="space-y-3">
                 {stats.recentBooks.map((book) => (
                   <div key={book.id} className="flex items-center gap-4 p-3 bg-muted rounded-xl">
@@ -279,8 +278,8 @@ export function StatsPageClient() {
           )}
 
           {/* All-time Stats */}
-          <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">All-Time Stats</h3>
+          <div className="bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">All-Time Stats</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 bg-muted rounded-xl">
                 <div className="text-2xl font-bold text-foreground">{stats.totalBooksRead}</div>
@@ -296,11 +295,11 @@ export function StatsPageClient() {
           {/* Goal Link */}
           <Link
             href="/goals"
-            className="block bg-card border border-border rounded-xl shadow-elevation-1 p-6 hover:bg-muted transition-colors"
+            className="block bg-card border border-border rounded-xl shadow-elevation-1 p-4 sm:p-6 hover:bg-muted transition-colors"
           >
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-tertiary/20 text-tertiary rounded-xl">
-                <Target className="w-6 h-6" />
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-2.5 sm:p-3 bg-tertiary/20 text-tertiary rounded-xl">
+                <Target className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div className="flex-1">
                 <h3 className="font-semibold text-foreground">Set a Reading Goal</h3>

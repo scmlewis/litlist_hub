@@ -98,11 +98,11 @@ export function BookListItem({
         focused ? "ring-2 ring-ring" : ""
       }`}
     >
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-3">
         <button
           {...attributes}
           {...listeners}
-          className="mt-2 p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing touch-none"
+          className="hidden sm:block mt-2 p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing touch-none"
           aria-label="Drag to reorder"
         >
           <GripVertical className="w-5 h-5" />
@@ -112,12 +112,12 @@ export function BookListItem({
           checked={selected}
           onCheckedChange={(checked) => onSelect(false)}
           onClick={(e) => onSelect(e.shiftKey)}
-          className="mt-2"
+          className="mt-2 hidden sm:block"
           aria-label={`Select ${listBook.book.title}`}
         />
 
         <div
-          className="flex-shrink-0 w-16 h-24 bg-muted rounded-lg overflow-hidden cursor-pointer"
+          className="flex-shrink-0 w-12 h-18 sm:w-16 sm:h-24 bg-muted rounded-lg overflow-hidden cursor-pointer"
           onClick={handleClick}
         >
           {listBook.book.coverUrl ? (
@@ -130,22 +130,22 @@ export function BookListItem({
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-              <span className="text-2xl">📚</span>
+              <span className="text-xl sm:text-2xl">📚</span>
             </div>
           )}
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2">
+          <div className="flex items-start justify-between gap-1">
             <div className="flex-1 min-w-0 cursor-pointer" onClick={handleClick}>
-              <h4 className="font-semibold text-foreground mb-1 truncate">
+              <h4 className="font-semibold text-foreground text-sm sm:text-base mb-0.5 truncate">
                 {searchQuery ? (
                   <HighlightMatch text={listBook.book.title} query={searchQuery} />
                 ) : (
                   listBook.book.title
                 )}
               </h4>
-              <p className="text-sm text-muted-foreground mb-2">
+              <p className="text-xs sm:text-sm text-muted-foreground truncate">
                 {searchQuery ? (
                   <HighlightMatch
                     text={listBook.book.authors.join(", ") || "Unknown Author"}
@@ -157,25 +157,25 @@ export function BookListItem({
               </p>
             </div>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5">
               <button
                 onClick={onOpenDetails}
-                className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+                className="p-1.5 sm:p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
                 aria-label="View details"
               >
-                <Info className="w-4 h-4" />
+                <Info className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
               <button
                 onClick={onRemove}
-                className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+                className="p-1.5 sm:p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
                 aria-label="Remove book"
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex flex-wrap items-center gap-2 mt-2">
             <StatusBadge
               status={listBook.status as ReadingStatus}
             />
@@ -186,13 +186,15 @@ export function BookListItem({
           </div>
 
           {listBook.totalPages && (
-            <ReadingProgress
-              currentPage={listBook.currentPage}
-              totalPages={listBook.totalPages}
-              onUpdate={(current: number, total: number) => onUpdateProgress(listBook.bookId, current, total)}
-              editable
-              compact
-            />
+            <div className="mt-2">
+              <ReadingProgress
+                currentPage={listBook.currentPage}
+                totalPages={listBook.totalPages}
+                onUpdate={(current: number, total: number) => onUpdateProgress(listBook.bookId, current, total)}
+                editable
+                compact
+              />
+            </div>
           )}
 
           {expanded && (

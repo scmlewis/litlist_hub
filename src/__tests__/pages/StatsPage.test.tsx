@@ -60,7 +60,7 @@ describe("StatsPageClient", () => {
 
     render(<StatsPageClient />);
     
-    expect(screen.getByText("Reading Statistics")).toBeInTheDocument();
+    expect(screen.getByText("Statistics")).toBeInTheDocument();
   });
 
   it("shows loading state initially", () => {
@@ -180,7 +180,7 @@ describe("StatsPageClient", () => {
     
     await waitFor(() => {
       // Should still render without crashing
-      expect(screen.getByText("Reading Statistics")).toBeInTheDocument();
+      expect(screen.getByText("Statistics")).toBeInTheDocument();
     });
   });
 
@@ -193,7 +193,7 @@ describe("StatsPageClient", () => {
     
     await waitFor(() => {
       // Component should still render without crashing
-      expect(screen.getByText("Reading Statistics")).toBeInTheDocument();
+      expect(screen.getByText("Statistics")).toBeInTheDocument();
     });
   });
 });

@@ -6,9 +6,5 @@ export const metadata = {
 };
 
 export default function StatsPage() {
-  return (
-    <main className="container mx-auto px-4 py-8">
-      <StatsPageClient />
-    </main>
-  );
+  return <StatsPageClient />;
 }
