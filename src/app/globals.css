@@ -317,6 +317,24 @@ body {
   padding-top: env(safe-area-inset-top, 0);
 }
 
+.main-top-safe {
+  padding-top: calc(5rem + env(safe-area-inset-top, 0px));
+}
+
+@media (min-width: 640px) {
+  .main-top-safe {
+    padding-top: calc(6rem + env(safe-area-inset-top, 0px));
+  }
+}
+
+.bottom-safe-offset {
+  bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+}
+
+.toast-bottom-safe {
+  bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+
 @layer base {
   button, a, [role="button"], input, select, textarea {
     @apply min-h-[44px];

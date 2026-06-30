@@ -53,7 +53,7 @@ export function MobileNav() {
           onClick={closeMore}
         >
           <div
-            className="absolute bottom-20 left-4 right-4 p-4 bg-card border border-border rounded-2xl shadow-elevation-3 animate-slide-up"
+            className="absolute bottom-safe-offset left-4 right-4 p-4 bg-card border border-border rounded-2xl shadow-elevation-3 animate-slide-up"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
