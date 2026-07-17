@@ -7,73 +7,77 @@ export default async function Home() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {/* Hero Section */}
-      <section className="text-center py-20">
-        <div className="relative inline-block mb-8">
-          <div className="relative p-5 bg-primary rounded-3xl shadow-elevation-2">
-            <BookOpen className="w-14 h-14 text-primary-foreground" strokeWidth={1.5} />
+      {/* Hero Section — left-aligned for asymmetric feel */}
+      <section className="py-20 relative">
+        <div className="absolute inset-0 -z-10 bg-mesh rounded-3xl opacity-60" />
+        <div className="flex flex-col items-start text-left">
+          <div className="relative inline-block mb-8">
+            <div className="relative p-5 bg-primary rounded-3xl shadow-elevation-2">
+              <BookOpen className="w-14 h-14 text-primary-foreground" strokeWidth={1.5} />
+            </div>
           </div>
-        </div>
-        
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-          <span className="bg-gradient-to-r from-foreground via-foreground/80 to-foreground bg-clip-text text-transparent">
-            LitList Hub
-          </span>
-        </h1>
-        
-        <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-          Your personal reading companion. Track books, build lists, and share your literary journey.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          {session ? (
-            <>
+          
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 tracking-tighter-hero text-balance max-w-3xl">
+            <span className="bg-gradient-to-r from-foreground via-foreground/80 to-foreground bg-clip-text text-transparent">
+              LitList Hub
+            </span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-xl leading-relaxed text-balance">
+            Your personal reading companion. Track books, build lists, and share your literary journey.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 items-start">
+            {session ? (
+              <>
+                <Link
+                  href="/search"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-semibold transition-all duration-300 cursor-pointer shadow-elevation-2 hover:shadow-elevation-3 hover:scale-[1.02] active:scale-[0.98] active:shadow-elevation-1"
+                >
+                  <Search className="w-5 h-5" />
+                  Search Books
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href="/lists"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-card border border-border text-foreground rounded-2xl font-semibold hover:bg-muted transition-all duration-300 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <BookMarked className="w-5 h-5" />
+                  My Lists
+                  <ArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                </Link>
+              </>
+            ) : (
               <Link
-                href="/search"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-semibold transition-all duration-300 cursor-pointer shadow-elevation-2 hover:shadow-elevation-3 hover:scale-[1.02]"
+                href="/auth/signin"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-semibold transition-all duration-300 cursor-pointer shadow-elevation-2 hover:shadow-elevation-3 hover:scale-[1.02] active:scale-[0.98] active:shadow-elevation-1"
               >
-                <Search className="w-5 h-5" />
-                Search Books
+                <Sparkles className="w-5 h-5" />
+                Get Started Free
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link
-                href="/lists"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-card border border-border text-foreground rounded-2xl font-semibold hover:bg-muted transition-all duration-300 cursor-pointer hover:scale-[1.02]"
-              >
-                <BookMarked className="w-5 h-5" />
-                My Lists
-                <ArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-              </Link>
-            </>
-          ) : (
-            <Link
-              href="/auth/signin"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-semibold transition-all duration-300 cursor-pointer shadow-elevation-2 hover:shadow-elevation-3 hover:scale-[1.02]"
-            >
-              <Sparkles className="w-5 h-5" />
-              Get Started Free
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          )}
+            )}
+          </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features Section — 2-column zig-zag layout */}
       <section className="py-16">
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <span className="inline-flex items-center gap-2 px-4 py-2 bg-muted text-muted-foreground rounded-full text-sm font-medium mb-4">
             <Sparkles className="w-4 h-4" />
             Features
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight-section text-balance max-w-lg">
             Everything you need to track your reading
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* First feature — full width on mobile, spans visual space */}
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer md:row-span-1">
             <div className="relative inline-block mb-6">
-              <div className="relative p-4 bg-blue-500/20 text-blue-400 rounded-2xl">
+              <div className="relative p-4 bg-primary/15 text-primary rounded-2xl">
                 <Search className="w-7 h-7" />
               </div>
             </div>
@@ -85,9 +89,10 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
+          {/* Second feature — offset with top margin on desktop for zig-zag */}
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer md:mt-12">
             <div className="relative inline-block mb-6">
-              <div className="relative p-4 bg-tertiary/20 text-tertiary rounded-2xl">
+              <div className="relative p-4 bg-tertiary/15 text-tertiary rounded-2xl">
                 <BookMarked className="w-7 h-7" />
               </div>
             </div>
@@ -99,9 +104,10 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
+          {/* Third feature — aligned with first on desktop */}
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer md:col-span-2 md:max-w-[calc(50%-0.75rem)]">
             <div className="relative inline-block mb-6">
-              <div className="relative p-4 bg-purple-500/20 text-purple-400 rounded-2xl">
+              <div className="relative p-4 bg-accent/15 text-accent rounded-2xl">
                 <Share2 className="w-7 h-7" />
               </div>
             </div>

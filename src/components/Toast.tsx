@@ -82,14 +82,14 @@ function ToastItem({ toast, onDismiss }: ToastItemProps) {
   const icons = {
     success: <CheckCircle className="w-5 h-5 text-accent-400" />,
     error: <XCircle className="w-5 h-5 text-red-400" />,
-    info: <Info className="w-5 h-5 text-blue-400" />,
+    info: <Info className="w-5 h-5 text-info" />,
     warning: <AlertTriangle className="w-5 h-5 text-primary-400" />,
   };
 
   const styles = {
     success: "border-accent-800/50 bg-accent-900/20",
     error: "border-red-800/50 bg-red-900/20",
-    info: "border-blue-800/50 bg-blue-900/20",
+    info: "border-info/30 bg-info/10",
     warning: "border-primary-800/50 bg-primary-900/20",
   };
 

@@ -324,7 +324,7 @@ export function BookList({
                         activeBook.status === "DONE" 
                           ? "bg-emerald-500/20 text-emerald-400"
                           : activeBook.status === "READING"
-                          ? "bg-blue-500/20 text-blue-400"
+                          ? "bg-primary-500/20 text-primary-400"
                           : "bg-amber-500/20 text-amber-400"
                       }`}>
                         {activeBook.status === "DONE" ? "Done" : activeBook.status === "READING" ? "Reading" : "Want to Read"}

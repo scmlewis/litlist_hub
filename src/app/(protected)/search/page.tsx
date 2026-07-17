@@ -6,8 +6,8 @@ export default function SearchPage() {
     <div className="max-w-4xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl blur-lg opacity-40" />
-          <div className="relative p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl blur-lg opacity-40" />
+          <div className="relative p-3 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl">
             <Search className="w-6 h-6 text-white" />
           </div>
         </div>

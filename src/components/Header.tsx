@@ -106,7 +106,7 @@ export async function Header() {
             >
               <button
                 type="submit"
-                className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-medium shadow-elevation-1 hover:shadow-elevation-2 hover:brightness-110 transition-all duration-200"
+                className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-medium shadow-elevation-1 hover:shadow-elevation-2 hover:brightness-110 active:scale-[0.98] active:shadow-elevation-1 transition-all duration-200"
               >
                 <Sparkles className="w-4 h-4" />
                 Get Started
@@ -136,7 +136,7 @@ export async function Header() {
             >
               <button
                 type="submit"
-                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl font-medium text-sm shadow-elevation-1"
+                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl font-medium text-sm shadow-elevation-1 active:scale-[0.98] transition-all duration-200"
               >
                 <Sparkles className="w-4 h-4" />
                 Start

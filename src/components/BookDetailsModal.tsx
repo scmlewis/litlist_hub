@@ -189,7 +189,7 @@ export function BookDetailsModal({ bookKey, onClose, onAddToList }: BookDetailsM
               {details.subjects && details.subjects.length > 0 && (
                 <div className="px-6 pb-4">
                   <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <Tag className="w-4 h-4 text-blue-500" />
+                    <Tag className="w-4 h-4 text-primary-400" />
                     Subjects
                   </h3>
                   <div className="flex flex-wrap gap-2">

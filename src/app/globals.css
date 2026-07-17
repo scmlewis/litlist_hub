@@ -65,6 +65,12 @@
     --elevation-3: 0 4px 8px 3px rgba(16, 13, 10, 0.4), 0 1px 3px 0 rgba(16, 13, 10, 0.5);
     --elevation-4: 0 6px 10px 4px rgba(16, 13, 10, 0.4), 0 2px 3px 0 rgba(16, 13, 10, 0.5);
 
+    /* Mesh gradient — ambient library lighting */
+    --gradient-mesh:
+      radial-gradient(ellipse 100% 80% at 50% -30%, rgba(139, 90, 43, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 90% 10%, rgba(112, 66, 20, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 60% at 10% 80%, rgba(201, 166, 107, 0.06) 0%, transparent 50%);
+
     /* Shape */
     --shape-none: 0;
     --shape-xs: 4px;
@@ -87,7 +93,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   -webkit-font-smoothing: antialiased;
@@ -168,6 +174,10 @@ body {
     box-shadow: var(--elevation-2);
     filter: brightness(1.1);
   }
+  .btn-m3-filled:active {
+    transform: scale(0.98);
+    box-shadow: var(--elevation-1);
+  }
 
   .btn-m3-tonal {
     background: hsl(var(--secondary));
@@ -176,6 +186,9 @@ body {
   .btn-m3-tonal:hover {
     box-shadow: var(--elevation-1);
     filter: brightness(1.1);
+  }
+  .btn-m3-tonal:active {
+    transform: scale(0.98);
   }
 
   .btn-m3-outlined {
@@ -186,6 +199,9 @@ body {
   .btn-m3-outlined:hover {
     background: hsl(var(--muted));
   }
+  .btn-m3-outlined:active {
+    transform: scale(0.98);
+  }
 
   .btn-m3-text {
     background: transparent;
@@ -193,6 +209,9 @@ body {
   }
   .btn-m3-text:hover {
     background: hsl(var(--muted));
+  }
+  .btn-m3-text:active {
+    transform: scale(0.98);
   }
 
   .field-m3 {
@@ -300,6 +319,18 @@ body {
     text-wrap: balance;
   }
 
+  .tracking-tighter-hero {
+    letter-spacing: -0.03em;
+  }
+
+  .tracking-tight-section {
+    letter-spacing: -0.02em;
+  }
+
+  .bg-mesh {
+    background: var(--gradient-mesh);
+  }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -351,6 +382,22 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ============================================================
+   Grain Texture Overlay
+   ============================================================ */
+
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
 }
 
 /* ============================================================

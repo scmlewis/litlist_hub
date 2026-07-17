@@ -30,7 +30,7 @@ interface ListFiltersProps {
 
 const STATUS_OPTIONS: { value: ReadingStatus | null; label: string; icon: typeof BookOpen; color: string }[] = [
   { value: null, label: "All", icon: Filter, color: "text-stone-400" },
-  { value: "WANT_TO_READ", label: "Want to Read", icon: Clock, color: "text-blue-400" },
+  { value: "WANT_TO_READ", label: "Want to Read", icon: Clock, color: "text-tertiary" },
   { value: "READING", label: "Reading", icon: BookOpen, color: "text-primary-400" },
   { value: "DONE", label: "Done", icon: CheckCircle, color: "text-accent-400" },
 ];

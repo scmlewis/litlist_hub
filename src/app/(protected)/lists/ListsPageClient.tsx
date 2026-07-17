@@ -590,7 +590,7 @@ export function ListsPageClient({ initialLists }: ListsPageClientProps) {
                     </div>
                     <button
                       onClick={() => setSelectedBookKey(listBook.book.openLibraryKey)}
-                      className="p-2 text-stone-400 hover:text-blue-400 hover:bg-blue-900/30 rounded-xl transition-all duration-200"
+                      className="p-2 text-stone-400 hover:text-primary-400 hover:bg-primary-900/30 rounded-xl transition-all duration-200"
                       title="View details"
                     >
                       <Info className="w-4 h-4" />

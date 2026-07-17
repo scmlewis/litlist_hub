@@ -87,7 +87,7 @@ export default async function ListsPage() {
         </div>
         <Link
           href="/search"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all duration-200 cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 active:scale-[0.98] active:shadow-primary-500/20 transition-all duration-200 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           Add Books

@@ -85,7 +85,7 @@ LitList Hub evokes the warm, intimate atmosphere of a personal library at night.
 
 ### Font Families
 ```css
---font-primary: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+--font-primary: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 --font-code: 'Monaco', 'Courier New', monospace;
 ```
 

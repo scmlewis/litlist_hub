@@ -80,7 +80,7 @@ export function BookCard({
             {!isInList && onAdd && (
               <button
                 onClick={onAdd}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-full shadow-elevation-1 hover:shadow-elevation-2 hover:brightness-110 transition-all duration-200"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-full shadow-elevation-1 hover:shadow-elevation-2 hover:brightness-110 active:scale-[0.98] active:shadow-elevation-1 transition-all duration-200"
               >
                 <Plus className="w-4 h-4" />
                 Add to List
