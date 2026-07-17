@@ -1,5 +1,5 @@
-const CACHE_NAME = "litlist-v1";
-const STATIC_CACHE = "litlist-static-v1";
+const CACHE_NAME = "litlist-v2";
+const STATIC_CACHE = "litlist-static-v2";
 
 const PRECACHE_URLS = ["/", "/auth/signin"];
 
@@ -28,6 +28,9 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
 
   if (request.method !== "GET") return;
+
+  // Only handle http/https schemes — skip chrome-extension:// etc.
+  if (url.protocol !== "http:" && url.protocol !== "https:") return;
 
   if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/_next/")) {
     event.respondWith(networkFirst(request));
