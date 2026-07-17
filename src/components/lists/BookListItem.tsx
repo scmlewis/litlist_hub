@@ -184,6 +184,8 @@ export function BookListItem({
             <StarRating
               rating={listBook.rating}
               size="sm"
+              editable
+              onChange={(rating) => onUpdateRating(rating || null)}
             />
           </div>
 
