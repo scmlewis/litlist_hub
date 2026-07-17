@@ -61,21 +61,21 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Features Section — 2-column zig-zag layout */}
+      {/* Features Section — 2-column top row + centered bottom card */}
       <section className="py-16">
         <div className="mb-12">
           <span className="inline-flex items-center gap-2 px-4 py-2 bg-muted text-muted-foreground rounded-full text-sm font-medium mb-4">
             <Sparkles className="w-4 h-4" />
             Features
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight-section text-balance max-w-lg">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight-section text-balance">
             Everything you need to track your reading
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* First feature — full width on mobile, spans visual space */}
-          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer md:row-span-1">
+        {/* Top row — two cards side by side */}
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
             <div className="relative inline-block mb-6">
               <div className="relative p-4 bg-primary/15 text-primary rounded-2xl">
                 <Search className="w-7 h-7" />
@@ -89,8 +89,7 @@ export default async function Home() {
             </p>
           </div>
 
-          {/* Second feature — offset with top margin on desktop for zig-zag */}
-          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer md:mt-12">
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
             <div className="relative inline-block mb-6">
               <div className="relative p-4 bg-tertiary/15 text-tertiary rounded-2xl">
                 <BookMarked className="w-7 h-7" />
@@ -103,9 +102,11 @@ export default async function Home() {
               Mark books as want to read, currently reading, or finished. Never lose track again.
             </p>
           </div>
+        </div>
 
-          {/* Third feature — aligned with first on desktop */}
-          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer md:col-span-2 md:max-w-[calc(50%-0.75rem)]">
+        {/* Bottom row — single card centered */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer md:col-start-1">
             <div className="relative inline-block mb-6">
               <div className="relative p-4 bg-accent/15 text-accent rounded-2xl">
                 <Share2 className="w-7 h-7" />

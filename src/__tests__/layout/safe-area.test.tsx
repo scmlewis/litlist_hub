@@ -11,12 +11,12 @@ const globalsCss = fs.readFileSync(
 describe("Safe area CSS classes", () => {
   it("defines .main-top-safe with env(safe-area-inset-top)", () => {
     expect(globalsCss).toContain(".main-top-safe");
-    expect(globalsCss).toContain("padding-top: calc(5rem + env(safe-area-inset-top, 0px))");
+    expect(globalsCss).toContain("padding-top: calc(6.5rem + env(safe-area-inset-top, 0px))");
   });
 
   it("defines .main-top-safe responsive sm breakpoint", () => {
     expect(globalsCss).toContain("@media (min-width: 640px)");
-    expect(globalsCss).toContain("padding-top: calc(6rem + env(safe-area-inset-top, 0px))");
+    expect(globalsCss).toContain("padding-top: calc(7rem + env(safe-area-inset-top, 0px))");
   });
 
   it("defines .bottom-safe-offset with env(safe-area-inset-bottom)", () => {

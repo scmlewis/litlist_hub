@@ -102,22 +102,14 @@ describe("Landing Page - Design Improvements", () => {
     expect(accentIcons.length).toBeGreaterThan(0);
   });
 
-  it("features section uses 2-column grid, not 3-column", async () => {
+  it("features section uses 2-column grid for top row", async () => {
     const { default: Home } = await import("@/app/page");
     const { container } = render(await Home());
 
-    const featureGrid = container.querySelector(".grid");
-    expect(featureGrid?.className).toContain("md:grid-cols-2");
-    expect(featureGrid?.className).not.toContain("md:grid-cols-3");
-  });
-
-  it("second feature card has offset margin for zig-zag layout", async () => {
-    const { default: Home } = await import("@/app/page");
-    const { container } = render(await Home());
-
-    const featureCards = container.querySelectorAll(".grid > div");
-    // Second card should have md:mt-12
-    expect(featureCards[1].className).toContain("md:mt-12");
+    const featureGrids = container.querySelectorAll(".grid");
+    expect(featureGrids.length).toBeGreaterThanOrEqual(1);
+    // First grid (top row) should be 2-column on desktop
+    expect(featureGrids[0].className).toContain("md:grid-cols-2");
   });
 
   it("feature headings have tighter tracking", async () => {
@@ -142,5 +134,14 @@ describe("Landing Page - Design Improvements", () => {
 
     const listsButton = screen.getByText("My Lists");
     expect(listsButton.className).toContain("active:scale-[0.98]");
+  });
+
+  it("renders all three feature cards", async () => {
+    const { default: Home } = await import("@/app/page");
+    render(await Home());
+
+    expect(screen.getByText("Discover Books")).toBeInTheDocument();
+    expect(screen.getByText("Track Progress")).toBeInTheDocument();
+    expect(screen.getByText("Share Lists")).toBeInTheDocument();
   });
 });
