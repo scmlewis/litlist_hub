@@ -43,8 +43,6 @@ export function MobileNav() {
 
   const closeMore = useCallback(() => setShowMore(false), []);
 
-  if (!session) return null;
-
   return (
     <>
       {showMore && (
@@ -86,16 +84,26 @@ export function MobileNav() {
                 );
               })}
             </div>
-            <button
-              onClick={() => {
-                closeMore();
-                signOut();
-              }}
-              className="w-full mt-4 flex items-center justify-center gap-2 p-3 rounded-xl text-destructive hover:bg-destructive/10 transition-colors duration-150"
-            >
-              <LogOut className="w-5 h-5" />
-              <span className="text-sm font-medium">Sign Out</span>
-            </button>
+            {session ? (
+              <button
+                onClick={() => {
+                  closeMore();
+                  signOut();
+                }}
+                className="w-full mt-4 flex items-center justify-center gap-2 p-3 rounded-xl text-destructive hover:bg-destructive/10 transition-colors duration-150"
+              >
+                <LogOut className="w-5 h-5" />
+                <span className="text-sm font-medium">Sign Out</span>
+              </button>
+            ) : (
+              <Link
+                href="/api/auth/signin"
+                onClick={closeMore}
+                className="w-full mt-4 flex items-center justify-center gap-2 p-3 rounded-xl text-primary bg-primary/10 hover:bg-primary/20 transition-colors duration-150"
+              >
+                <span className="text-sm font-medium">Sign In</span>
+              </Link>
+            )}
           </div>
         </div>
       )}

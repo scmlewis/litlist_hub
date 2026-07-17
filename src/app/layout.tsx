@@ -67,7 +67,7 @@ export default function RootLayout({
           <Providers>
             <ServiceWorkerRegister />
             <Header />
-            <main id="main-content" className="container mx-auto px-4 py-6 sm:py-8 main-top-safe pb-24 md:pb-8">
+            <main id="main-content" className="container mx-auto px-4 main-top-safe pb-24 md:pb-8">
               <PageTransition>{children}</PageTransition>
             </main>
             <MobileNav />

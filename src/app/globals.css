@@ -349,12 +349,12 @@ body {
 }
 
 .main-top-safe {
-  padding-top: calc(6.5rem + env(safe-area-inset-top, 0px));
+  padding-top: calc(6.5rem + env(safe-area-inset-top, 0px)) !important;
 }
 
 @media (min-width: 640px) {
   .main-top-safe {
-    padding-top: calc(7rem + env(safe-area-inset-top, 0px));
+    padding-top: calc(7rem + env(safe-area-inset-top, 0px)) !important;
   }
 }
 
