@@ -1,7 +1,29 @@
 import Link from "next/link";
 import Image from "next/image";
 import { auth, signIn, signOut } from "@/lib/auth";
-import { BookOpen, Search, Library, LogOut, Sparkles, Upload, Target, BarChart3, Download, Settings } from "lucide-react";
+import { Search, Library, LogOut, Sparkles, Upload, Target, BarChart3, Download, Settings } from "lucide-react";
+
+function LitListIcon({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className={className}>
+      <defs>
+        <linearGradient id="hdr-cover" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#a06830" />
+          <stop offset="100%" stopColor="#7a4820" />
+        </linearGradient>
+      </defs>
+      <rect x="8" y="5" width="16" height="22" rx="2" fill="url(#hdr-cover)" />
+      <rect x="8" y="5" width="3" height="22" rx="2" fill="#6a3e18" />
+      <rect x="13" y="7" width="10" height="18" rx="1" fill="#f5f0e8" />
+      <rect x="15" y="7" width="7" height="1" rx="0.5" fill="#c9a66b" opacity="0.8" />
+      <rect x="15" y="10" width="6" height="1" rx="0.5" fill="#c9a66b" opacity="0.5" />
+      <rect x="15" y="13" width="7" height="1" rx="0.5" fill="#c9a66b" opacity="0.5" />
+      <rect x="15" y="16" width="5" height="1" rx="0.5" fill="#c9a66b" opacity="0.5" />
+      <rect x="15" y="19" width="6" height="1" rx="0.5" fill="#c9a66b" opacity="0.5" />
+      <path d="M22 5 L22 11 L23 9.5 L24 11 L24 5 Z" fill="#d4763a" />
+    </svg>
+  );
+}
 
 export async function Header() {
   const session = await auth();
@@ -11,7 +33,7 @@ export async function Header() {
       <nav className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between bg-card/80 backdrop-blur-md border border-border rounded-2xl shadow-elevation-1">
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="p-1.5 bg-primary rounded-xl transition-transform duration-200 group-hover:scale-105">
-            <BookOpen className="w-5 h-5 text-primary-foreground" />
+            <LitListIcon className="w-5 h-5" />
           </div>
           <span className="text-xl font-bold text-foreground tracking-tight">
             LitList
