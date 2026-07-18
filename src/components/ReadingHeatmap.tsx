@@ -18,9 +18,9 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 
 function getColorClass(count: number): string {
   if (count === 0) return "bg-muted hover:bg-muted/80";
-  if (count === 1) return "bg-warning/30 hover:bg-warning/40";
-  if (count === 2) return "bg-warning/60 hover:bg-warning/70";
-  return "bg-warning hover:bg-warning/90";
+  if (count === 1) return "bg-warning/50 hover:bg-warning/60";
+  if (count === 2) return "bg-warning/80 hover:bg-warning/90";
+  return "bg-warning hover:brightness-110";
 }
 
 function getDaysInYear(year: number): { date: Date; dateKey: string }[] {
@@ -184,8 +184,8 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
         <span className="text-xs text-muted-foreground">Less</span>
         <div className="flex gap-1">
           <div className="w-3 h-3 rounded-xs bg-muted" />
-          <div className="w-3 h-3 rounded-xs bg-warning/30" />
-          <div className="w-3 h-3 rounded-xs bg-warning/60" />
+          <div className="w-3 h-3 rounded-xs bg-warning/50" />
+          <div className="w-3 h-3 rounded-xs bg-warning/80" />
           <div className="w-3 h-3 rounded-xs bg-warning" />
         </div>
         <span className="text-xs text-muted-foreground">More</span>
