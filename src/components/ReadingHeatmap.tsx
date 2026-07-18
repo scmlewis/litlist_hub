@@ -141,7 +141,7 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
                   return (
                     <div
                       key={`empty-${dayIndex}`}
-                      className="w-3 h-3 rounded-sm"
+                      className="w-3 h-3 rounded-xs"
                       style={{ width: "13px", height: "13px" }}
                     />
                   );
@@ -161,7 +161,7 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
                     key={day.dateKey}
                     onClick={() => activity.count > 0 && onDayClick(day.dateKey, activity)}
                     disabled={isFuture || activity.count === 0}
-                    className={`w-3 h-3 rounded-sm transition-all duration-150 ${
+                    className={`w-3 h-3 rounded-xs transition-all duration-150 ${
                       isFuture
                         ? "bg-muted/50 cursor-not-allowed"
                         : getColorClass(activity.count)
@@ -183,10 +183,10 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
       <div className="flex items-center justify-end gap-2 mt-4">
         <span className="text-xs text-muted-foreground">Less</span>
         <div className="flex gap-1">
-          <div className="w-3 h-3 rounded-sm bg-muted" />
-          <div className="w-3 h-3 rounded-sm bg-warning/30" />
-          <div className="w-3 h-3 rounded-sm bg-warning/60" />
-          <div className="w-3 h-3 rounded-sm bg-warning" />
+          <div className="w-3 h-3 rounded-xs bg-muted" />
+          <div className="w-3 h-3 rounded-xs bg-warning/30" />
+          <div className="w-3 h-3 rounded-xs bg-warning/60" />
+          <div className="w-3 h-3 rounded-xs bg-warning" />
         </div>
         <span className="text-xs text-muted-foreground">More</span>
       </div>
