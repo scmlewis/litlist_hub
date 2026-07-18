@@ -61,7 +61,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Features Section — 2-column top row + centered bottom card */}
+      {/* Features Section — asymmetric layout */}
       <section className="py-16">
         <div className="mb-12">
           <span className="inline-flex items-center gap-2 px-4 py-2 bg-muted text-muted-foreground rounded-full text-sm font-medium mb-4">
@@ -73,51 +73,55 @@ export default async function Home() {
           </h2>
         </div>
 
-        {/* Top row — two cards side by side */}
-        <div className="grid md:grid-cols-2 gap-6 mb-6">
-          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
-            <div className="relative inline-block mb-6">
-              <div className="relative p-4 bg-primary/15 text-primary rounded-2xl">
-                <Search className="w-7 h-7" />
+        {/* Feature cards — 2-column top + full-width bottom */}
+        <div className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
+              <div className="relative inline-block mb-6">
+                <div className="relative p-4 bg-primary/15 text-primary rounded-2xl">
+                  <Search className="w-7 h-7" />
+                </div>
               </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">
+                Discover Books
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Search millions of books from the Open Library database. Find your next great read.
+              </p>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-foreground">
-              Discover Books
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Search millions of books from the Open Library database. Find your next great read.
-            </p>
+
+            <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
+              <div className="relative inline-block mb-6">
+                <div className="relative p-4 bg-tertiary/15 text-tertiary rounded-2xl">
+                  <BookMarked className="w-7 h-7" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">
+                Track Progress
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Mark books as want to read, currently reading, or finished. Never lose track again.
+              </p>
+            </div>
           </div>
 
+          {/* Bottom card — full width for emphasis */}
           <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer">
-            <div className="relative inline-block mb-6">
-              <div className="relative p-4 bg-tertiary/15 text-tertiary rounded-2xl">
-                <BookMarked className="w-7 h-7" />
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+              <div className="relative inline-block">
+                <div className="relative p-4 bg-accent/15 text-accent rounded-2xl">
+                  <Share2 className="w-7 h-7" />
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-xl font-bold mb-2 text-foreground">
+                  Share Lists
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Create shareable links to show friends what you&apos;re reading. Inspire others.
+                </p>
               </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-foreground">
-              Track Progress
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Mark books as want to read, currently reading, or finished. Never lose track again.
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom row — single card centered */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="group p-6 sm:p-8 bg-card border border-border rounded-xl shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 cursor-pointer md:col-start-1">
-            <div className="relative inline-block mb-6">
-              <div className="relative p-4 bg-accent/15 text-accent rounded-2xl">
-                <Share2 className="w-7 h-7" />
-              </div>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-foreground">
-              Share Lists
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Create shareable links to show friends what you&apos;re reading. Inspire others.
-            </p>
           </div>
         </div>
       </section>

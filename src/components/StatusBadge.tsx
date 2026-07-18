@@ -19,20 +19,20 @@ const statusConfig: Record<ReadingStatus, {
 }> = {
   WANT_TO_READ: {
     label: "Want to Read",
-    bg: "bg-muted",
-    text: "text-muted-foreground",
+    bg: "bg-secondary/20",
+    text: "text-secondary-foreground",
     icon: BookMarked,
   },
   READING: {
     label: "Reading",
-    bg: "bg-muted",
-    text: "text-muted-foreground",
+    bg: "bg-primary/20",
+    text: "text-primary",
     icon: BookOpen,
   },
   DONE: {
     label: "Done",
-    bg: "bg-muted",
-    text: "text-muted-foreground",
+    bg: "bg-tertiary/20",
+    text: "text-tertiary",
     icon: CheckCircle,
   },
 };

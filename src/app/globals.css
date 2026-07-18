@@ -49,6 +49,7 @@
 
     /* Borders */
     --border: 24 14% 18%;              /* #332c26 */
+    --card-border: 24 14% 18%;
     --input: 24 14% 18%;
     --ring: 24 44% 56%;                /* copper focus ring */
 
@@ -111,7 +112,7 @@ body {
 
 @layer components {
   .glass-card {
-    background: rgba(28, 23, 20, 0.6);
+    background: hsl(var(--card) / 0.6);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--border));

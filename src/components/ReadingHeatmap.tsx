@@ -17,10 +17,10 @@ const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function getColorClass(count: number): string {
-  if (count === 0) return "bg-stone-800 hover:bg-stone-700";
-  if (count === 1) return "bg-amber-900/70 hover:bg-amber-800";
-  if (count === 2) return "bg-amber-700 hover:bg-amber-600";
-  return "bg-amber-500 hover:bg-amber-400";
+  if (count === 0) return "bg-muted hover:bg-muted/80";
+  if (count === 1) return "bg-warning/30 hover:bg-warning/40";
+  if (count === 2) return "bg-warning/60 hover:bg-warning/70";
+  return "bg-warning hover:bg-warning/90";
 }
 
 function getDaysInYear(year: number): { date: Date; dateKey: string }[] {
@@ -107,7 +107,7 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
             return (
               <div
                 key={weekIndex}
-                className="w-3 text-xs text-stone-500"
+                className="w-3 text-xs text-muted-foreground"
                 style={{ width: "13px" }}
               >
                 {label?.month || ""}
@@ -123,7 +123,7 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
           {DAYS_OF_WEEK.map((day, i) => (
             <div
               key={day}
-              className="text-xs text-stone-500 h-3 flex items-center"
+              className="text-xs text-muted-foreground h-3 flex items-center"
               style={{ height: "13px" }}
             >
               {i % 2 === 1 ? day : ""}
@@ -163,9 +163,9 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
                     disabled={isFuture || activity.count === 0}
                     className={`w-3 h-3 rounded-sm transition-all duration-150 ${
                       isFuture
-                        ? "bg-stone-900 cursor-not-allowed"
+                        ? "bg-muted/50 cursor-not-allowed"
                         : getColorClass(activity.count)
-                    } ${isToday ? "ring-1 ring-primary-400" : ""}`}
+                    } ${isToday ? "ring-1 ring-primary" : ""}`}
                     style={{ width: "13px", height: "13px" }}
                     title={`${formattedDate}: ${activity.count} book${activity.count !== 1 ? "s" : ""} finished`}
                     aria-label={`${formattedDate}: ${activity.count} book${activity.count !== 1 ? "s" : ""} finished`}
@@ -181,14 +181,14 @@ export function ReadingHeatmap({ year, dailyActivity, onDayClick }: ReadingHeatm
 
       {/* Legend */}
       <div className="flex items-center justify-end gap-2 mt-4">
-        <span className="text-xs text-stone-500">Less</span>
+        <span className="text-xs text-muted-foreground">Less</span>
         <div className="flex gap-1">
-          <div className="w-3 h-3 rounded-sm bg-stone-800" />
-          <div className="w-3 h-3 rounded-sm bg-amber-900/70" />
-          <div className="w-3 h-3 rounded-sm bg-amber-700" />
-          <div className="w-3 h-3 rounded-sm bg-amber-500" />
+          <div className="w-3 h-3 rounded-sm bg-muted" />
+          <div className="w-3 h-3 rounded-sm bg-warning/30" />
+          <div className="w-3 h-3 rounded-sm bg-warning/60" />
+          <div className="w-3 h-3 rounded-sm bg-warning" />
         </div>
-        <span className="text-xs text-stone-500">More</span>
+        <span className="text-xs text-muted-foreground">More</span>
       </div>
     </div>
   );

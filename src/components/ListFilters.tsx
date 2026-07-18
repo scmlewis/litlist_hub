@@ -29,10 +29,10 @@ interface ListFiltersProps {
 }
 
 const STATUS_OPTIONS: { value: ReadingStatus | null; label: string; icon: typeof BookOpen; color: string }[] = [
-  { value: null, label: "All", icon: Filter, color: "text-stone-400" },
-  { value: "WANT_TO_READ", label: "Want to Read", icon: Clock, color: "text-tertiary" },
-  { value: "READING", label: "Reading", icon: BookOpen, color: "text-primary-400" },
-  { value: "DONE", label: "Done", icon: CheckCircle, color: "text-accent-400" },
+  { value: null, label: "All", icon: Filter, color: "text-muted-foreground" },
+  { value: "WANT_TO_READ", label: "Want to Read", icon: Clock, color: "text-secondary-foreground" },
+  { value: "READING", label: "Reading", icon: BookOpen, color: "text-primary" },
+  { value: "DONE", label: "Done", icon: CheckCircle, color: "text-tertiary" },
 ];
 
 const SORT_OPTIONS: { value: SortField; label: string }[] = [
@@ -87,12 +87,12 @@ export function ListFilters({
   };
 
   return (
-    <div className="p-3 sm:p-4 bg-stone-800/30 border-b border-[var(--card-border)]">
+    <div className="p-3 sm:p-4 bg-muted/50 border-b border-border">
       {/* Mobile: Collapsed summary bar */}
       <div className="flex sm:hidden items-center justify-between">
         <button 
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center gap-2 text-sm text-stone-400 cursor-pointer"
+          className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer"
         >
           <Filter className="w-4 h-4" />
           <span>Filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}</span>
@@ -100,13 +100,13 @@ export function ListFilters({
         </button>
         <div className="flex items-center gap-2">
           {isFiltered && (
-            <span className="text-xs text-stone-500">
+            <span className="text-xs text-muted-foreground">
               {filteredCount}/{totalBooks}
             </span>
           )}
           <button
             onClick={() => onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")}
-            className="p-2.5 text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
+            className="p-2.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors cursor-pointer"
             title={sortOrder === "asc" ? "Ascending" : "Descending"}
           >
             {sortOrder === "asc" ? (
@@ -118,7 +118,7 @@ export function ListFilters({
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="p-2.5 text-stone-400 hover:text-red-400 hover:bg-red-900/30 rounded-lg transition-colors cursor-pointer"
+              className="p-2.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors cursor-pointer"
               title="Clear filters"
             >
               <X className="w-4 h-4" />
@@ -132,7 +132,7 @@ export function ListFilters({
         <div className="flex flex-col gap-3">
         {/* Status Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible sm:flex-wrap">
-          <span className="text-xs text-stone-500 uppercase tracking-wider mr-1 flex-shrink-0">Status:</span>
+          <span className="text-xs text-muted-foreground uppercase tracking-wider mr-1 flex-shrink-0">Status:</span>
           {STATUS_OPTIONS.map((option) => {
             const Icon = option.icon;
             const isActive = filterStatus === option.value;
@@ -142,8 +142,8 @@ export function ListFilters({
                 onClick={() => onFilterStatusChange(option.value)}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? "bg-primary-500/20 text-primary-300 ring-1 ring-primary-500/50"
-                    : "bg-stone-700/50 text-stone-400 hover:bg-stone-700 hover:text-stone-300"
+                    ? "bg-primary/20 text-primary ring-1 ring-primary/50"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                 }`}
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? option.color : ""}`} />
@@ -157,11 +157,11 @@ export function ListFilters({
         <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible sm:flex-wrap">
           {/* Rating Filter */}
           <div className="flex items-center gap-2">
-            <Star className="w-4 h-4 text-stone-500" />
+            <Star className="w-4 h-4 text-muted-foreground" />
             <select
               value={filterMinRating ?? ""}
               onChange={(e) => onFilterMinRatingChange(e.target.value ? Number(e.target.value) : null)}
-              className="px-3 py-2 text-sm bg-stone-700/50 text-stone-300 rounded-lg border border-stone-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer min-h-[44px]"
+              className="px-3 py-2 text-sm bg-muted text-foreground rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-ring cursor-pointer min-h-[44px]"
             >
               {RATING_OPTIONS.map((option) => (
                 <option key={option.value ?? "any"} value={option.value ?? ""}>
@@ -171,15 +171,15 @@ export function ListFilters({
             </select>
           </div>
 
-          <div className="h-4 w-px bg-stone-600 mx-1" />
+          <div className="h-4 w-px bg-border mx-1" />
 
           {/* Sort By */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-stone-500">Sort:</span>
+            <span className="text-xs text-muted-foreground">Sort:</span>
             <select
               value={sortBy}
               onChange={(e) => onSortByChange(e.target.value as SortField)}
-              className="px-3 py-2 text-sm bg-stone-700/50 text-stone-300 rounded-lg border border-stone-600/50 focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer min-h-[44px]"
+              className="px-3 py-2 text-sm bg-muted text-foreground rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-ring cursor-pointer min-h-[44px]"
             >
               {SORT_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -189,7 +189,7 @@ export function ListFilters({
             </select>
             <button
               onClick={() => onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")}
-              className="p-2.5 text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
+              className="p-2.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors cursor-pointer"
               title={sortOrder === "asc" ? "Ascending" : "Descending"}
             >
               {sortOrder === "asc" ? (
@@ -203,14 +203,14 @@ export function ListFilters({
           {/* Clear Filters & Count */}
           <div className="flex items-center gap-2 ml-auto">
             {isFiltered && (
-              <span className="text-xs text-stone-400">
+              <span className="text-xs text-muted-foreground">
                 {filteredCount} of {totalBooks} books
               </span>
             )}
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="inline-flex items-center gap-1 px-2.5 py-2 text-xs text-stone-400 hover:text-stone-300 hover:bg-stone-700 rounded-lg transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-2.5 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-3 h-3" />
                 Clear
