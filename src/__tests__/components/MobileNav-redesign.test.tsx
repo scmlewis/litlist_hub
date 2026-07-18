@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen, act } from "@testing-library/react";
 
 // Mock next-auth
 vi.mock("next-auth/react", () => ({
@@ -58,5 +58,55 @@ describe("MobileNav - Color Consistency", () => {
 
     const searchLink = screen.getByText("Search").closest("a");
     expect(searchLink?.className).toContain("transition-colors");
+  });
+});
+
+describe("MobileNav - Unauthenticated", () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
+  it("renders main navigation items when not authenticated", async () => {
+    vi.doMock("next-auth/react", () => ({
+      useSession: () => ({
+        data: null,
+        status: "unauthenticated",
+      }),
+      signOut: vi.fn(),
+      signIn: vi.fn(),
+      SessionProvider: ({ children }: { children: React.ReactNode }) => children,
+    }));
+    const { MobileNav } = await import("@/components/MobileNav");
+    render(<MobileNav />);
+
+    expect(screen.getByText("Home")).toBeInTheDocument();
+    expect(screen.getByText("Search")).toBeInTheDocument();
+    expect(screen.getByText("Lists")).toBeInTheDocument();
+    expect(screen.getByText("Goals")).toBeInTheDocument();
+    expect(screen.getByText("More")).toBeInTheDocument();
+  });
+
+  it("shows Sign In link in More menu when not authenticated", async () => {
+    vi.doMock("next-auth/react", () => ({
+      useSession: () => ({
+        data: null,
+        status: "unauthenticated",
+      }),
+      signOut: vi.fn(),
+      signIn: vi.fn(),
+      SessionProvider: ({ children }: { children: React.ReactNode }) => children,
+    }));
+    const { MobileNav } = await import("@/components/MobileNav");
+    render(<MobileNav />);
+
+    // Open More menu
+    await act(async () => {
+      const moreButton = screen.getByText("More").closest("button");
+      moreButton?.click();
+    });
+
+    // Should show Sign In, not Sign Out
+    expect(screen.getByText("Sign In")).toBeInTheDocument();
+    expect(screen.queryByText("Sign Out")).not.toBeInTheDocument();
   });
 });

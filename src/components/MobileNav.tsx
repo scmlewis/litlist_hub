@@ -43,6 +43,8 @@ export function MobileNav() {
 
   const closeMore = useCallback(() => setShowMore(false), []);
 
+  // Don't unmount during navigation — render conditionally inside JSX instead
+  // to prevent the nav bar from flickering on route changes
   return (
     <>
       {showMore && (
@@ -67,7 +69,9 @@ export function MobileNav() {
               {moreNavItems.map((item) => {
                 const Icon = item.icon;
                 const active = activeStates[item.href];
-                return (
+                // Don't unmount during navigation — render conditionally inside JSX instead
+  // to prevent the nav bar from flickering on route changes
+  return (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -113,7 +117,9 @@ export function MobileNav() {
           {mainNavItems.map((item) => {
             const Icon = item.icon;
             const active = activeStates[item.href];
-            return (
+            // Don't unmount during navigation — render conditionally inside JSX instead
+  // to prevent the nav bar from flickering on route changes
+  return (
               <Link
                 key={item.href}
                 href={item.href}
