@@ -39,3 +39,13 @@ next-env.d.ts
 # Prisma
 prisma/*.db
 prisma/*.db-journal
+
+# Python
+.venv/
+
+# Agent skills (local config)
+.agents/
+skills-lock.json
+
+# Temporary / one-off scripts
+check-contrast.js
