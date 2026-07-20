@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <div className="max-w-5xl mx-auto">
       {/* Hero Section */}
-      <section className="py-24 md:py-32 relative">
+      <section className="py-24 md:py-32 relative overflow-hidden">
         {/* Ambient glow */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10" />
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-tertiary/8 rounded-full blur-3xl -z-10" />
@@ -133,7 +133,7 @@ export default async function Home() {
 
       {/* Bottom CTA */}
       <section className="py-16 mb-8">
-        <div className="relative p-8 md:p-12 bg-card border border-border rounded-3xl shadow-elevation-2 overflow-hidden">
+        <div className="relative p-8 md:p-12 bg-card border border-border rounded-3xl shadow-elevation-2 overflow-hidden max-w-full">
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
           <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
